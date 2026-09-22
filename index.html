@@ -3,27 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#071A2B" />
   <title>Offa Connect by Leo</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+    :root {
+      --navy: #071A2B;
+      --blue: #0B5C8E;
+      --teal: #0B8F87;
+      --green: #18A06A;
+      --gold: #D9A441;
+      --cream: #F7F4EE;
+      --white: #FFFFFF;
+      --ink: #132235;
+      --muted: #6E7D8C;
+      --line: #E4EAF0;
+      --danger: #D94B4B;
+      --shadow: 0 12px 35px rgba(7, 26, 43, 0.10);
+    }
+
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f7f4ee;
-      color: #132235;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
     }
 
     button,
     input,
-    textarea,
-    select {
+    select,
+    textarea {
       font: inherit;
     }
 
@@ -35,30 +51,26 @@
       display: none !important;
     }
 
-    .app {
-      min-height: 100vh;
-    }
+    /* AUTH */
 
-    /* ---------- AUTH ---------- */
-
-    .auth-page {
+    #authScreen {
       min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       padding: 24px;
       background:
-        radial-gradient(circle at top right, #0b8f87 0, transparent 35%),
-        linear-gradient(145deg, #071a2b, #0b5c8e 55%, #0b8f87);
+        radial-gradient(circle at top right, rgba(24,160,106,.18), transparent 35%),
+        linear-gradient(145deg, #071A2B, #0B5C8E);
     }
 
     .auth-card {
       width: 100%;
       max-width: 430px;
-      background: rgba(255,255,255,.97);
+      background: rgba(255,255,255,.98);
       border-radius: 28px;
       padding: 32px;
-      box-shadow: 0 25px 80px rgba(0,0,0,.25);
+      box-shadow: 0 25px 70px rgba(0,0,0,.25);
     }
 
     .brand {
@@ -66,34 +78,34 @@
       margin-bottom: 26px;
     }
 
-    .brand-logo {
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 15px;
+    .logo {
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 14px;
       border-radius: 50%;
       display: flex;
-      align-items: center;
       justify-content: center;
-      font-size: 46px;
-      background: linear-gradient(145deg, #071a2b, #0b5c8e);
-      border: 5px solid #d9a441;
-      box-shadow: 0 12px 30px rgba(7,26,43,.25);
+      align-items: center;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      color: white;
+      font-size: 40px;
+      box-shadow: 0 12px 28px rgba(11,92,142,.25);
     }
 
     .brand h1 {
-      margin: 0;
-      font-size: 30px;
-      color: #071a2b;
+      color: var(--navy);
+      font-size: 29px;
+      letter-spacing: -.5px;
     }
 
     .brand p {
-      margin: 8px 0 0;
-      color: #6e7d8c;
+      color: var(--muted);
+      margin-top: 5px;
+      font-size: 14px;
     }
 
-    .tagline {
-      color: #0b8f87 !important;
-      font-weight: 700;
+    .gold {
+      color: var(--gold);
     }
 
     .form-group {
@@ -102,387 +114,570 @@
 
     label {
       display: block;
-      font-weight: 700;
       font-size: 13px;
+      font-weight: 700;
       margin-bottom: 7px;
+      color: var(--ink);
     }
 
     input,
-    textarea,
-    select {
+    select,
+    textarea {
       width: 100%;
-      border: 1px solid #dfe6ed;
-      border-radius: 14px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
       padding: 13px 14px;
-      background: #fff;
-      color: #132235;
+      background: white;
+      color: var(--ink);
       outline: none;
-    }
-
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: #0b8f87;
-      box-shadow: 0 0 0 3px rgba(11,143,135,.1);
+      transition: .2s;
     }
 
     textarea {
-      min-height: 100px;
+      min-height: 110px;
       resize: vertical;
     }
 
-    .primary {
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(11,143,135,.10);
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .danger-btn {
       width: 100%;
-      border: 0;
-      border-radius: 14px;
+      border: none;
+      border-radius: 13px;
       padding: 14px;
+      font-weight: 800;
+      margin-top: 7px;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--teal), var(--green));
       color: white;
-      font-weight: 800;
-      background: linear-gradient(135deg, #0b5c8e, #0b8f87);
-      box-shadow: 0 10px 25px rgba(11,92,142,.22);
     }
 
-    .secondary {
-      width: 100%;
-      border: 1px solid #dfe6ed;
-      border-radius: 14px;
-      padding: 13px;
-      background: white;
-      color: #071a2b;
-      font-weight: 700;
+    .secondary-btn {
+      background: #EEF5F7;
+      color: var(--blue);
     }
 
-    .link-button {
-      background: none;
-      border: 0;
-      color: #0b5c8e;
-      font-weight: 800;
-      padding: 10px;
+    .danger-btn {
+      background: #FFF0F0;
+      color: var(--danger);
     }
 
-    .auth-switch {
+    .switch-auth {
       text-align: center;
       margin-top: 18px;
-      color: #6e7d8c;
-    }
-
-    .message {
-      padding: 12px 14px;
-      border-radius: 12px;
-      margin-bottom: 15px;
+      color: var(--muted);
       font-size: 14px;
     }
 
-    .error {
-      background: #fff0f0;
-      color: #a32929;
+    .switch-auth button {
+      border: none;
+      background: none;
+      color: var(--blue);
+      font-weight: 800;
     }
 
-    .success {
-      background: #edf9f3;
-      color: #157347;
+    .message {
+      margin: 12px 0;
+      padding: 11px 13px;
+      border-radius: 11px;
+      font-size: 13px;
+      display: none;
     }
 
-    /* ---------- APP ---------- */
+    .message.error {
+      display: block;
+      background: #FFF0F0;
+      color: #A52D2D;
+    }
+
+    .message.success {
+      display: block;
+      background: #ECFBF3;
+      color: #167546;
+    }
+
+    /* APP */
+
+    #appScreen {
+      min-height: 100vh;
+      padding-bottom: 82px;
+    }
 
     .topbar {
-      height: 72px;
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: rgba(7,26,43,.97);
+      height: 70px;
+      background: var(--navy);
       color: white;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 22px;
-      box-shadow: 0 5px 25px rgba(0,0,0,.15);
+      padding: 0 20px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 5px 20px rgba(0,0,0,.12);
     }
 
-    .topbar-brand {
+    .top-brand {
       font-weight: 900;
-      font-size: 20px;
+      font-size: 19px;
     }
 
-    .topbar-brand span {
-      color: #d9a441;
+    .top-brand span {
+      color: var(--gold);
     }
 
-    .logout {
-      border: 1px solid rgba(255,255,255,.25);
-      background: transparent;
-      color: white;
-      padding: 9px 13px;
-      border-radius: 10px;
+    .online-dot {
+      width: 8px;
+      height: 8px;
+      background: #31D77C;
+      display: inline-block;
+      border-radius: 50%;
+      margin-right: 5px;
     }
 
-    .content {
+    .page {
+      width: 100%;
       max-width: 1100px;
-      margin: auto;
-      padding: 25px 18px 100px;
+      margin: 0 auto;
+      padding: 22px 16px;
     }
 
-    .welcome {
-      margin-bottom: 20px;
+    .section-title {
+      margin-bottom: 16px;
     }
 
-    .welcome h2 {
-      margin: 0 0 5px;
+    .section-title h2 {
+      color: var(--navy);
+      font-size: 25px;
     }
 
-    .muted {
-      color: #6e7d8c;
+    .section-title p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 4px;
     }
+
+    /* DISCOVER */
 
     .filters {
       background: white;
-      border-radius: 20px;
-      padding: 18px;
-      margin-bottom: 20px;
-      box-shadow: 0 8px 30px rgba(7,26,43,.07);
+      padding: 15px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
     }
 
     .filter-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
+      gap: 9px;
     }
 
-    .profiles {
+    .profile-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 18px;
     }
 
     .profile-card {
-      overflow: hidden;
       background: white;
-      border-radius: 22px;
-      box-shadow: 0 10px 30px rgba(7,26,43,.09);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
     }
 
     .profile-image {
+      height: 280px;
+      background: linear-gradient(135deg, #DCECEF, #B9D9D7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .profile-image img {
       width: 100%;
-      height: 290px;
+      height: 100%;
       object-fit: cover;
-      background: linear-gradient(135deg, #071a2b, #0b8f87);
     }
 
-    .profile-body {
-      padding: 17px;
-    }
-
-    .profile-name {
-      font-size: 20px;
+    .avatar-placeholder {
+      font-size: 72px;
+      color: var(--blue);
       font-weight: 900;
     }
 
+    .profile-info {
+      padding: 15px;
+    }
+
+    .profile-name {
+      font-size: 19px;
+      font-weight: 900;
+      color: var(--navy);
+    }
+
     .profile-meta {
-      color: #6e7d8c;
-      margin: 4px 0 10px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .profile-bio {
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 10px 0;
+      color: #405162;
+      min-height: 38px;
     }
 
     .goal {
       display: inline-block;
-      padding: 6px 9px;
-      background: #eef8f6;
-      color: #08786f;
-      border-radius: 999px;
-      font-size: 12px;
+      padding: 5px 8px;
+      background: #EEF8F5;
+      color: var(--green);
+      border-radius: 20px;
+      font-size: 11px;
       font-weight: 800;
+      margin-bottom: 10px;
     }
 
-    .bio {
-      margin: 12px 0;
-      line-height: 1.5;
-    }
-
-    .card-actions {
+    .profile-actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 9px;
+      gap: 8px;
     }
 
-    .like {
-      border: 0;
-      background: #0b8f87;
-      color: white;
-      border-radius: 12px;
-      padding: 11px;
+    .like-btn,
+    .pass-btn {
+      border: none;
+      border-radius: 11px;
+      padding: 10px;
       font-weight: 800;
     }
 
-    .pass {
-      border: 1px solid #dfe6ed;
-      background: white;
-      color: #132235;
-      border-radius: 12px;
-      padding: 11px;
-      font-weight: 800;
+    .like-btn {
+      background: #E9F9F1;
+      color: var(--green);
     }
 
-    /* ---------- NAV ---------- */
-
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 70px;
-      background: rgba(255,255,255,.97);
-      border-top: 1px solid #e6ebef;
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      z-index: 30;
+    .pass-btn {
+      background: #F2F4F6;
+      color: var(--muted);
     }
 
-    .nav-btn {
-      border: 0;
-      background: transparent;
-      min-width: 90px;
-      color: #6e7d8c;
-      font-weight: 700;
-    }
-
-    .nav-btn.active {
-      color: #0b8f87;
-    }
-
-    .nav-icon {
-      font-size: 22px;
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    /* ---------- MATCHES ---------- */
+    /* MATCHES */
 
     .match-list {
       display: grid;
       gap: 12px;
     }
 
-    .match-item {
+    .match-card {
       background: white;
-      border-radius: 18px;
-      padding: 12px;
+      padding: 14px;
+      border-radius: 17px;
       display: flex;
       align-items: center;
       gap: 13px;
-      box-shadow: 0 7px 25px rgba(7,26,43,.07);
-      cursor: pointer;
+      box-shadow: var(--shadow);
     }
 
-    .avatar {
+    .match-avatar {
       width: 58px;
       height: 58px;
       border-radius: 50%;
-      object-fit: cover;
-      background: #0b5c8e;
+      overflow: hidden;
+      background: #DDECEF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--blue);
+      font-size: 23px;
+      font-weight: 900;
     }
 
-    /* ---------- CHAT ---------- */
+    .match-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-    .chat {
+    .match-info {
+      flex: 1;
+    }
+
+    .match-info h3 {
+      font-size: 16px;
+    }
+
+    .match-info p {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .chat-open {
+      border: none;
+      border-radius: 11px;
+      background: var(--blue);
+      color: white;
+      padding: 9px 13px;
+      font-weight: 800;
+    }
+
+    /* CHAT */
+
+    .chat-box {
       background: white;
-      border-radius: 22px;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(7,26,43,.08);
+      height: calc(100vh - 145px);
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
     }
 
     .chat-header {
-      padding: 16px;
-      border-bottom: 1px solid #edf0f2;
+      padding: 14px 16px;
+      background: var(--navy);
+      color: white;
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .chat-messages {
-      height: 430px;
+    .chat-header button {
+      border: none;
+      background: transparent;
+      color: white;
+      font-size: 23px;
+    }
+
+    .chat-header-info {
+      flex: 1;
+    }
+
+    .chat-header-info h3 {
+      font-size: 16px;
+    }
+
+    .chat-header-info p {
+      color: #B9D2DF;
+      font-size: 11px;
+      margin-top: 2px;
+    }
+
+    .messages {
+      flex: 1;
       overflow-y: auto;
-      padding: 18px;
-      background: #f7f9fa;
+      padding: 16px;
+      background: #F7FAFB;
+    }
+
+    .message-row {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .message-row.mine {
+      justify-content: flex-end;
     }
 
     .bubble {
       max-width: 75%;
       padding: 10px 13px;
       border-radius: 16px;
-      margin-bottom: 9px;
+      font-size: 14px;
       line-height: 1.4;
     }
 
-    .mine {
-      margin-left: auto;
-      background: #0b8f87;
+    .mine .bubble {
+      background: var(--teal);
       color: white;
       border-bottom-right-radius: 4px;
     }
 
-    .theirs {
+    .theirs .bubble {
       background: white;
+      color: var(--ink);
       border-bottom-left-radius: 4px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.05);
     }
 
-    .chat-compose {
+    .bubble-time {
+      display: block;
+      font-size: 9px;
+      margin-top: 4px;
+      opacity: .65;
+    }
+
+    .attachment-link {
+      display: inline-block;
+      margin-top: 5px;
+      text-decoration: none;
+      font-weight: 700;
+      color: inherit;
+    }
+
+    .chat-input {
+      padding: 11px;
       display: flex;
       gap: 8px;
-      padding: 12px;
-      border-top: 1px solid #edf0f2;
+      border-top: 1px solid var(--line);
+      background: white;
     }
 
-    .chat-compose input {
+    .chat-input input {
       flex: 1;
     }
 
-    .send {
-      border: 0;
-      background: #0b5c8e;
-      color: white;
+    .send-btn {
+      border: none;
       border-radius: 12px;
+      background: var(--green);
+      color: white;
       padding: 0 18px;
-      font-weight: 800;
+      font-weight: 900;
     }
 
-    /* ---------- PROFILE ---------- */
+    /* PROFILE */
 
-    .panel {
+    .profile-editor {
+      max-width: 650px;
+      margin: auto;
       background: white;
-      border-radius: 22px;
       padding: 22px;
-      box-shadow: 0 10px 30px rgba(7,26,43,.07);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
     }
 
-    .profile-preview {
+    .photo-upload {
       text-align: center;
       margin-bottom: 22px;
     }
 
     .big-avatar {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
+      width: 125px;
+      height: 125px;
       border-radius: 50%;
-      background: #0b5c8e;
-      border: 5px solid #d9a441;
+      overflow: hidden;
+      margin: auto;
+      background: #DDECEF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue);
+      font-size: 48px;
+      font-weight: 900;
+      border: 4px solid white;
+      box-shadow: 0 8px 25px rgba(0,0,0,.12);
     }
 
-    .upload {
+    .big-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .upload-label {
       display: inline-block;
       margin-top: 10px;
+      background: #EEF5F7;
+      color: var(--blue);
       padding: 9px 14px;
-      border-radius: 10px;
-      background: #edf5f8;
-      color: #0b5c8e;
+      border-radius: 11px;
+      font-size: 13px;
       font-weight: 800;
       cursor: pointer;
     }
 
-    /* ---------- RESPONSIVE ---------- */
+    #photoInput {
+      display: none;
+    }
+
+    /* NAV */
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background: white;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: center;
+      z-index: 100;
+      box-shadow: 0 -5px 20px rgba(0,0,0,.06);
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 650px;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .nav-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-btn .nav-icon {
+      font-size: 22px;
+    }
+
+    .nav-btn.active {
+      color: var(--teal);
+    }
+
+    /* EMPTY */
+
+    .empty {
+      text-align: center;
+      padding: 45px 20px;
+      background: white;
+      border-radius: 20px;
+      color: var(--muted);
+      box-shadow: var(--shadow);
+    }
+
+    .empty-icon {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 45px;
+      color: var(--muted);
+    }
+
+    /* RESPONSIVE */
 
     @media (max-width: 800px) {
-      .profiles {
+      .profile-grid {
         grid-template-columns: repeat(2, 1fr);
       }
 
@@ -493,23 +688,28 @@
 
     @media (max-width: 560px) {
       .auth-card {
-        padding: 24px;
+        padding: 24px 19px;
       }
 
-      .profiles {
+      .profile-grid {
         grid-template-columns: 1fr;
+      }
+
+      .profile-image {
+        height: 340px;
       }
 
       .filter-grid {
         grid-template-columns: 1fr;
       }
 
-      .profile-image {
-        height: 330px;
+      .page {
+        padding: 18px 12px;
       }
 
-      .nav-btn {
-        min-width: 70px;
+      .chat-box {
+        height: calc(100vh - 145px);
+        border-radius: 15px;
       }
     }
   </style>
@@ -517,15 +717,398 @@
 
 <body>
 
-<div id="root"></div>
+  <!-- AUTH SCREEN -->
+  <section id="authScreen">
+
+    <div class="auth-card">
+
+      <div class="brand">
+        <div class="logo">🦚</div>
+        <h1>Offa Connect <span class="gold">by Leo</span></h1>
+        <p>Meet. Connect. Belong.</p>
+      </div>
+
+      <div id="authMessage" class="message"></div>
+
+      <div id="loginForm">
+
+        <div class="form-group">
+          <label>Email</label>
+          <input
+            id="loginEmail"
+            type="email"
+            placeholder="Enter your email"
+            autocomplete="email"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input
+            id="loginPassword"
+            type="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+          />
+        </div>
+
+        <button class="primary-btn" onclick="login()">
+          Login
+        </button>
+
+        <div class="switch-auth">
+          Don't have an account?
+          <button onclick="showSignup()">Create account</button>
+        </div>
+
+      </div>
+
+      <div id="signupForm" class="hidden">
+
+        <div class="form-group">
+          <label>Your name</label>
+          <input id="signupName" type="text" placeholder="Your name" />
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input id="signupEmail" type="email" placeholder="Email address" />
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input
+            id="signupPassword"
+            type="password"
+            placeholder="At least 6 characters"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Age</label>
+          <input id="signupAge" type="number" min="18" placeholder="18+" />
+        </div>
+
+        <div class="form-group">
+          <label>Sex</label>
+          <select id="signupSex">
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>City</label>
+          <input
+            id="signupCity"
+            type="text"
+            value="Offa"
+            placeholder="City"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Relationship goal</label>
+          <select id="signupGoal">
+            <option value="">Select</option>
+            <option value="Serious relationship">Serious relationship</option>
+            <option value="Marriage">Marriage</option>
+            <option value="Friendship">Friendship</option>
+            <option value="Getting to know someone">Getting to know someone</option>
+          </select>
+        </div>
+
+        <button class="primary-btn" onclick="signup()">
+          Create account
+        </button>
+
+        <div class="switch-auth">
+          Already have an account?
+          <button onclick="showLogin()">Login</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- APP -->
+  <section id="appScreen" class="hidden">
+
+    <header class="topbar">
+      <div class="top-brand">
+        Offa Connect <span>by Leo</span>
+      </div>
+
+      <div>
+        <span class="online-dot"></span>
+        <span id="topUserName">Online</span>
+      </div>
+    </header>
+
+
+    <!-- DISCOVER -->
+    <main id="discoverPage" class="page">
+
+      <div class="section-title">
+        <h2>Discover</h2>
+        <p>Meet people from Offa and beyond.</p>
+      </div>
+
+      <div class="filters">
+
+        <div class="filter-grid">
+
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search name, city or bio"
+            oninput="loadDiscover()"
+          />
+
+          <input
+            id="minAge"
+            type="number"
+            min="18"
+            placeholder="Min age"
+            oninput="loadDiscover()"
+          />
+
+          <input
+            id="maxAge"
+            type="number"
+            min="18"
+            placeholder="Max age"
+            oninput="loadDiscover()"
+          />
+
+          <select id="goalFilter" onchange="loadDiscover()">
+            <option value="">All goals</option>
+            <option value="Serious relationship">Serious relationship</option>
+            <option value="Marriage">Marriage</option>
+            <option value="Friendship">Friendship</option>
+            <option value="Getting to know someone">Getting to know someone</option>
+          </select>
+
+        </div>
+
+      </div>
+
+      <div id="discoverList" class="profile-grid">
+        <div class="loading">Loading profiles...</div>
+      </div>
+
+    </main>
+
+
+    <!-- MATCHES -->
+    <main id="matchesPage" class="page hidden">
+
+      <div class="section-title">
+        <h2>Your Matches</h2>
+        <p>People you've connected with.</p>
+      </div>
+
+      <div id="matchesList" class="match-list">
+        <div class="loading">Loading matches...</div>
+      </div>
+
+    </main>
+
+
+    <!-- CHAT -->
+    <main id="chatPage" class="page hidden">
+
+      <div id="chatEmpty" class="empty">
+        <div class="empty-icon">💬</div>
+        <h3>Select a match</h3>
+        <p>Open one of your matches to start chatting.</p>
+      </div>
+
+      <div id="chatBox" class="chat-box hidden">
+
+        <div class="chat-header">
+
+          <button onclick="closeChat()">‹</button>
+
+          <div id="chatAvatar" class="match-avatar">
+            ?
+          </div>
+
+          <div class="chat-header-info">
+            <h3 id="chatName">Chat</h3>
+            <p id="chatStatus">Connected on Offa Connect</p>
+          </div>
+
+        </div>
+
+        <div id="messages" class="messages"></div>
+
+        <form class="chat-input" onsubmit="sendMessage(event)">
+          <input
+            id="messageInput"
+            type="text"
+            placeholder="Write a message..."
+            autocomplete="off"
+          />
+
+          <button class="send-btn" type="submit">
+            Send
+          </button>
+        </form>
+
+      </div>
+
+    </main>
+
+
+    <!-- PROFILE -->
+    <main id="profilePage" class="page hidden">
+
+      <div class="section-title">
+        <h2>My Profile</h2>
+        <p>Keep your profile up to date.</p>
+      </div>
+
+      <div class="profile-editor">
+
+        <div class="photo-upload">
+
+          <div id="bigAvatar" class="big-avatar">
+            ?
+          </div>
+
+          <label class="upload-label" for="photoInput">
+            Change photo
+          </label>
+
+          <input
+            id="photoInput"
+            type="file"
+            accept="image/*"
+            onchange="uploadAvatar(event)"
+          />
+
+        </div>
+
+        <div id="profileMessage" class="message"></div>
+
+        <div class="form-group">
+          <label>Name</label>
+          <input id="profileName" type="text" />
+        </div>
+
+        <div class="form-group">
+          <label>Age</label>
+          <input id="profileAge" type="number" min="18" />
+        </div>
+
+        <div class="form-group">
+          <label>Sex</label>
+          <select id="profileSex">
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>City</label>
+          <input id="profileCity" type="text" />
+        </div>
+
+        <div class="form-group">
+          <label>Relationship goal</label>
+          <select id="profileGoal">
+            <option value="">Select</option>
+            <option value="Serious relationship">Serious relationship</option>
+            <option value="Marriage">Marriage</option>
+            <option value="Friendship">Friendship</option>
+            <option value="Getting to know someone">Getting to know someone</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Bio</label>
+          <textarea
+            id="profileBio"
+            placeholder="Tell people a little about yourself..."
+          ></textarea>
+        </div>
+
+        <button class="primary-btn" onclick="saveProfile()">
+          Save profile
+        </button>
+
+        <button class="danger-btn" onclick="logout()">
+          Logout
+        </button>
+
+      </div>
+
+    </main>
+
+
+    <!-- NAVIGATION -->
+    <nav class="bottom-nav">
+
+      <div class="nav-inner">
+
+        <button
+          id="navDiscover"
+          class="nav-btn active"
+          onclick="showPage('discover')"
+        >
+          <span class="nav-icon">⌕</span>
+          Discover
+        </button>
+
+        <button
+          id="navMatches"
+          class="nav-btn"
+          onclick="showPage('matches')"
+        >
+          <span class="nav-icon">♥</span>
+          Matches
+        </button>
+
+        <button
+          id="navChat"
+          class="nav-btn"
+          onclick="showPage('chat')"
+        >
+          <span class="nav-icon">◌</span>
+          Chat
+        </button>
+
+        <button
+          id="navProfile"
+          class="nav-btn"
+          onclick="showPage('profile')"
+        >
+          <span class="nav-icon">●</span>
+          Profile
+        </button>
+
+      </div>
+
+    </nav>
+
+  </section>
+
 
 <script>
 /* ============================================================
-   OFFA CONNECT BY LEO
-   Supabase configuration
-   ============================================================ */
+   SUPABASE
+============================================================ */
 
-const SUPABASE_URL = "https://irjahjpdjuvlmlcgtusr.supabase.co";
+const SUPABASE_URL =
+  "https://irjahjpdjuvlmlcgtusr.supabase.co";
 
 const SUPABASE_KEY =
   "sb_publishable_HoMz0Vb4krVkz1p4Dm5_dg_hFuaxwxl";
@@ -535,1003 +1118,1552 @@ const db = window.supabase.createClient(
   SUPABASE_KEY
 );
 
+
+/* ============================================================
+   APP STATE
+============================================================ */
+
 let session = null;
 let myProfile = null;
-let currentScreen = "discover";
-let matches = [];
 let selectedMatch = null;
 let messagesSubscription = null;
 
 
 /* ============================================================
-   HELPERS
-   ============================================================ */
+   SMALL HELPERS
+============================================================ */
 
-function esc(value) {
-  return String(value || "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+function escapeHtml(value) {
+  if (value === null || value === undefined) return "";
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
-function avatar(url) {
-  return url ||
-    "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500";
+
+function initials(name) {
+  if (!name) return "?";
+
+  return name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map(x => x[0])
+    .join("")
+    .toUpperCase();
 }
 
-function showMessage(text, type = "error") {
-  const box = document.getElementById("message");
-  if (!box) return;
 
-  box.innerHTML = `<div class="message ${type}">${esc(text)}</div>`;
+function showMessage(elementId, text, type = "error") {
+  const el = document.getElementById(elementId);
 
-  setTimeout(() => {
-    box.innerHTML = "";
-  }, 5000);
+  if (!el) return;
+
+  el.textContent = text;
+  el.className = "message " + type;
+}
+
+
+function clearMessage(elementId) {
+  const el = document.getElementById(elementId);
+
+  if (!el) return;
+
+  el.textContent = "";
+  el.className = "message";
+}
+
+
+function formatTime(date) {
+  if (!date) return "";
+
+  return new Date(date).toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit"
+  });
 }
 
 
 /* ============================================================
-   AUTH
-   ============================================================ */
+   AUTH UI
+============================================================ */
 
-function renderAuth(mode = "login") {
-  const signup = mode === "signup";
-
-  document.getElementById("root").innerHTML = `
-    <div class="auth-page">
-      <div class="auth-card">
-
-        <div class="brand">
-          <div class="brand-logo">🦚</div>
-          <h1>Offa Connect by Leo</h1>
-          <p class="tagline">Meet. Connect. Belong.</p>
-          <p>Connect with people from Offa and beyond.</p>
-        </div>
-
-        <div id="message"></div>
-
-        ${
-          signup
-          ? `
-            <div class="form-group">
-              <label>Full name</label>
-              <input id="name" placeholder="Your name" />
-            </div>
-
-            <div class="form-group">
-              <label>Age</label>
-              <input id="age" type="number" min="18" placeholder="18+" />
-            </div>
-
-            <div class="form-group">
-              <label>Sex</label>
-              <select id="sex">
-                <option value="">Select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>City</label>
-              <input id="city" value="Offa" />
-            </div>
-          `
-          : ""
-        }
-
-        <div class="form-group">
-          <label>Email</label>
-          <input id="email" type="email" placeholder="you@example.com" />
-        </div>
-
-        <div class="form-group">
-          <label>Password</label>
-          <input id="password" type="password" placeholder="••••••••" />
-        </div>
-
-        <button class="primary" onclick="${signup ? "signup()" : "login()}">
-          ${signup ? "Create account" : "Log in"}
-        </button>
-
-        <div class="auth-switch">
-          ${
-            signup
-            ? `Already have an account?
-              <button class="link-button" onclick="renderAuth('login')">Log in</button>`
-            : `New to Offa Connect?
-              <button class="link-button" onclick="renderAuth('signup')">Create account</button>`
-          }
-        </div>
-
-      </div>
-    </div>
-  `;
+function showSignup() {
+  document.getElementById("loginForm").classList.add("hidden");
+  document.getElementById("signupForm").classList.remove("hidden");
+  clearMessage("authMessage");
 }
 
-async function login() {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
 
-  if (!email || !password) {
-    showMessage("Enter your email and password.");
-    return;
-  }
-
-  const { error } = await db.auth.signInWithPassword({
-    email,
-    password
-  });
-
-  if (error) {
-    showMessage(error.message);
-    return;
-  }
-
-  await startApp();
+function showLogin() {
+  document.getElementById("signupForm").classList.add("hidden");
+  document.getElementById("loginForm").classList.remove("hidden");
+  clearMessage("authMessage");
 }
+
+
+/* ============================================================
+   SIGNUP
+============================================================ */
 
 async function signup() {
-  const name = document.getElementById("name").value.trim();
-  const age = Number(document.getElementById("age").value);
-  const sex = document.getElementById("sex").value;
-  const city = document.getElementById("city").value.trim() || "Offa";
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
 
-  if (!name || !age || age < 18 || !email || !password) {
-    showMessage("Please complete all required fields. You must be 18 or older.");
+  clearMessage("authMessage");
+
+  const name =
+    document.getElementById("signupName").value.trim();
+
+  const email =
+    document.getElementById("signupEmail").value.trim();
+
+  const password =
+    document.getElementById("signupPassword").value;
+
+  const age =
+    Number(document.getElementById("signupAge").value);
+
+  const sex =
+    document.getElementById("signupSex").value;
+
+  const city =
+    document.getElementById("signupCity").value.trim() || "Offa";
+
+  const goal =
+    document.getElementById("signupGoal").value;
+
+
+  if (!name) {
+    showMessage("authMessage", "Please enter your name.");
     return;
   }
 
-  const { data, error } = await db.auth.signUp({
-    email,
-    password
-  });
-
-  if (error) {
-    showMessage(error.message);
+  if (!email) {
+    showMessage("authMessage", "Please enter your email.");
     return;
   }
 
-  if (!data.user) {
-    showMessage("Account created. Check your email to confirm your account.", "success");
+  if (password.length < 6) {
+    showMessage(
+      "authMessage",
+      "Password must be at least 6 characters."
+    );
     return;
   }
 
-  const { error: profileError } = await db.from("profiles").insert({
-    id: data.user.id,
-    name,
-    age,
-    sex,
-    city,
-    bio: "",
-    relationship_goal: ""
-  });
-
-  if (profileError) {
-    showMessage(profileError.message);
+  if (!age || age < 18) {
+    showMessage(
+      "authMessage",
+      "You must be 18 or older to use Offa Connect."
+    );
     return;
   }
 
-  showMessage(
-    "Account created successfully. Welcome to Offa Connect!",
-    "success"
-  );
 
-  await startApp();
+  try {
+
+    const { data, error } =
+      await db.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            name
+          }
+        }
+      });
+
+    if (error) throw error;
+
+
+    if (!data.user) {
+      throw new Error("Account could not be created.");
+    }
+
+
+    /*
+      Create profile immediately when possible.
+      If email confirmation is enabled, the user may
+      need to confirm their email before logging in.
+    */
+
+    const { error: profileError } =
+      await db.from("profiles").upsert({
+        id: data.user.id,
+        name,
+        age,
+        sex: sex || null,
+        city,
+        bio: "",
+        relationship_goal: goal || null
+      });
+
+
+    if (profileError) {
+      console.error(profileError);
+
+      /*
+        Do not fail the whole signup if Supabase requires
+        email confirmation first.
+      */
+    }
+
+
+    if (data.session) {
+
+      showMessage(
+        "authMessage",
+        "Account created successfully.",
+        "success"
+      );
+
+      await startApp(data.session);
+
+    } else {
+
+      showMessage(
+        "authMessage",
+        "Account created. Check your email if confirmation is required, then log in.",
+        "success"
+      );
+
+      showLogin();
+    }
+
+  } catch (error) {
+
+    console.error(error);
+
+    showMessage(
+      "authMessage",
+      error.message || "Could not create account."
+    );
+  }
 }
 
 
 /* ============================================================
-   APP START
-   ============================================================ */
+   LOGIN
+============================================================ */
 
-async function startApp() {
-  const result = await db.auth.getSession();
+async function login() {
 
-  session = result.data.session;
+  clearMessage("authMessage");
 
-  if (!session) {
-    renderAuth("login");
+  const email =
+    document.getElementById("loginEmail").value.trim();
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+
+  if (!email || !password) {
+    showMessage(
+      "authMessage",
+      "Enter your email and password."
+    );
     return;
   }
+
+
+  try {
+
+    const { data, error } =
+      await db.auth.signInWithPassword({
+        email,
+        password
+      });
+
+
+    if (error) throw error;
+
+
+    await startApp(data.session);
+
+  } catch (error) {
+
+    console.error(error);
+
+    showMessage(
+      "authMessage",
+      error.message || "Login failed."
+    );
+  }
+}
+
+
+/* ============================================================
+   START APP
+============================================================ */
+
+async function startApp(newSession) {
+
+  session = newSession;
+
+  if (!session) return;
+
+
+  document
+    .getElementById("authScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("appScreen")
+    .classList.remove("hidden");
+
 
   await loadMyProfile();
-  await loadMatches();
-  renderApp();
-}
 
-async function loadMyProfile() {
-  const { data } = await db
-    .from("profiles")
-    .select("*")
-    .eq("id", session.user.id)
-    .maybeSingle();
+  await updateLastSeen();
 
-  myProfile = data;
-}
+  showPage("discover");
 
-async function loadMatches() {
-  const { data } = await db
-    .from("matches")
-    .select(`
-      *,
-      user_one_profile:profiles!matches_user_one_fkey(*),
-      user_two_profile:profiles!matches_user_two_fkey(*)
-    `)
-    .or(
-      `user_one.eq.${session.user.id},user_two.eq.${session.user.id}`
-    )
-    .order("created_at", { ascending: false });
-
-  matches = data || [];
+  await loadDiscover();
 }
 
 
 /* ============================================================
-   MAIN APP
-   ============================================================ */
+   LOAD MY PROFILE
+============================================================ */
 
-function renderApp() {
-  document.getElementById("root").innerHTML = `
-    <div class="app">
+async function loadMyProfile() {
 
-      <header class="topbar">
-        <div class="topbar-brand">
-          Offa Connect <span>by Leo</span>
-        </div>
+  if (!session?.user?.id) return;
 
-        <button class="logout" onclick="logout()">
-          Log out
-        </button>
-      </header>
 
-      <main class="content">
-        <div id="screen"></div>
-      </main>
+  const { data, error } =
+    await db
+      .from("profiles")
+      .select("*")
+      .eq("id", session.user.id)
+      .maybeSingle();
 
-      <nav class="bottom-nav">
 
-        <button class="nav-btn ${
-          currentScreen === "discover" ? "active" : ""
-        }" onclick="go('discover')">
-          <span class="nav-icon">♥</span>
-          Discover
-        </button>
+  if (error) {
 
-        <button class="nav-btn ${
-          currentScreen === "matches" ? "active" : ""
-        }" onclick="go('matches')">
-          <span class="nav-icon">💚</span>
-          Matches
-        </button>
+    console.error(error);
 
-        <button class="nav-btn ${
-          currentScreen === "profile" ? "active" : ""
-        }" onclick="go('profile')">
-          <span class="nav-icon">●</span>
-          Profile
-        </button>
+    myProfile = null;
 
-      </nav>
+    return;
+  }
 
-    </div>
-  `;
 
-  renderScreen();
+  myProfile = data;
+
+
+  if (myProfile) {
+
+    document.getElementById("topUserName").textContent =
+      myProfile.name || "Online";
+
+    fillProfileForm();
+
+  } else {
+
+    document.getElementById("topUserName").textContent =
+      "Complete profile";
+  }
 }
 
-function go(screen) {
-  currentScreen = screen;
-  renderApp();
+
+/* ============================================================
+   PROFILE FORM
+============================================================ */
+
+function fillProfileForm() {
+
+  if (!myProfile) return;
+
+
+  document.getElementById("profileName").value =
+    myProfile.name || "";
+
+  document.getElementById("profileAge").value =
+    myProfile.age || "";
+
+  document.getElementById("profileSex").value =
+    myProfile.sex || "";
+
+  document.getElementById("profileCity").value =
+    myProfile.city || "Offa";
+
+  document.getElementById("profileGoal").value =
+    myProfile.relationship_goal || "";
+
+  document.getElementById("profileBio").value =
+    myProfile.bio || "";
+
+
+  const avatar =
+    document.getElementById("bigAvatar");
+
+
+  if (myProfile.avatar_url) {
+
+    avatar.innerHTML =
+      `<img src="${escapeHtml(myProfile.avatar_url)}" alt="Profile photo">`;
+
+  } else {
+
+    avatar.textContent =
+      initials(myProfile.name);
+  }
 }
 
-async function renderScreen() {
-  if (currentScreen === "discover") {
-    await renderDiscover();
+
+/* ============================================================
+   SAVE PROFILE
+============================================================ */
+
+async function saveProfile() {
+
+  if (!session?.user?.id) return;
+
+
+  clearMessage("profileMessage");
+
+
+  const name =
+    document.getElementById("profileName").value.trim();
+
+  const age =
+    Number(document.getElementById("profileAge").value);
+
+  const sex =
+    document.getElementById("profileSex").value;
+
+  const city =
+    document.getElementById("profileCity").value.trim();
+
+  const goal =
+    document.getElementById("profileGoal").value;
+
+  const bio =
+    document.getElementById("profileBio").value.trim();
+
+
+  if (!name) {
+    showMessage("profileMessage", "Enter your name.");
+    return;
   }
 
-  if (currentScreen === "matches") {
-    renderMatches();
+  if (!age || age < 18) {
+    showMessage(
+      "profileMessage",
+      "Age must be 18 or older."
+    );
+    return;
   }
 
-  if (currentScreen === "profile") {
-    renderProfile();
-  }
 
-  if (currentScreen === "chat") {
-    renderChat();
+  try {
+
+    const { data, error } =
+      await db
+        .from("profiles")
+        .upsert({
+          id: session.user.id,
+          name,
+          age,
+          sex: sex || null,
+          city: city || "Offa",
+          relationship_goal: goal || null,
+          bio
+        })
+        .select()
+        .single();
+
+
+    if (error) throw error;
+
+
+    myProfile = data;
+
+
+    document.getElementById("topUserName").textContent =
+      data.name || "Online";
+
+
+    showMessage(
+      "profileMessage",
+      "Profile saved successfully.",
+      "success"
+    );
+
+
+    await loadDiscover();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showMessage(
+      "profileMessage",
+      error.message || "Could not save profile."
+    );
+  }
+}
+
+
+/* ============================================================
+   AVATAR UPLOAD
+============================================================ */
+
+async function uploadAvatar(event) {
+
+  const file =
+    event.target.files?.[0];
+
+  if (!file || !session?.user?.id) return;
+
+
+  clearMessage("profileMessage");
+
+
+  try {
+
+    const extension =
+      file.name.split(".").pop() || "jpg";
+
+    const path =
+      `${session.user.id}/${Date.now()}.${extension}`;
+
+
+    const { error: uploadError } =
+      await db.storage
+        .from("avatars")
+        .upload(path, file, {
+          contentType: file.type || "image/jpeg",
+          upsert: true
+        });
+
+
+    if (uploadError) throw uploadError;
+
+
+    const { data: publicData } =
+      db.storage
+        .from("avatars")
+        .getPublicUrl(path);
+
+
+    const avatarUrl =
+      publicData.publicUrl;
+
+
+    const { error: updateError } =
+      await db
+        .from("profiles")
+        .update({
+          avatar_url: avatarUrl
+        })
+        .eq("id", session.user.id);
+
+
+    if (updateError) throw updateError;
+
+
+    myProfile.avatar_url =
+      avatarUrl;
+
+
+    fillProfileForm();
+
+
+    showMessage(
+      "profileMessage",
+      "Profile photo updated.",
+      "success"
+    );
+
+
+    await loadDiscover();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showMessage(
+      "profileMessage",
+      error.message || "Photo upload failed."
+    );
   }
 }
 
 
 /* ============================================================
    DISCOVER
-   ============================================================ */
-
-async function renderDiscover() {
-  const screen = document.getElementById("screen");
-
-  screen.innerHTML = `
-    <div class="welcome">
-      <h2>Discover people</h2>
-      <div class="muted">
-        Find your connection in the Offa community.
-      </div>
-    </div>
-
-    <div class="filters">
-
-      <div class="filter-grid">
-
-        <input
-          id="search"
-          placeholder="Search name or bio"
-        />
-
-        <input
-          id="cityFilter"
-          placeholder="City"
-        />
-
-        <input
-          id="minAge"
-          type="number"
-          placeholder="Min age"
-        />
-
-        <input
-          id="maxAge"
-          type="number"
-          placeholder="Max age"
-        />
-
-      </div>
-
-      <br />
-
-      <button class="primary" onclick="loadDiscover()">
-        Search
-      </button>
-
-    </div>
-
-    <div id="profiles" class="profiles">
-      Loading people...
-    </div>
-  `;
-
-  await loadDiscover();
-}
+============================================================ */
 
 async function loadDiscover() {
-  const box = document.getElementById("profiles");
 
-  if (!box) return;
+  const container =
+    document.getElementById("discoverList");
 
-  let query = db
-    .from("profiles")
-    .select("*")
-    .neq("id", session.user.id)
-    .gte("age", 18)
-    .order("created_at", { ascending: false })
-    .limit(30);
 
-  const search = document.getElementById("search")?.value.trim();
-  const city = document.getElementById("cityFilter")?.value.trim();
-  const minAge = Number(document.getElementById("minAge")?.value);
-  const maxAge = Number(document.getElementById("maxAge")?.value);
+  if (!session?.user?.id) return;
 
-  if (search) {
-    query = query.or(
-      `name.ilike.%${search}%,bio.ilike.%${search}%`
-    );
-  }
 
-  if (city) {
-    query = query.ilike("city", `%${city}%`);
-  }
+  container.innerHTML =
+    `<div class="loading">Loading profiles...</div>`;
 
-  if (minAge) {
-    query = query.gte("age", minAge);
-  }
 
-  if (maxAge) {
-    query = query.lte("age", maxAge);
-  }
+  try {
 
-  const { data, error } = await query;
+    let query =
+      db
+        .from("profiles")
+        .select("*")
+        .neq("id", session.user.id)
+        .gte("age", 18)
+        .order("created_at", {
+          ascending: false
+        });
 
-  if (error) {
-    box.innerHTML = `<div class="panel">${esc(error.message)}</div>`;
-    return;
-  }
 
-  if (!data?.length) {
-    box.innerHTML = `
-      <div class="panel">
-        No profiles found yet.
+    const minAge =
+      Number(document.getElementById("minAge").value);
+
+    const maxAge =
+      Number(document.getElementById("maxAge").value);
+
+    const goal =
+      document.getElementById("goalFilter").value;
+
+    const search =
+      document.getElementById("searchInput").value
+        .trim()
+        .toLowerCase();
+
+
+    if (minAge) {
+      query = query.gte("age", minAge);
+    }
+
+    if (maxAge) {
+      query = query.lte("age", maxAge);
+    }
+
+    if (goal) {
+      query = query.eq(
+        "relationship_goal",
+        goal
+      );
+    }
+
+
+    const { data, error } =
+      await query;
+
+
+    if (error) throw error;
+
+
+    let profiles =
+      data || [];
+
+
+    if (search) {
+
+      profiles =
+        profiles.filter(profile => {
+
+          const text = [
+            profile.name,
+            profile.city,
+            profile.bio,
+            profile.relationship_goal
+          ]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase();
+
+
+          return text.includes(search);
+        });
+    }
+
+
+    renderDiscover(profiles);
+
+  } catch (error) {
+
+    console.error(error);
+
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">⚠</div>
+        <h3>Could not load profiles</h3>
+        <p>${escapeHtml(error.message)}</p>
       </div>
     `;
-    return;
   }
-
-  box.innerHTML = data.map(profile => `
-    <article class="profile-card">
-
-      <img
-        class="profile-image"
-        src="${esc(avatar(profile.avatar_url))}"
-        alt="${esc(profile.name)}"
-      />
-
-      <div class="profile-body">
-
-        <div class="profile-name">
-          ${esc(profile.name)}, ${esc(profile.age)}
-        </div>
-
-        <div class="profile-meta">
-          ${esc(profile.city || "Offa")}
-          ${profile.sex ? " • " + esc(profile.sex) : ""}
-        </div>
-
-        ${
-          profile.relationship_goal
-          ? `<span class="goal">${esc(profile.relationship_goal)}</span>`
-          : ""
-        }
-
-        <div class="bio">
-          ${esc(profile.bio || "No bio yet.")}
-        </div>
-
-        <div class="card-actions">
-
-          <button
-            class="pass"
-            onclick="passProfile('${profile.id}')"
-          >
-            Pass
-          </button>
-
-          <button
-            class="like"
-            onclick="likeProfile('${profile.id}')"
-          >
-            ♥ Like
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-  `).join("");
 }
 
 
 /* ============================================================
-   LIKE / PASS
-   ============================================================ */
+   RENDER DISCOVER
+============================================================ */
 
-async function passProfile(id) {
-  const button = event?.target;
+function renderDiscover(profiles) {
 
-  if (button) button.disabled = true;
+  const container =
+    document.getElementById("discoverList");
 
-  await likeAction(id, false);
 
-  await loadDiscover();
-}
+  if (!profiles.length) {
 
-async function likeProfile(id) {
-  const button = event?.target;
+    container.innerHTML = `
+      <div class="empty" style="grid-column:1/-1">
+        <div class="empty-icon">🦚</div>
+        <h3>No profiles found</h3>
+        <p>Try changing your search or filters.</p>
+      </div>
+    `;
 
-  if (button) button.disabled = true;
-
-  await likeAction(id, true);
-
-  await loadDiscover();
-}
-
-async function likeAction(id, liked) {
-  if (!liked) return;
-
-  const { error } = await db
-    .from("likes")
-    .insert({
-      from_user: session.user.id,
-      to_user: id
-    });
-
-  if (error && !error.message.includes("duplicate")) {
-    alert(error.message);
     return;
   }
 
-  await loadMatches();
 
-  if (matches.some(m =>
-    m.user_one === session.user.id ||
-    m.user_two === session.user.id
-  )) {
-    alert("It's a match! 💚");
+  container.innerHTML =
+    profiles.map(profile => `
+
+      <article class="profile-card">
+
+        <div class="profile-image">
+
+          ${
+            profile.avatar_url
+              ? `<img
+                   src="${escapeHtml(profile.avatar_url)}"
+                   alt="${escapeHtml(profile.name)}"
+                 >`
+              : `<div class="avatar-placeholder">
+                   ${escapeHtml(initials(profile.name))}
+                 </div>`
+          }
+
+        </div>
+
+
+        <div class="profile-info">
+
+          <div class="profile-name">
+            ${escapeHtml(profile.name || "Member")}
+            ${profile.age ? `, ${escapeHtml(profile.age)}` : ""}
+          </div>
+
+
+          <div class="profile-meta">
+            ${escapeHtml(profile.city || "Offa")}
+            ${profile.sex ? ` • ${escapeHtml(profile.sex)}` : ""}
+          </div>
+
+
+          ${
+            profile.relationship_goal
+              ? `<div class="goal">
+                   ${escapeHtml(profile.relationship_goal)}
+                 </div>`
+              : ""
+          }
+
+
+          <div class="profile-bio">
+            ${escapeHtml(
+              profile.bio || "No bio added yet."
+            )}
+          </div>
+
+
+          <div class="profile-actions">
+
+            <button
+              class="pass-btn"
+              onclick="passProfile('${profile.id}')"
+            >
+              Pass
+            </button>
+
+            <button
+              class="like-btn"
+              onclick="likeProfile('${profile.id}')"
+            >
+              ♥ Like
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    `).join("");
+}
+
+
+/* ============================================================
+   LIKE
+============================================================ */
+
+async function likeProfile(profileId) {
+
+  if (!session?.user?.id) return;
+
+
+  try {
+
+    const { error } =
+      await db
+        .from("likes")
+        .upsert(
+          {
+            from_user: session.user.id,
+            to_user: profileId
+          },
+          {
+            onConflict: "from_user,to_user"
+          }
+        );
+
+
+    if (error) throw error;
+
+
+    /*
+      The database trigger creates a match automatically
+      when the other person has already liked you.
+    */
+
+
+    await loadDiscover();
+
+    await loadMatches();
+
+
+    alert("Like sent ♥");
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      error.message ||
+      "Could not send like."
+    );
+  }
+}
+
+
+/* ============================================================
+   PASS
+============================================================ */
+
+function passProfile(profileId) {
+
+  /*
+    Pass is intentionally local for this simple version.
+    The profile disappears after refreshing the discover list.
+  */
+
+  const card =
+    document
+      .querySelector(
+        `[onclick="passProfile('${profileId}')"]`
+      )
+      ?.closest(".profile-card");
+
+
+  if (card) {
+    card.remove();
   }
 }
 
 
 /* ============================================================
    MATCHES
-   ============================================================ */
+============================================================ */
 
-function otherProfile(match) {
-  return match.user_one === session.user.id
-    ? match.user_two_profile
-    : match.user_one_profile;
-}
+async function loadMatches() {
 
-function renderMatches() {
-  const screen = document.getElementById("screen");
+  const container =
+    document.getElementById("matchesList");
 
-  if (!matches.length) {
-    screen.innerHTML = `
-      <div class="welcome">
-        <h2>Your matches</h2>
-      </div>
 
-      <div class="panel">
-        You don't have any matches yet.
-        Keep discovering people. 💚
-      </div>
-    `;
-    return;
-  }
+  if (!session?.user?.id) return;
 
-  screen.innerHTML = `
-    <div class="welcome">
-      <h2>Your matches</h2>
-      <div class="muted">
-        People you've connected with.
-      </div>
-    </div>
 
-    <div class="match-list">
+  container.innerHTML =
+    `<div class="loading">Loading matches...</div>`;
 
-      ${matches.map(match => {
-        const p = otherProfile(match);
+
+  try {
+
+    const { data, error } =
+      await db
+        .from("matches")
+        .select("*")
+        .or(
+          `user_one.eq.${session.user.id},user_two.eq.${session.user.id}`
+        )
+        .order("created_at", {
+          ascending: false
+        });
+
+
+    if (error) throw error;
+
+
+    const matches =
+      data || [];
+
+
+    if (!matches.length) {
+
+      container.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">♥</div>
+          <h3>No matches yet</h3>
+          <p>Start liking people to make connections.</p>
+        </div>
+      `;
+
+      return;
+    }
+
+
+    const otherIds =
+      matches.map(match =>
+        match.user_one === session.user.id
+          ? match.user_two
+          : match.user_one
+      );
+
+
+    const { data: profiles, error: profileError } =
+      await db
+        .from("profiles")
+        .select("*")
+        .in("id", otherIds);
+
+
+    if (profileError) throw profileError;
+
+
+    const profileMap = {};
+
+    (profiles || []).forEach(profile => {
+      profileMap[profile.id] = profile;
+    });
+
+
+    container.innerHTML =
+      matches.map(match => {
+
+        const otherId =
+          match.user_one === session.user.id
+            ? match.user_two
+            : match.user_one;
+
+
+        const profile =
+          profileMap[otherId];
+
+
+        if (!profile) return "";
+
 
         return `
-          <div
-            class="match-item"
-            onclick="openChat(${match.id})"
-          >
 
-            <img
-              class="avatar"
-              src="${esc(avatar(p?.avatar_url))}"
-            />
+          <div class="match-card">
 
-            <div>
-              <strong>${esc(p?.name || "Match")}</strong>
-              <div class="muted">
-                ${esc(p?.city || "Offa")}
-              </div>
+            <div class="match-avatar">
+
+              ${
+                profile.avatar_url
+                  ? `<img
+                       src="${escapeHtml(profile.avatar_url)}"
+                       alt=""
+                     >`
+                  : escapeHtml(initials(profile.name))
+              }
+
             </div>
 
-          </div>
-        `;
-      }).join("")}
 
-    </div>
-  `;
+            <div class="match-info">
+
+              <h3>
+                ${escapeHtml(profile.name || "Member")}
+              </h3>
+
+              <p>
+                ${escapeHtml(profile.city || "Offa")}
+                ${profile.age ? ` • ${profile.age}` : ""}
+              </p>
+
+            </div>
+
+
+            <button
+              class="chat-open"
+              onclick="openChat(${JSON.stringify(JSON.stringify({
+                matchId: match.id,
+                profile
+              }))})"
+            >
+              Chat
+            </button>
+
+          </div>
+
+        `;
+
+      }).join("");
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">⚠</div>
+        <h3>Could not load matches</h3>
+        <p>${escapeHtml(error.message)}</p>
+      </div>
+    `;
+  }
 }
 
 
 /* ============================================================
-   CHAT
-   ============================================================ */
+   OPEN CHAT
+============================================================ */
 
-async function openChat(matchId) {
-  selectedMatch = matches.find(m => m.id === matchId);
+async function openChat(encodedData) {
 
-  currentScreen = "chat";
-  renderApp();
+  let data;
+
+  try {
+    data = JSON.parse(encodedData);
+  } catch {
+    return;
+  }
+
+
+  selectedMatch = data;
+
+
+  showPage("chat");
+
+
+  document
+    .getElementById("chatEmpty")
+    .classList.add("hidden");
+
+  document
+    .getElementById("chatBox")
+    .classList.remove("hidden");
+
+
+  const profile =
+    data.profile;
+
+
+  document.getElementById("chatName").textContent =
+    profile.name || "Chat";
+
+
+  document.getElementById("chatStatus").textContent =
+    profile.city || "Connected on Offa Connect";
+
+
+  const avatar =
+    document.getElementById("chatAvatar");
+
+
+  if (profile.avatar_url) {
+
+    avatar.innerHTML =
+      `<img src="${escapeHtml(profile.avatar_url)}" alt="">`;
+
+  } else {
+
+    avatar.textContent =
+      initials(profile.name);
+  }
+
 
   await loadMessages();
 
+
+  subscribeToMessages();
+}
+
+
+/* ============================================================
+   CLOSE CHAT
+============================================================ */
+
+function closeChat() {
+
+  selectedMatch = null;
+
+
   if (messagesSubscription) {
+
     db.removeChannel(messagesSubscription);
+
+    messagesSubscription = null;
   }
 
-  messagesSubscription = db
-    .channel("chat-" + matchId)
-    .on(
-      "postgres_changes",
-      {
-        event: "INSERT",
-        schema: "public",
-        table: "messages",
-        filter: `match_id=eq.${matchId}`
-      },
-      payload => {
-        addMessageToChat(payload.new);
-      }
-    )
-    .subscribe();
+
+  document
+    .getElementById("chatBox")
+    .classList.add("hidden");
+
+  document
+    .getElementById("chatEmpty")
+    .classList.remove("hidden");
 }
+
+
+/* ============================================================
+   LOAD MESSAGES
+============================================================ */
 
 async function loadMessages() {
-  const box = document.getElementById("chatMessages");
 
-  if (!box || !selectedMatch) return;
+  const container =
+    document.getElementById("messages");
 
-  const { data, error } = await db
-    .from("messages")
-    .select("*")
-    .eq("match_id", selectedMatch.id)
-    .order("created_at", { ascending: true });
-
-  if (error) {
-    box.innerHTML = `<div>${esc(error.message)}</div>`;
-    return;
-  }
-
-  box.innerHTML = "";
-
-  (data || []).forEach(addMessageToChat);
-
-  box.scrollTop = box.scrollHeight;
-}
-
-function addMessageToChat(message) {
-  const box = document.getElementById("chatMessages");
-
-  if (!box) return;
-
-  if (
-    document.getElementById("message-" + message.id)
-  ) return;
-
-  const div = document.createElement("div");
-
-  div.id = "message-" + message.id;
-
-  div.className =
-    "bubble " +
-    (message.sender_id === session.user.id
-      ? "mine"
-      : "theirs");
-
-  div.innerHTML = esc(message.message);
-
-  box.appendChild(div);
-
-  box.scrollTop = box.scrollHeight;
-}
-
-function renderChat() {
-  const p = selectedMatch
-    ? otherProfile(selectedMatch)
-    : null;
-
-  document.getElementById("screen").innerHTML = `
-    <div class="chat">
-
-      <div class="chat-header">
-
-        <button
-          class="secondary"
-          style="width:auto"
-          onclick="go('matches')"
-        >
-          ←
-        </button>
-
-        <img
-          class="avatar"
-          src="${esc(avatar(p?.avatar_url))}"
-        />
-
-        <div>
-          <strong>${esc(p?.name || "Match")}</strong>
-          <div class="muted">
-            ${esc(p?.city || "Offa")}
-          </div>
-        </div>
-
-      </div>
-
-      <div id="chatMessages" class="chat-messages">
-        Loading...
-      </div>
-
-      <form
-        class="chat-compose"
-        onsubmit="sendMessage(event)"
-      >
-        <input
-          id="chatInput"
-          placeholder="Write a message..."
-          autocomplete="off"
-        />
-
-        <button class="send">
-          Send
-        </button>
-      </form>
-
-    </div>
-  `;
-}
-
-async function sendMessage(e) {
-  e.preventDefault();
 
   if (!selectedMatch) return;
 
-  const input = document.getElementById("chatInput");
-  const message = input.value.trim();
 
-  if (!message) return;
+  container.innerHTML =
+    `<div class="loading">Loading messages...</div>`;
 
-  input.value = "";
 
-  const { error } = await db
-    .from("messages")
-    .insert({
-      match_id: selectedMatch.id,
-      sender_id: session.user.id,
-      message
-    });
+  try {
 
-  if (error) {
-    alert(error.message);
+    const { data, error } =
+      await db
+        .from("messages")
+        .select("*")
+        .eq("match_id", selectedMatch.matchId)
+        .order("created_at", {
+          ascending: true
+        });
+
+
+    if (error) throw error;
+
+
+    renderMessages(data || []);
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    container.innerHTML = `
+      <div class="empty">
+        <p>${escapeHtml(error.message)}</p>
+      </div>
+    `;
   }
 }
 
 
 /* ============================================================
-   PROFILE
-   ============================================================ */
+   RENDER MESSAGES
+============================================================ */
 
-function renderProfile() {
-  const p = myProfile || {};
+function renderMessages(messages) {
 
-  document.getElementById("screen").innerHTML = `
-    <div class="welcome">
-      <h2>Your profile</h2>
-      <div class="muted">
-        Make your profile stand out.
+  const container =
+    document.getElementById("messages");
+
+
+  if (!messages.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">👋</div>
+        <h3>Start the conversation</h3>
+        <p>Say hello!</p>
       </div>
-    </div>
+    `;
 
-    <div class="panel">
+    return;
+  }
 
-      <div class="profile-preview">
 
-        <img
-          id="profilePhoto"
-          class="big-avatar"
-          src="${esc(avatar(p.avatar_url))}"
-        />
+  container.innerHTML =
+    messages.map(message => {
 
-        <br />
+      const mine =
+        message.sender_id === session.user.id;
 
-        <label class="upload">
-          Choose photo
-          <input
-            type="file"
-            accept="image/*"
-            hidden
-            onchange="uploadProfilePhoto(event)"
-          />
-        </label>
 
-      </div>
+      let content = "";
 
-      <div class="form-group">
-        <label>Name</label>
-        <input id="profileName" value="${esc(p.name)}" />
-      </div>
 
-      <div class="form-group">
-        <label>Age</label>
-        <input
-          id="profileAge"
-          type="number"
-          min="18"
-          value="${esc(p.age)}"
-        />
-      </div>
+      if (message.message) {
 
-      <div class="form-group">
-        <label>Sex</label>
-        <select id="profileSex">
-          <option value="">Select</option>
-          <option value="Male" ${p.sex === "Male" ? "selected" : ""}>Male</option>
-          <option value="Female" ${p.sex === "Female" ? "selected" : ""}>Female</option>
-        </select>
-      </div>
+        content +=
+          `<div>${escapeHtml(message.message)}</div>`;
+      }
 
-      <div class="form-group">
-        <label>City</label>
-        <input id="profileCity" value="${esc(p.city || "Offa")}" />
-      </div>
 
-      <div class="form-group">
-        <label>Relationship goal</label>
-        <select id="profileGoal">
-          <option value="">Select</option>
-          <option ${p.relationship_goal === "Serious relationship" ? "selected" : ""}>
-            Serious relationship
-          </option>
-          <option ${p.relationship_goal === "Marriage" ? "selected" : ""}>
-            Marriage
-          </option>
-          <option ${p.relationship_goal === "Friendship" ? "selected" : ""}>
-            Friendship
-          </option>
-          <option ${p.relationship_goal === "Dating" ? "selected" : ""}>
-            Dating
-          </option>
-        </select>
-      </div>
+      if (message.attachment_url) {
 
-      <div class="form-group">
-        <label>Bio</label>
-        <textarea id="profileBio">${esc(p.bio)}</textarea>
-      </div>
+        content += `
+          <a
+            class="attachment-link"
+            href="${escapeHtml(message.attachment_url)}"
+            target="_blank"
+            rel="noopener"
+          >
+            📎 ${escapeHtml(
+              message.attachment_name || "Attachment"
+            )}
+          </a>
+        `;
+      }
 
-      <button class="primary" onclick="saveProfile()">
-        Save profile
-      </button>
 
-      <br><br>
+      return `
 
-      <button
-        class="secondary"
-        onclick="logout()"
-      >
-        Log out
-      </button>
+        <div class="message-row ${mine ? "mine" : "theirs"}">
 
-    </div>
-  `;
+          <div class="bubble">
+
+            ${content}
+
+            <span class="bubble-time">
+              ${formatTime(message.created_at)}
+              ${mine && message.read_at ? " ✓✓" : ""}
+            </span>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+
+  container.scrollTop =
+    container.scrollHeight;
 }
 
-async function saveProfile() {
-  const updates = {
-    name: document.getElementById("profileName").value.trim(),
-    age: Number(document.getElementById("profileAge").value),
-    sex: document.getElementById("profileSex").value,
-    city: document.getElementById("profileCity").value.trim(),
-    relationship_goal:
-      document.getElementById("profileGoal").value,
-    bio:
-      document.getElementById("profileBio").value.trim()
-  };
 
-  if (!updates.name || updates.age < 18) {
-    alert("Please enter a valid name and age 18+.");
-    return;
+/* ============================================================
+   SEND MESSAGE
+============================================================ */
+
+async function sendMessage(event) {
+
+  event.preventDefault();
+
+
+  if (
+    !session?.user?.id ||
+    !selectedMatch
+  ) return;
+
+
+  const input =
+    document.getElementById("messageInput");
+
+
+  const message =
+    input.value.trim();
+
+
+  if (!message) return;
+
+
+  input.value = "";
+
+
+  try {
+
+    const { error } =
+      await db
+        .from("messages")
+        .insert({
+          match_id: selectedMatch.matchId,
+          sender_id: session.user.id,
+          message
+        });
+
+
+    if (error) throw error;
+
+
+    await loadMessages();
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      error.message ||
+      "Message could not be sent."
+    );
+
+    input.value = message;
   }
-
-  const { error } = await db
-    .from("profiles")
-    .update(updates)
-    .eq("id", session.user.id);
-
-  if (error) {
-    alert(error.message);
-    return;
-  }
-
-  myProfile = {
-    ...myProfile,
-    ...updates
-  };
-
-  alert("Profile updated successfully.");
 }
 
-async function uploadProfilePhoto(event) {
-  const file = event.target.files?.[0];
 
-  if (!file) return;
+/* ============================================================
+   REALTIME CHAT
+============================================================ */
 
-  const extension =
-    file.name.split(".").pop() || "jpg";
+function subscribeToMessages() {
 
-  const path =
-    `${session.user.id}/${Date.now()}.${extension}`;
+  if (!selectedMatch) return;
 
-  const { error } = await db
-    .storage
-    .from("avatars")
-    .upload(path, file, {
-      contentType: file.type,
-      upsert: true
-    });
 
-  if (error) {
-    alert(error.message);
-    return;
+  if (messagesSubscription) {
+
+    db.removeChannel(messagesSubscription);
+
+    messagesSubscription = null;
   }
 
-  const { data } =
-    db.storage
-      .from("avatars")
-      .getPublicUrl(path);
 
-  const avatarUrl = data.publicUrl;
+  messagesSubscription =
+    db
+      .channel(
+        "messages-" +
+        selectedMatch.matchId +
+        "-" +
+        Date.now()
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "messages",
+          filter:
+            `match_id=eq.${selectedMatch.matchId}`
+        },
+        async () => {
 
-  const { error: updateError } =
+          await loadMessages();
+
+        }
+      )
+      .subscribe();
+}
+
+
+/* ============================================================
+   NAVIGATION
+============================================================ */
+
+function showPage(page) {
+
+  const pages = [
+    "discover",
+    "matches",
+    "chat",
+    "profile"
+  ];
+
+
+  pages.forEach(name => {
+
+    const element =
+      document.getElementById(name + "Page");
+
+    if (element) {
+
+      element.classList.toggle(
+        "hidden",
+        name !== page
+      );
+    }
+
+
+    const nav =
+      document.getElementById(
+        "nav" +
+        name.charAt(0).toUpperCase() +
+        name.slice(1)
+      );
+
+
+    if (nav) {
+
+      nav.classList.toggle(
+        "active",
+        name === page
+      );
+    }
+  });
+
+
+  if (page === "discover") {
+
+    loadDiscover();
+  }
+
+
+  if (page === "matches") {
+
+    loadMatches();
+  }
+
+
+  if (page === "profile") {
+
+    loadMyProfile();
+  }
+}
+
+
+/* ============================================================
+   LAST SEEN / ONLINE
+============================================================ */
+
+async function updateLastSeen() {
+
+  if (!session?.user?.id) return;
+
+
+  try {
+
     await db
       .from("profiles")
       .update({
-        avatar_url: avatarUrl
+        last_seen_at: new Date().toISOString()
       })
       .eq("id", session.user.id);
 
-  if (updateError) {
-    alert(updateError.message);
-    return;
+  } catch (error) {
+
+    console.warn(
+      "Could not update last seen:",
+      error
+    );
   }
-
-  myProfile.avatar_url = avatarUrl;
-
-  document.getElementById("profilePhoto").src =
-    avatarUrl;
-
-  alert("Profile photo updated.");
 }
 
 
 /* ============================================================
    LOGOUT
-   ============================================================ */
+============================================================ */
 
 async function logout() {
-  if (messagesSubscription) {
-    db.removeChannel(messagesSubscription);
-    messagesSubscription = null;
+
+  try {
+
+    await db.auth.signOut();
+
+  } catch (error) {
+
+    console.error(error);
   }
 
-  await db.auth.signOut();
 
   session = null;
   myProfile = null;
-  matches = [];
   selectedMatch = null;
 
-  renderAuth("login");
+
+  if (messagesSubscription) {
+
+    db.removeChannel(messagesSubscription);
+
+    messagesSubscription = null;
+  }
+
+
+  document
+    .getElementById("appScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("authScreen")
+    .classList.remove("hidden");
+
+
+  showLogin();
 }
 
 
 /* ============================================================
    AUTH STATE
-   ============================================================ */
+============================================================ */
 
-db.auth.onAuthStateChange(async (_event, newSession) => {
-  session = newSession;
+db.auth.onAuthStateChange(
+  async (event, newSession) => {
 
-  if (newSession) {
-    await loadMyProfile();
+    if (
+      newSession &&
+      !session
+    ) {
+
+      await startApp(newSession);
+
+    }
+
+    if (!newSession) {
+
+      session = null;
+
+      document
+        .getElementById("appScreen")
+        .classList.add("hidden");
+
+      document
+        .getElementById("authScreen")
+        .classList.remove("hidden");
+    }
   }
-});
+);
 
 
 /* ============================================================
-   START
-   ============================================================ */
+   INITIAL SESSION
+============================================================ */
 
-startApp();
+(async function init() {
 
+  try {
+
+    const { data } =
+      await db.auth.getSession();
+
+
+    if (data.session) {
+
+      await startApp(data.session);
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Session initialization failed:",
+      error
+    );
+  }
+
+})();
 </script>
 
 </body>
