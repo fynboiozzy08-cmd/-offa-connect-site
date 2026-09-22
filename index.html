@@ -9,707 +9,700 @@
 
   <style>
     :root {
-      --navy: #071A2B;
-      --blue: #0B5C8E;
-      --teal: #0B8F87;
-      --green: #18A06A;
-      --gold: #D9A441;
-      --cream: #F7F4EE;
-      --white: #FFFFFF;
-      --ink: #132235;
-      --muted: #6E7D8C;
-      --line: #E4EAF0;
-      --danger: #D94B4B;
-      --shadow: 0 12px 35px rgba(7, 26, 43, 0.10);
+      --navy:#071A2B;
+      --blue:#0B5C8E;
+      --teal:#0B8F87;
+      --green:#18A06A;
+      --gold:#D9A441;
+      --cream:#F7F4EE;
+      --white:#FFFFFF;
+      --ink:#132235;
+      --muted:#6E7D8C;
+      --line:#E4EAF0;
+      --danger:#D94B4B;
+      --shadow:0 12px 35px rgba(7,26,43,.10);
     }
 
     * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: var(--cream);
-      color: var(--ink);
-      min-height: 100vh;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:var(--cream);
+      color:var(--ink);
+      min-height:100vh;
     }
 
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
+    button,input,select,textarea {
+      font:inherit;
     }
 
     button {
-      cursor: pointer;
+      cursor:pointer;
     }
 
     .hidden {
-      display: none !important;
+      display:none!important;
     }
 
     /* AUTH */
 
     #authScreen {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 24px;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:24px;
       background:
-        radial-gradient(circle at top right, rgba(24,160,106,.18), transparent 35%),
-        linear-gradient(145deg, #071A2B, #0B5C8E);
+        radial-gradient(circle at top right,rgba(24,160,106,.18),transparent 35%),
+        linear-gradient(145deg,#071A2B,#0B5C8E);
     }
 
     .auth-card {
-      width: 100%;
-      max-width: 430px;
-      background: rgba(255,255,255,.98);
-      border-radius: 28px;
-      padding: 32px;
-      box-shadow: 0 25px 70px rgba(0,0,0,.25);
+      width:100%;
+      max-width:430px;
+      background:rgba(255,255,255,.98);
+      border-radius:28px;
+      padding:32px;
+      box-shadow:0 25px 70px rgba(0,0,0,.25);
     }
 
     .brand {
-      text-align: center;
-      margin-bottom: 26px;
+      text-align:center;
+      margin-bottom:26px;
     }
 
     .logo {
-      width: 82px;
-      height: 82px;
-      margin: 0 auto 14px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, var(--teal), var(--blue));
-      color: white;
-      font-size: 40px;
-      box-shadow: 0 12px 28px rgba(11,92,142,.25);
+      width:82px;
+      height:82px;
+      margin:0 auto 14px;
+      border-radius:50%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:linear-gradient(135deg,var(--teal),var(--blue));
+      color:white;
+      font-size:40px;
+      box-shadow:0 12px 28px rgba(11,92,142,.25);
     }
 
     .brand h1 {
-      color: var(--navy);
-      font-size: 29px;
-      letter-spacing: -.5px;
+      color:var(--navy);
+      font-size:29px;
+      letter-spacing:-.5px;
     }
 
     .brand p {
-      color: var(--muted);
-      margin-top: 5px;
-      font-size: 14px;
+      color:var(--muted);
+      margin-top:5px;
+      font-size:14px;
     }
 
     .gold {
-      color: var(--gold);
+      color:var(--gold);
     }
 
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom:15px;
     }
 
     label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 7px;
-      color: var(--ink);
+      display:block;
+      font-size:13px;
+      font-weight:700;
+      margin-bottom:7px;
     }
 
-    input,
-    select,
-    textarea {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      padding: 13px 14px;
-      background: white;
-      color: var(--ink);
-      outline: none;
-      transition: .2s;
+    input,select,textarea {
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:13px;
+      padding:13px 14px;
+      background:white;
+      color:var(--ink);
+      outline:none;
+      transition:.2s;
     }
 
     textarea {
-      min-height: 110px;
-      resize: vertical;
+      min-height:110px;
+      resize:vertical;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: var(--teal);
-      box-shadow: 0 0 0 3px rgba(11,143,135,.10);
+      border-color:var(--teal);
+      box-shadow:0 0 0 3px rgba(11,143,135,.10);
     }
 
     .primary-btn,
     .secondary-btn,
     .danger-btn {
-      width: 100%;
-      border: none;
-      border-radius: 13px;
-      padding: 14px;
-      font-weight: 800;
-      margin-top: 7px;
+      width:100%;
+      border:none;
+      border-radius:13px;
+      padding:14px;
+      font-weight:800;
+      margin-top:7px;
     }
 
     .primary-btn {
-      background: linear-gradient(135deg, var(--teal), var(--green));
-      color: white;
+      background:linear-gradient(135deg,var(--teal),var(--green));
+      color:white;
     }
 
     .secondary-btn {
-      background: #EEF5F7;
-      color: var(--blue);
+      background:#EEF5F7;
+      color:var(--blue);
     }
 
     .danger-btn {
-      background: #FFF0F0;
-      color: var(--danger);
+      background:#FFF0F0;
+      color:var(--danger);
     }
 
     .switch-auth {
-      text-align: center;
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 14px;
+      text-align:center;
+      margin-top:18px;
+      color:var(--muted);
+      font-size:14px;
     }
 
     .switch-auth button {
-      border: none;
-      background: none;
-      color: var(--blue);
-      font-weight: 800;
+      border:none;
+      background:none;
+      color:var(--blue);
+      font-weight:800;
     }
 
     .message {
-      margin: 12px 0;
-      padding: 11px 13px;
-      border-radius: 11px;
-      font-size: 13px;
-      display: none;
+      margin:12px 0;
+      padding:11px 13px;
+      border-radius:11px;
+      font-size:13px;
+      display:none;
     }
 
     .message.error {
-      display: block;
-      background: #FFF0F0;
-      color: #A52D2D;
+      display:block;
+      background:#FFF0F0;
+      color:#A52D2D;
     }
 
     .message.success {
-      display: block;
-      background: #ECFBF3;
-      color: #167546;
+      display:block;
+      background:#ECFBF3;
+      color:#167546;
     }
 
     /* APP */
 
     #appScreen {
-      min-height: 100vh;
-      padding-bottom: 82px;
+      min-height:100vh;
+      padding-bottom:82px;
     }
 
     .topbar {
-      height: 70px;
-      background: var(--navy);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      box-shadow: 0 5px 20px rgba(0,0,0,.12);
+      height:70px;
+      background:var(--navy);
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 20px;
+      position:sticky;
+      top:0;
+      z-index:50;
+      box-shadow:0 5px 20px rgba(0,0,0,.12);
     }
 
     .top-brand {
-      font-weight: 900;
-      font-size: 19px;
+      font-weight:900;
+      font-size:19px;
     }
 
     .top-brand span {
-      color: var(--gold);
+      color:var(--gold);
     }
 
     .online-dot {
-      width: 8px;
-      height: 8px;
-      background: #31D77C;
-      display: inline-block;
-      border-radius: 50%;
-      margin-right: 5px;
+      width:8px;
+      height:8px;
+      background:#31D77C;
+      display:inline-block;
+      border-radius:50%;
+      margin-right:5px;
     }
 
     .page {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 22px 16px;
+      width:100%;
+      max-width:1100px;
+      margin:0 auto;
+      padding:22px 16px;
     }
 
     .section-title {
-      margin-bottom: 16px;
+      margin-bottom:16px;
     }
 
     .section-title h2 {
-      color: var(--navy);
-      font-size: 25px;
+      color:var(--navy);
+      font-size:25px;
     }
 
     .section-title p {
-      color: var(--muted);
-      font-size: 14px;
-      margin-top: 4px;
+      color:var(--muted);
+      font-size:14px;
+      margin-top:4px;
     }
 
-    /* DISCOVER */
+    /* FILTERS */
 
     .filters {
-      background: white;
-      padding: 15px;
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      margin-bottom: 18px;
+      background:white;
+      padding:15px;
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
     }
 
     .filter-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 9px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:9px;
     }
 
+    /* PROFILES */
+
     .profile-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
     }
 
     .profile-card {
-      background: white;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
+      background:white;
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
     }
 
     .profile-image {
-      height: 280px;
-      background: linear-gradient(135deg, #DCECEF, #B9D9D7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
+      height:280px;
+      background:linear-gradient(135deg,#DCECEF,#B9D9D7);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
     }
 
     .profile-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      width:100%;
+      height:100%;
+      object-fit:cover;
     }
 
     .avatar-placeholder {
-      font-size: 72px;
-      color: var(--blue);
-      font-weight: 900;
+      font-size:72px;
+      color:var(--blue);
+      font-weight:900;
     }
 
     .profile-info {
-      padding: 15px;
+      padding:15px;
     }
 
     .profile-name {
-      font-size: 19px;
-      font-weight: 900;
-      color: var(--navy);
+      font-size:19px;
+      font-weight:900;
+      color:var(--navy);
     }
 
     .profile-meta {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 4px;
+      color:var(--muted);
+      font-size:13px;
+      margin-top:4px;
     }
 
     .profile-bio {
-      font-size: 13px;
-      line-height: 1.45;
-      margin: 10px 0;
-      color: #405162;
-      min-height: 38px;
+      font-size:13px;
+      line-height:1.45;
+      margin:10px 0;
+      color:#405162;
+      min-height:38px;
     }
 
     .goal {
-      display: inline-block;
-      padding: 5px 8px;
-      background: #EEF8F5;
-      color: var(--green);
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 800;
-      margin-bottom: 10px;
+      display:inline-block;
+      padding:5px 8px;
+      background:#EEF8F5;
+      color:var(--green);
+      border-radius:20px;
+      font-size:11px;
+      font-weight:800;
+      margin-top:9px;
     }
 
     .profile-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
     }
 
     .like-btn,
     .pass-btn {
-      border: none;
-      border-radius: 11px;
-      padding: 10px;
-      font-weight: 800;
+      border:none;
+      border-radius:11px;
+      padding:10px;
+      font-weight:800;
     }
 
     .like-btn {
-      background: #E9F9F1;
-      color: var(--green);
+      background:#E9F9F1;
+      color:var(--green);
     }
 
     .pass-btn {
-      background: #F2F4F6;
-      color: var(--muted);
+      background:#F2F4F6;
+      color:var(--muted);
     }
 
     /* MATCHES */
 
     .match-list {
-      display: grid;
-      gap: 12px;
+      display:grid;
+      gap:12px;
     }
 
     .match-card {
-      background: white;
-      padding: 14px;
-      border-radius: 17px;
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      box-shadow: var(--shadow);
+      background:white;
+      padding:14px;
+      border-radius:17px;
+      display:flex;
+      align-items:center;
+      gap:13px;
+      box-shadow:var(--shadow);
     }
 
     .match-avatar {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      overflow: hidden;
-      background: #DDECEF;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: var(--blue);
-      font-size: 23px;
-      font-weight: 900;
+      width:58px;
+      height:58px;
+      border-radius:50%;
+      overflow:hidden;
+      background:#DDECEF;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+      color:var(--blue);
+      font-size:23px;
+      font-weight:900;
     }
 
     .match-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      width:100%;
+      height:100%;
+      object-fit:cover;
     }
 
     .match-info {
-      flex: 1;
+      flex:1;
     }
 
     .match-info h3 {
-      font-size: 16px;
+      font-size:16px;
     }
 
     .match-info p {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 3px;
+      color:var(--muted);
+      font-size:12px;
+      margin-top:3px;
     }
 
     .chat-open {
-      border: none;
-      border-radius: 11px;
-      background: var(--blue);
-      color: white;
-      padding: 9px 13px;
-      font-weight: 800;
+      border:none;
+      border-radius:11px;
+      background:var(--blue);
+      color:white;
+      padding:9px 13px;
+      font-weight:800;
     }
 
     /* CHAT */
 
     .chat-box {
-      background: white;
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      height: calc(100vh - 145px);
-      min-height: 500px;
-      display: flex;
-      flex-direction: column;
+      background:white;
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      height:calc(100vh - 145px);
+      min-height:500px;
+      display:flex;
+      flex-direction:column;
     }
 
     .chat-header {
-      padding: 14px 16px;
-      background: var(--navy);
-      color: white;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      padding:14px 16px;
+      background:var(--navy);
+      color:white;
+      display:flex;
+      align-items:center;
+      gap:12px;
     }
 
     .chat-header button {
-      border: none;
-      background: transparent;
-      color: white;
-      font-size: 23px;
+      border:none;
+      background:transparent;
+      color:white;
+      font-size:27px;
     }
 
     .chat-header-info {
-      flex: 1;
+      flex:1;
     }
 
     .chat-header-info h3 {
-      font-size: 16px;
+      font-size:16px;
     }
 
     .chat-header-info p {
-      color: #B9D2DF;
-      font-size: 11px;
-      margin-top: 2px;
+      color:#B9D2DF;
+      font-size:11px;
+      margin-top:2px;
     }
 
     .messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px;
-      background: #F7FAFB;
+      flex:1;
+      overflow-y:auto;
+      padding:16px;
+      background:#F7FAFB;
     }
 
     .message-row {
-      display: flex;
-      margin-bottom: 10px;
+      display:flex;
+      margin-bottom:10px;
     }
 
     .message-row.mine {
-      justify-content: flex-end;
+      justify-content:flex-end;
     }
 
     .bubble {
-      max-width: 75%;
-      padding: 10px 13px;
-      border-radius: 16px;
-      font-size: 14px;
-      line-height: 1.4;
+      max-width:75%;
+      padding:10px 13px;
+      border-radius:16px;
+      font-size:14px;
+      line-height:1.4;
+      word-break:break-word;
     }
 
     .mine .bubble {
-      background: var(--teal);
-      color: white;
-      border-bottom-right-radius: 4px;
+      background:var(--teal);
+      color:white;
+      border-bottom-right-radius:4px;
     }
 
     .theirs .bubble {
-      background: white;
-      color: var(--ink);
-      border-bottom-left-radius: 4px;
-      box-shadow: 0 3px 12px rgba(0,0,0,.05);
+      background:white;
+      color:var(--ink);
+      border-bottom-left-radius:4px;
+      box-shadow:0 3px 12px rgba(0,0,0,.05);
     }
 
     .bubble-time {
-      display: block;
-      font-size: 9px;
-      margin-top: 4px;
-      opacity: .65;
-    }
-
-    .attachment-link {
-      display: inline-block;
-      margin-top: 5px;
-      text-decoration: none;
-      font-weight: 700;
-      color: inherit;
+      display:block;
+      font-size:9px;
+      margin-top:4px;
+      opacity:.65;
     }
 
     .chat-input {
-      padding: 11px;
-      display: flex;
-      gap: 8px;
-      border-top: 1px solid var(--line);
-      background: white;
+      padding:11px;
+      display:flex;
+      gap:8px;
+      border-top:1px solid var(--line);
+      background:white;
     }
 
     .chat-input input {
-      flex: 1;
+      flex:1;
     }
 
     .send-btn {
-      border: none;
-      border-radius: 12px;
-      background: var(--green);
-      color: white;
-      padding: 0 18px;
-      font-weight: 900;
+      border:none;
+      border-radius:12px;
+      background:var(--green);
+      color:white;
+      padding:0 18px;
+      font-weight:900;
     }
 
     /* PROFILE */
 
     .profile-editor {
-      max-width: 650px;
-      margin: auto;
-      background: white;
-      padding: 22px;
-      border-radius: 22px;
-      box-shadow: var(--shadow);
+      max-width:650px;
+      margin:auto;
+      background:white;
+      padding:22px;
+      border-radius:22px;
+      box-shadow:var(--shadow);
     }
 
     .photo-upload {
-      text-align: center;
-      margin-bottom: 22px;
+      text-align:center;
+      margin-bottom:22px;
     }
 
     .big-avatar {
-      width: 125px;
-      height: 125px;
-      border-radius: 50%;
-      overflow: hidden;
-      margin: auto;
-      background: #DDECEF;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--blue);
-      font-size: 48px;
-      font-weight: 900;
-      border: 4px solid white;
-      box-shadow: 0 8px 25px rgba(0,0,0,.12);
+      width:125px;
+      height:125px;
+      border-radius:50%;
+      overflow:hidden;
+      margin:auto;
+      background:#DDECEF;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--blue);
+      font-size:48px;
+      font-weight:900;
+      border:4px solid white;
+      box-shadow:0 8px 25px rgba(0,0,0,.12);
     }
 
     .big-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      width:100%;
+      height:100%;
+      object-fit:cover;
     }
 
     .upload-label {
-      display: inline-block;
-      margin-top: 10px;
-      background: #EEF5F7;
-      color: var(--blue);
-      padding: 9px 14px;
-      border-radius: 11px;
-      font-size: 13px;
-      font-weight: 800;
-      cursor: pointer;
+      display:inline-block;
+      margin-top:10px;
+      background:#EEF5F7;
+      color:var(--blue);
+      padding:9px 14px;
+      border-radius:11px;
+      font-size:13px;
+      font-weight:800;
+      cursor:pointer;
     }
 
     #photoInput {
-      display: none;
+      display:none;
     }
 
     /* NAV */
 
     .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 72px;
-      background: white;
-      border-top: 1px solid var(--line);
-      display: flex;
-      justify-content: center;
-      z-index: 100;
-      box-shadow: 0 -5px 20px rgba(0,0,0,.06);
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      height:72px;
+      background:white;
+      border-top:1px solid var(--line);
+      display:flex;
+      justify-content:center;
+      z-index:100;
+      box-shadow:0 -5px 20px rgba(0,0,0,.06);
     }
 
     .nav-inner {
-      width: 100%;
-      max-width: 650px;
-      display: flex;
-      justify-content: space-around;
+      width:100%;
+      max-width:650px;
+      display:flex;
+      justify-content:space-around;
     }
 
     .nav-btn {
-      flex: 1;
-      border: none;
-      background: transparent;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 4px;
+      flex:1;
+      border:none;
+      background:transparent;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:800;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      gap:4px;
     }
 
-    .nav-btn .nav-icon {
-      font-size: 22px;
+    .nav-icon {
+      font-size:22px;
     }
 
     .nav-btn.active {
-      color: var(--teal);
+      color:var(--teal);
     }
 
-    /* EMPTY */
-
     .empty {
-      text-align: center;
-      padding: 45px 20px;
-      background: white;
-      border-radius: 20px;
-      color: var(--muted);
-      box-shadow: var(--shadow);
+      text-align:center;
+      padding:45px 20px;
+      background:white;
+      border-radius:20px;
+      color:var(--muted);
+      box-shadow:var(--shadow);
     }
 
     .empty-icon {
-      font-size: 42px;
-      margin-bottom: 10px;
+      font-size:42px;
+      margin-bottom:10px;
     }
 
     .loading {
-      text-align: center;
-      padding: 45px;
-      color: var(--muted);
+      text-align:center;
+      padding:45px;
+      color:var(--muted);
     }
 
-    /* RESPONSIVE */
-
-    @media (max-width: 800px) {
+    @media (max-width:800px) {
       .profile-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:repeat(2,1fr);
       }
 
       .filter-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:repeat(2,1fr);
       }
     }
 
-    @media (max-width: 560px) {
+    @media (max-width:560px) {
       .auth-card {
-        padding: 24px 19px;
+        padding:24px 19px;
       }
 
       .profile-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:1fr;
       }
 
       .profile-image {
-        height: 340px;
+        height:340px;
       }
 
       .filter-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:1fr;
       }
 
       .page {
-        padding: 18px 12px;
+        padding:18px 12px;
       }
 
       .chat-box {
-        height: calc(100vh - 145px);
-        border-radius: 15px;
+        height:calc(100vh - 145px);
+        border-radius:15px;
+      }
+
+      .topbar {
+        padding:0 13px;
+      }
+
+      .top-brand {
+        font-size:16px;
       }
     }
   </style>
@@ -717,395 +710,546 @@
 
 <body>
 
-  <!-- AUTH SCREEN -->
-  <section id="authScreen">
+<!-- ==========================================================
+     AUTH
+========================================================== -->
 
-    <div class="auth-card">
+<section id="authScreen">
 
-      <div class="brand">
-        <div class="logo">🦚</div>
-        <h1>Offa Connect <span class="gold">by Leo</span></h1>
-        <p>Meet. Connect. Belong.</p>
+  <div class="auth-card">
+
+    <div class="brand">
+      <div class="logo">🦚</div>
+
+      <h1>
+        Offa Connect
+        <span class="gold">by Leo</span>
+      </h1>
+
+      <p>Meet. Connect. Belong.</p>
+    </div>
+
+    <div id="authMessage" class="message"></div>
+
+    <!-- LOGIN -->
+
+    <div id="loginForm">
+
+      <div class="form-group">
+        <label>Email</label>
+
+        <input
+          id="loginEmail"
+          type="email"
+          placeholder="Enter your email"
+          autocomplete="email"
+        />
       </div>
 
-      <div id="authMessage" class="message"></div>
+      <div class="form-group">
+        <label>Password</label>
 
-      <div id="loginForm">
-
-        <div class="form-group">
-          <label>Email</label>
-          <input
-            id="loginEmail"
-            type="email"
-            placeholder="Enter your email"
-            autocomplete="email"
-          />
-        </div>
-
-        <div class="form-group">
-          <label>Password</label>
-          <input
-            id="loginPassword"
-            type="password"
-            placeholder="Enter your password"
-            autocomplete="current-password"
-          />
-        </div>
-
-        <button class="primary-btn" onclick="login()">
-          Login
-        </button>
-
-        <div class="switch-auth">
-          Don't have an account?
-          <button onclick="showSignup()">Create account</button>
-        </div>
-
+        <input
+          id="loginPassword"
+          type="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+        />
       </div>
 
-      <div id="signupForm" class="hidden">
+      <button class="primary-btn" onclick="login()">
+        Login
+      </button>
 
-        <div class="form-group">
-          <label>Your name</label>
-          <input id="signupName" type="text" placeholder="Your name" />
-        </div>
-
-        <div class="form-group">
-          <label>Email</label>
-          <input id="signupEmail" type="email" placeholder="Email address" />
-        </div>
-
-        <div class="form-group">
-          <label>Password</label>
-          <input
-            id="signupPassword"
-            type="password"
-            placeholder="At least 6 characters"
-          />
-        </div>
-
-        <div class="form-group">
-          <label>Age</label>
-          <input id="signupAge" type="number" min="18" placeholder="18+" />
-        </div>
-
-        <div class="form-group">
-          <label>Sex</label>
-          <select id="signupSex">
-            <option value="">Select</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>City</label>
-          <input
-            id="signupCity"
-            type="text"
-            value="Offa"
-            placeholder="City"
-          />
-        </div>
-
-        <div class="form-group">
-          <label>Relationship goal</label>
-          <select id="signupGoal">
-            <option value="">Select</option>
-            <option value="Serious relationship">Serious relationship</option>
-            <option value="Marriage">Marriage</option>
-            <option value="Friendship">Friendship</option>
-            <option value="Getting to know someone">Getting to know someone</option>
-          </select>
-        </div>
-
-        <button class="primary-btn" onclick="signup()">
+      <div class="switch-auth">
+        Don't have an account?
+        <button onclick="showSignup()">
           Create account
         </button>
+      </div>
 
-        <div class="switch-auth">
-          Already have an account?
-          <button onclick="showLogin()">Login</button>
-        </div>
+    </div>
+
+
+    <!-- SIGNUP -->
+
+    <div id="signupForm" class="hidden">
+
+      <div class="form-group">
+        <label>Your name</label>
+
+        <input
+          id="signupName"
+          type="text"
+          placeholder="Your name"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+
+        <input
+          id="signupEmail"
+          type="email"
+          placeholder="Email address"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+
+        <input
+          id="signupPassword"
+          type="password"
+          placeholder="At least 6 characters"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Age</label>
+
+        <input
+          id="signupAge"
+          type="number"
+          min="18"
+          placeholder="18+"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Sex</label>
+
+        <select id="signupSex">
+          <option value="">Select</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>City</label>
+
+        <input
+          id="signupCity"
+          type="text"
+          value="Offa"
+          placeholder="City"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Relationship goal</label>
+
+        <select id="signupGoal">
+          <option value="">Select</option>
+          <option value="Serious relationship">
+            Serious relationship
+          </option>
+          <option value="Marriage">
+            Marriage
+          </option>
+          <option value="Friendship">
+            Friendship
+          </option>
+          <option value="Getting to know someone">
+            Getting to know someone
+          </option>
+        </select>
+      </div>
+
+      <button class="primary-btn" onclick="signup()">
+        Create account
+      </button>
+
+      <div class="switch-auth">
+        Already have an account?
+        <button onclick="showLogin()">
+          Login
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ==========================================================
+     APP
+========================================================== -->
+
+<section id="appScreen" class="hidden">
+
+  <header class="topbar">
+
+    <div class="top-brand">
+      Offa Connect <span>by Leo</span>
+    </div>
+
+    <div>
+      <span class="online-dot"></span>
+      <span id="topUserName">Online</span>
+    </div>
+
+  </header>
+
+
+  <!-- DISCOVER -->
+
+  <main id="discoverPage" class="page">
+
+    <div class="section-title">
+      <h2>Discover</h2>
+      <p>Meet people from Offa and beyond.</p>
+    </div>
+
+    <div class="filters">
+
+      <div class="filter-grid">
+
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Search name, city or bio"
+          oninput="loadDiscover()"
+        />
+
+        <input
+          id="minAge"
+          type="number"
+          min="18"
+          placeholder="Min age"
+          oninput="loadDiscover()"
+        />
+
+        <input
+          id="maxAge"
+          type="number"
+          min="18"
+          placeholder="Max age"
+          oninput="loadDiscover()"
+        />
+
+        <select
+          id="goalFilter"
+          onchange="loadDiscover()"
+        >
+          <option value="">All goals</option>
+          <option value="Serious relationship">
+            Serious relationship
+          </option>
+          <option value="Marriage">
+            Marriage
+          </option>
+          <option value="Friendship">
+            Friendship
+          </option>
+          <option value="Getting to know someone">
+            Getting to know someone
+          </option>
+        </select>
 
       </div>
 
     </div>
 
-  </section>
-
-
-  <!-- APP -->
-  <section id="appScreen" class="hidden">
-
-    <header class="topbar">
-      <div class="top-brand">
-        Offa Connect <span>by Leo</span>
+    <div id="discoverList" class="profile-grid">
+      <div class="loading">
+        Loading profiles...
       </div>
+    </div>
 
-      <div>
-        <span class="online-dot"></span>
-        <span id="topUserName">Online</span>
+  </main>
+
+
+  <!-- MATCHES -->
+
+  <main id="matchesPage" class="page hidden">
+
+    <div class="section-title">
+      <h2>Your Matches</h2>
+      <p>People you've connected with.</p>
+    </div>
+
+    <div id="matchesList" class="match-list">
+      <div class="loading">
+        Loading matches...
       </div>
-    </header>
+    </div>
+
+  </main>
 
 
-    <!-- DISCOVER -->
-    <main id="discoverPage" class="page">
+  <!-- CHAT -->
 
-      <div class="section-title">
-        <h2>Discover</h2>
-        <p>Meet people from Offa and beyond.</p>
-      </div>
+  <main id="chatPage" class="page hidden">
 
-      <div class="filters">
+    <div id="chatEmpty" class="empty">
 
-        <div class="filter-grid">
+      <div class="empty-icon">💬</div>
 
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Search name, city or bio"
-            oninput="loadDiscover()"
-          />
+      <h3>Select a match</h3>
 
-          <input
-            id="minAge"
-            type="number"
-            min="18"
-            placeholder="Min age"
-            oninput="loadDiscover()"
-          />
+      <p>
+        Open one of your matches to start chatting.
+      </p>
 
-          <input
-            id="maxAge"
-            type="number"
-            min="18"
-            placeholder="Max age"
-            oninput="loadDiscover()"
-          />
-
-          <select id="goalFilter" onchange="loadDiscover()">
-            <option value="">All goals</option>
-            <option value="Serious relationship">Serious relationship</option>
-            <option value="Marriage">Marriage</option>
-            <option value="Friendship">Friendship</option>
-            <option value="Getting to know someone">Getting to know someone</option>
-          </select>
-
-        </div>
-
-      </div>
-
-      <div id="discoverList" class="profile-grid">
-        <div class="loading">Loading profiles...</div>
-      </div>
-
-    </main>
+    </div>
 
 
-    <!-- MATCHES -->
-    <main id="matchesPage" class="page hidden">
+    <div id="chatBox" class="chat-box hidden">
 
-      <div class="section-title">
-        <h2>Your Matches</h2>
-        <p>People you've connected with.</p>
-      </div>
-
-      <div id="matchesList" class="match-list">
-        <div class="loading">Loading matches...</div>
-      </div>
-
-    </main>
-
-
-    <!-- CHAT -->
-    <main id="chatPage" class="page hidden">
-
-      <div id="chatEmpty" class="empty">
-        <div class="empty-icon">💬</div>
-        <h3>Select a match</h3>
-        <p>Open one of your matches to start chatting.</p>
-      </div>
-
-      <div id="chatBox" class="chat-box hidden">
-
-        <div class="chat-header">
-
-          <button onclick="closeChat()">‹</button>
-
-          <div id="chatAvatar" class="match-avatar">
-            ?
-          </div>
-
-          <div class="chat-header-info">
-            <h3 id="chatName">Chat</h3>
-            <p id="chatStatus">Connected on Offa Connect</p>
-          </div>
-
-        </div>
-
-        <div id="messages" class="messages"></div>
-
-        <form class="chat-input" onsubmit="sendMessage(event)">
-          <input
-            id="messageInput"
-            type="text"
-            placeholder="Write a message..."
-            autocomplete="off"
-          />
-
-          <button class="send-btn" type="submit">
-            Send
-          </button>
-        </form>
-
-      </div>
-
-    </main>
-
-
-    <!-- PROFILE -->
-    <main id="profilePage" class="page hidden">
-
-      <div class="section-title">
-        <h2>My Profile</h2>
-        <p>Keep your profile up to date.</p>
-      </div>
-
-      <div class="profile-editor">
-
-        <div class="photo-upload">
-
-          <div id="bigAvatar" class="big-avatar">
-            ?
-          </div>
-
-          <label class="upload-label" for="photoInput">
-            Change photo
-          </label>
-
-          <input
-            id="photoInput"
-            type="file"
-            accept="image/*"
-            onchange="uploadAvatar(event)"
-          />
-
-        </div>
-
-        <div id="profileMessage" class="message"></div>
-
-        <div class="form-group">
-          <label>Name</label>
-          <input id="profileName" type="text" />
-        </div>
-
-        <div class="form-group">
-          <label>Age</label>
-          <input id="profileAge" type="number" min="18" />
-        </div>
-
-        <div class="form-group">
-          <label>Sex</label>
-          <select id="profileSex">
-            <option value="">Select</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>City</label>
-          <input id="profileCity" type="text" />
-        </div>
-
-        <div class="form-group">
-          <label>Relationship goal</label>
-          <select id="profileGoal">
-            <option value="">Select</option>
-            <option value="Serious relationship">Serious relationship</option>
-            <option value="Marriage">Marriage</option>
-            <option value="Friendship">Friendship</option>
-            <option value="Getting to know someone">Getting to know someone</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Bio</label>
-          <textarea
-            id="profileBio"
-            placeholder="Tell people a little about yourself..."
-          ></textarea>
-        </div>
-
-        <button class="primary-btn" onclick="saveProfile()">
-          Save profile
-        </button>
-
-        <button class="danger-btn" onclick="logout()">
-          Logout
-        </button>
-
-      </div>
-
-    </main>
-
-
-    <!-- NAVIGATION -->
-    <nav class="bottom-nav">
-
-      <div class="nav-inner">
+      <div class="chat-header">
 
         <button
-          id="navDiscover"
-          class="nav-btn active"
-          onclick="showPage('discover')"
+          type="button"
+          onclick="closeChat()"
         >
-          <span class="nav-icon">⌕</span>
-          Discover
+          ‹
         </button>
 
-        <button
-          id="navMatches"
-          class="nav-btn"
-          onclick="showPage('matches')"
-        >
-          <span class="nav-icon">♥</span>
-          Matches
-        </button>
+        <div id="chatAvatar" class="match-avatar">
+          ?
+        </div>
 
-        <button
-          id="navChat"
-          class="nav-btn"
-          onclick="showPage('chat')"
-        >
-          <span class="nav-icon">◌</span>
-          Chat
-        </button>
+        <div class="chat-header-info">
 
-        <button
-          id="navProfile"
-          class="nav-btn"
-          onclick="showPage('profile')"
-        >
-          <span class="nav-icon">●</span>
-          Profile
-        </button>
+          <h3 id="chatName">
+            Chat
+          </h3>
+
+          <p id="chatStatus">
+            Connected on Offa Connect
+          </p>
+
+        </div>
 
       </div>
 
-    </nav>
 
-  </section>
+      <div id="messages" class="messages"></div>
+
+
+      <form
+        class="chat-input"
+        onsubmit="sendMessage(event)"
+      >
+
+        <input
+          id="messageInput"
+          type="text"
+          placeholder="Write a message..."
+          autocomplete="off"
+        />
+
+        <button
+          class="send-btn"
+          type="submit"
+        >
+          Send
+        </button>
+
+      </form>
+
+    </div>
+
+  </main>
+
+
+  <!-- PROFILE -->
+
+  <main id="profilePage" class="page hidden">
+
+    <div class="section-title">
+      <h2>My Profile</h2>
+      <p>Keep your profile up to date.</p>
+    </div>
+
+
+    <div class="profile-editor">
+
+      <div class="photo-upload">
+
+        <div id="bigAvatar" class="big-avatar">
+          ?
+        </div>
+
+        <label
+          class="upload-label"
+          for="photoInput"
+        >
+          Change photo
+        </label>
+
+        <input
+          id="photoInput"
+          type="file"
+          accept="image/*"
+          onchange="uploadAvatar(event)"
+        />
+
+      </div>
+
+
+      <div
+        id="profileMessage"
+        class="message"
+      ></div>
+
+
+      <div class="form-group">
+        <label>Name</label>
+
+        <input
+          id="profileName"
+          type="text"
+        />
+      </div>
+
+
+      <div class="form-group">
+        <label>Age</label>
+
+        <input
+          id="profileAge"
+          type="number"
+          min="18"
+        />
+      </div>
+
+
+      <div class="form-group">
+        <label>Sex</label>
+
+        <select id="profileSex">
+          <option value="">Select</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+
+      <div class="form-group">
+        <label>City</label>
+
+        <input
+          id="profileCity"
+          type="text"
+        />
+      </div>
+
+
+      <div class="form-group">
+        <label>Relationship goal</label>
+
+        <select id="profileGoal">
+          <option value="">Select</option>
+          <option value="Serious relationship">
+            Serious relationship
+          </option>
+          <option value="Marriage">
+            Marriage
+          </option>
+          <option value="Friendship">
+            Friendship
+          </option>
+          <option value="Getting to know someone">
+            Getting to know someone
+          </option>
+        </select>
+      </div>
+
+
+      <div class="form-group">
+        <label>Bio</label>
+
+        <textarea
+          id="profileBio"
+          placeholder="Tell people a little about yourself..."
+        ></textarea>
+      </div>
+
+
+      <button
+        class="primary-btn"
+        onclick="saveProfile()"
+      >
+        Save profile
+      </button>
+
+
+      <button
+        class="danger-btn"
+        onclick="logout()"
+      >
+        Logout
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- BOTTOM NAV -->
+
+  <nav class="bottom-nav">
+
+    <div class="nav-inner">
+
+      <button
+        id="navDiscover"
+        class="nav-btn active"
+        onclick="showPage('discover')"
+      >
+        <span class="nav-icon">⌕</span>
+        Discover
+      </button>
+
+
+      <button
+        id="navMatches"
+        class="nav-btn"
+        onclick="showPage('matches')"
+      >
+        <span class="nav-icon">♥</span>
+        Matches
+      </button>
+
+
+      <button
+        id="navChat"
+        class="nav-btn"
+        onclick="showPage('chat')"
+      >
+        <span class="nav-icon">◌</span>
+        Chat
+      </button>
+
+
+      <button
+        id="navProfile"
+        class="nav-btn"
+        onclick="showPage('profile')"
+      >
+        <span class="nav-icon">●</span>
+        Profile
+      </button>
+
+    </div>
+
+  </nav>
+
+</section>
 
 
 <script>
-/* ============================================================
+
+/* ==========================================================
    SUPABASE
-============================================================ */
+========================================================== */
 
 const SUPABASE_URL =
   "https://irjahjpdjuvlmlcgtusr.supabase.co";
@@ -1113,138 +1257,194 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   "sb_publishable_HoMz0Vb4krVkz1p4Dm5_dg_hFuaxwxl";
 
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const db =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
-/* ============================================================
-   APP STATE
-============================================================ */
+/* ==========================================================
+   STATE
+========================================================== */
 
 let session = null;
+
 let myProfile = null;
+
 let selectedMatch = null;
+
 let messagesSubscription = null;
 
+window.offaMatches = {};
 
-/* ============================================================
-   SMALL HELPERS
-============================================================ */
+
+/* ==========================================================
+   HELPERS
+========================================================== */
 
 function escapeHtml(value) {
-  if (value === null || value === undefined) return "";
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+    return "";
+  }
 
   return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
 
 function initials(name) {
+
   if (!name) return "?";
 
   return name
     .trim()
     .split(/\s+/)
-    .slice(0, 2)
+    .slice(0,2)
     .map(x => x[0])
     .join("")
     .toUpperCase();
 }
 
 
-function showMessage(elementId, text, type = "error") {
-  const el = document.getElementById(elementId);
-
-  if (!el) return;
-
-  el.textContent = text;
-  el.className = "message " + type;
-}
-
-
-function clearMessage(elementId) {
-  const el = document.getElementById(elementId);
-
-  if (!el) return;
-
-  el.textContent = "";
-  el.className = "message";
-}
-
-
 function formatTime(date) {
+
   if (!date) return "";
 
-  return new Date(date).toLocaleTimeString([], {
-    hour: "numeric",
-    minute: "2-digit"
+  return new Date(date).toLocaleTimeString([],{
+    hour:"numeric",
+    minute:"2-digit"
   });
 }
 
 
-/* ============================================================
-   AUTH UI
-============================================================ */
+function showMessage(
+  elementId,
+  text,
+  type="error"
+) {
+
+  const el =
+    document.getElementById(elementId);
+
+  if (!el) return;
+
+  el.textContent = text;
+
+  el.className =
+    "message " + type;
+}
+
+
+function clearMessage(elementId) {
+
+  const el =
+    document.getElementById(elementId);
+
+  if (!el) return;
+
+  el.textContent = "";
+
+  el.className = "message";
+}
+
+
+/* ==========================================================
+   AUTH SCREENS
+========================================================== */
 
 function showSignup() {
-  document.getElementById("loginForm").classList.add("hidden");
-  document.getElementById("signupForm").classList.remove("hidden");
+
+  document
+    .getElementById("loginForm")
+    .classList.add("hidden");
+
+  document
+    .getElementById("signupForm")
+    .classList.remove("hidden");
+
   clearMessage("authMessage");
 }
 
 
 function showLogin() {
-  document.getElementById("signupForm").classList.add("hidden");
-  document.getElementById("loginForm").classList.remove("hidden");
+
+  document
+    .getElementById("signupForm")
+    .classList.add("hidden");
+
+  document
+    .getElementById("loginForm")
+    .classList.remove("hidden");
+
   clearMessage("authMessage");
 }
 
 
-/* ============================================================
+/* ==========================================================
    SIGNUP
-============================================================ */
+========================================================== */
 
 async function signup() {
 
   clearMessage("authMessage");
 
   const name =
-    document.getElementById("signupName").value.trim();
+    document.getElementById("signupName")
+      .value.trim();
 
   const email =
-    document.getElementById("signupEmail").value.trim();
+    document.getElementById("signupEmail")
+      .value.trim();
 
   const password =
-    document.getElementById("signupPassword").value;
+    document.getElementById("signupPassword")
+      .value;
 
   const age =
-    Number(document.getElementById("signupAge").value);
+    Number(
+      document.getElementById("signupAge")
+        .value
+    );
 
   const sex =
-    document.getElementById("signupSex").value;
+    document.getElementById("signupSex")
+      .value;
 
   const city =
-    document.getElementById("signupCity").value.trim() || "Offa";
+    document.getElementById("signupCity")
+      .value.trim() || "Offa";
 
   const goal =
-    document.getElementById("signupGoal").value;
+    document.getElementById("signupGoal")
+      .value;
 
 
   if (!name) {
-    showMessage("authMessage", "Please enter your name.");
+    showMessage(
+      "authMessage",
+      "Please enter your name."
+    );
     return;
   }
 
+
   if (!email) {
-    showMessage("authMessage", "Please enter your email.");
+    showMessage(
+      "authMessage",
+      "Please enter your email."
+    );
     return;
   }
+
 
   if (password.length < 6) {
     showMessage(
@@ -1253,6 +1453,7 @@ async function signup() {
     );
     return;
   }
+
 
   if (!age || age < 18) {
     showMessage(
@@ -1265,60 +1466,57 @@ async function signup() {
 
   try {
 
-    const { data, error } =
+    const {
+      data,
+      error
+    } =
       await db.auth.signUp({
         email,
         password,
-        options: {
-          data: {
+        options:{
+          data:{
             name
           }
         }
       });
 
+
     if (error) throw error;
 
 
     if (!data.user) {
-      throw new Error("Account could not be created.");
+      throw new Error(
+        "Account could not be created."
+      );
     }
 
 
-    /*
-      Create profile immediately when possible.
-      If email confirmation is enabled, the user may
-      need to confirm their email before logging in.
-    */
-
-    const { error: profileError } =
-      await db.from("profiles").upsert({
-        id: data.user.id,
-        name,
-        age,
-        sex: sex || null,
-        city,
-        bio: "",
-        relationship_goal: goal || null
-      });
+    const {
+      error:profileError
+    } =
+      await db
+        .from("profiles")
+        .upsert({
+          id:data.user.id,
+          name,
+          age,
+          sex:sex || null,
+          city,
+          bio:"",
+          relationship_goal:
+            goal || null
+        });
 
 
     if (profileError) {
-      console.error(profileError);
-
-      /*
-        Do not fail the whole signup if Supabase requires
-        email confirmation first.
-      */
+      console.warn(
+        "Profile creation:",
+        profileError
+      );
     }
 
 
     if (data.session) {
-
-      showMessage(
-        "authMessage",
-        "Account created successfully.",
-        "success"
-      );
 
       await startApp(data.session);
 
@@ -1333,45 +1531,53 @@ async function signup() {
       showLogin();
     }
 
-  } catch (error) {
+  } catch(error) {
 
     console.error(error);
 
     showMessage(
       "authMessage",
-      error.message || "Could not create account."
+      error.message ||
+      "Could not create account."
     );
   }
 }
 
 
-/* ============================================================
+/* ==========================================================
    LOGIN
-============================================================ */
+========================================================== */
 
 async function login() {
 
   clearMessage("authMessage");
 
   const email =
-    document.getElementById("loginEmail").value.trim();
+    document.getElementById("loginEmail")
+      .value.trim();
 
   const password =
-    document.getElementById("loginPassword").value;
+    document.getElementById("loginPassword")
+      .value;
 
 
   if (!email || !password) {
+
     showMessage(
       "authMessage",
       "Enter your email and password."
     );
+
     return;
   }
 
 
   try {
 
-    const { data, error } =
+    const {
+      data,
+      error
+    } =
       await db.auth.signInWithPassword({
         email,
         password
@@ -1383,21 +1589,22 @@ async function login() {
 
     await startApp(data.session);
 
-  } catch (error) {
+  } catch(error) {
 
     console.error(error);
 
     showMessage(
       "authMessage",
-      error.message || "Login failed."
+      error.message ||
+      "Login failed."
     );
   }
 }
 
 
-/* ============================================================
+/* ==========================================================
    START APP
-============================================================ */
+========================================================== */
 
 async function startApp(newSession) {
 
@@ -1409,6 +1616,7 @@ async function startApp(newSession) {
   document
     .getElementById("authScreen")
     .classList.add("hidden");
+
 
   document
     .getElementById("appScreen")
@@ -1425,28 +1633,29 @@ async function startApp(newSession) {
 }
 
 
-/* ============================================================
+/* ==========================================================
    LOAD MY PROFILE
-============================================================ */
+========================================================== */
 
 async function loadMyProfile() {
 
   if (!session?.user?.id) return;
 
 
-  const { data, error } =
+  const {
+    data,
+    error
+  } =
     await db
       .from("profiles")
       .select("*")
-      .eq("id", session.user.id)
+      .eq("id",session.user.id)
       .maybeSingle();
 
 
   if (error) {
 
     console.error(error);
-
-    myProfile = null;
 
     return;
   }
@@ -1457,45 +1666,54 @@ async function loadMyProfile() {
 
   if (myProfile) {
 
-    document.getElementById("topUserName").textContent =
-      myProfile.name || "Online";
+    document
+      .getElementById("topUserName")
+      .textContent =
+        myProfile.name ||
+        "Online";
 
     fillProfileForm();
-
-  } else {
-
-    document.getElementById("topUserName").textContent =
-      "Complete profile";
   }
 }
 
 
-/* ============================================================
+/* ==========================================================
    PROFILE FORM
-============================================================ */
+========================================================== */
 
 function fillProfileForm() {
 
   if (!myProfile) return;
 
 
-  document.getElementById("profileName").value =
-    myProfile.name || "";
+  document.getElementById("profileName")
+    .value =
+      myProfile.name || "";
 
-  document.getElementById("profileAge").value =
-    myProfile.age || "";
 
-  document.getElementById("profileSex").value =
-    myProfile.sex || "";
+  document.getElementById("profileAge")
+    .value =
+      myProfile.age || "";
 
-  document.getElementById("profileCity").value =
-    myProfile.city || "Offa";
 
-  document.getElementById("profileGoal").value =
-    myProfile.relationship_goal || "";
+  document.getElementById("profileSex")
+    .value =
+      myProfile.sex || "";
 
-  document.getElementById("profileBio").value =
-    myProfile.bio || "";
+
+  document.getElementById("profileCity")
+    .value =
+      myProfile.city || "Offa";
+
+
+  document.getElementById("profileGoal")
+    .value =
+      myProfile.relationship_goal || "";
+
+
+  document.getElementById("profileBio")
+    .value =
+      myProfile.bio || "";
 
 
   const avatar =
@@ -1504,8 +1722,12 @@ function fillProfileForm() {
 
   if (myProfile.avatar_url) {
 
-    avatar.innerHTML =
-      `<img src="${escapeHtml(myProfile.avatar_url)}" alt="Profile photo">`;
+    avatar.innerHTML = `
+      <img
+        src="${escapeHtml(myProfile.avatar_url)}"
+        alt="Profile photo"
+      >
+    `;
 
   } else {
 
@@ -1515,9 +1737,9 @@ function fillProfileForm() {
 }
 
 
-/* ============================================================
+/* ==========================================================
    SAVE PROFILE
-============================================================ */
+========================================================== */
 
 async function saveProfile() {
 
@@ -1528,50 +1750,70 @@ async function saveProfile() {
 
 
   const name =
-    document.getElementById("profileName").value.trim();
+    document.getElementById("profileName")
+      .value.trim();
 
   const age =
-    Number(document.getElementById("profileAge").value);
+    Number(
+      document.getElementById("profileAge")
+        .value
+    );
 
   const sex =
-    document.getElementById("profileSex").value;
+    document.getElementById("profileSex")
+      .value;
 
   const city =
-    document.getElementById("profileCity").value.trim();
+    document.getElementById("profileCity")
+      .value.trim();
 
   const goal =
-    document.getElementById("profileGoal").value;
+    document.getElementById("profileGoal")
+      .value;
 
   const bio =
-    document.getElementById("profileBio").value.trim();
+    document.getElementById("profileBio")
+      .value.trim();
 
 
   if (!name) {
-    showMessage("profileMessage", "Enter your name.");
+
+    showMessage(
+      "profileMessage",
+      "Enter your name."
+    );
+
     return;
   }
 
+
   if (!age || age < 18) {
+
     showMessage(
       "profileMessage",
       "Age must be 18 or older."
     );
+
     return;
   }
 
 
   try {
 
-    const { data, error } =
+    const {
+      data,
+      error
+    } =
       await db
         .from("profiles")
         .upsert({
-          id: session.user.id,
+          id:session.user.id,
           name,
           age,
-          sex: sex || null,
-          city: city || "Offa",
-          relationship_goal: goal || null,
+          sex:sex || null,
+          city:city || "Offa",
+          relationship_goal:
+            goal || null,
           bio
         })
         .select()
@@ -1584,8 +1826,10 @@ async function saveProfile() {
     myProfile = data;
 
 
-    document.getElementById("topUserName").textContent =
-      data.name || "Online";
+    document
+      .getElementById("topUserName")
+      .textContent =
+        data.name || "Online";
 
 
     showMessage(
@@ -1597,28 +1841,30 @@ async function saveProfile() {
 
     await loadDiscover();
 
-  } catch (error) {
+  } catch(error) {
 
     console.error(error);
 
     showMessage(
       "profileMessage",
-      error.message || "Could not save profile."
+      error.message ||
+      "Could not save profile."
     );
   }
 }
 
 
-/* ============================================================
+/* ==========================================================
    AVATAR UPLOAD
-============================================================ */
+========================================================== */
 
 async function uploadAvatar(event) {
 
   const file =
     event.target.files?.[0];
 
-  if (!file || !session?.user?.id) return;
+  if (!file || !session?.user?.id)
+    return;
 
 
   clearMessage("profileMessage");
@@ -1627,25 +1873,38 @@ async function uploadAvatar(event) {
   try {
 
     const extension =
-      file.name.split(".").pop() || "jpg";
+      file.name.split(".").pop() ||
+      "jpg";
+
 
     const path =
       `${session.user.id}/${Date.now()}.${extension}`;
 
 
-    const { error: uploadError } =
+    const {
+      error:uploadError
+    } =
       await db.storage
         .from("avatars")
-        .upload(path, file, {
-          contentType: file.type || "image/jpeg",
-          upsert: true
-        });
+        .upload(
+          path,
+          file,
+          {
+            contentType:
+              file.type ||
+              "image/jpeg",
+            upsert:true
+          }
+        );
 
 
-    if (uploadError) throw uploadError;
+    if (uploadError)
+      throw uploadError;
 
 
-    const { data: publicData } =
+    const {
+      data:publicData
+    } =
       db.storage
         .from("avatars")
         .getPublicUrl(path);
@@ -1655,16 +1914,22 @@ async function uploadAvatar(event) {
       publicData.publicUrl;
 
 
-    const { error: updateError } =
+    const {
+      error:updateError
+    } =
       await db
         .from("profiles")
         .update({
-          avatar_url: avatarUrl
+          avatar_url:avatarUrl
         })
-        .eq("id", session.user.id);
+        .eq(
+          "id",
+          session.user.id
+        );
 
 
-    if (updateError) throw updateError;
+    if (updateError)
+      throw updateError;
 
 
     myProfile.avatar_url =
@@ -1683,33 +1948,39 @@ async function uploadAvatar(event) {
 
     await loadDiscover();
 
-  } catch (error) {
+  } catch(error) {
 
     console.error(error);
 
     showMessage(
       "profileMessage",
-      error.message || "Photo upload failed."
+      error.message ||
+      "Photo upload failed."
     );
   }
 }
 
 
-/* ============================================================
+/* ==========================================================
    DISCOVER
-============================================================ */
+========================================================== */
 
 async function loadDiscover() {
 
   const container =
-    document.getElementById("discoverList");
+    document.getElementById(
+      "discoverList"
+    );
 
 
-  if (!session?.user?.id) return;
+  if (!session?.user?.id)
+    return;
 
 
   container.innerHTML =
-    `<div class="loading">Loading profiles...</div>`;
+    `<div class="loading">
+       Loading profiles...
+     </div>`;
 
 
   try {
@@ -1718,45 +1989,72 @@ async function loadDiscover() {
       db
         .from("profiles")
         .select("*")
-        .neq("id", session.user.id)
-        .gte("age", 18)
-        .order("created_at", {
-          ascending: false
-        });
+        .neq(
+          "id",
+          session.user.id
+        )
+        .gte("age",18)
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        );
 
 
     const minAge =
-      Number(document.getElementById("minAge").value);
+      Number(
+        document.getElementById("minAge")
+          .value
+      );
 
     const maxAge =
-      Number(document.getElementById("maxAge").value);
+      Number(
+        document.getElementById("maxAge")
+          .value
+      );
 
     const goal =
-      document.getElementById("goalFilter").value;
+      document.getElementById(
+        "goalFilter"
+      ).value;
 
     const search =
-      document.getElementById("searchInput").value
+      document.getElementById(
+        "searchInput"
+      ).value
         .trim()
         .toLowerCase();
 
 
-    if (minAge) {
-      query = query.gte("age", minAge);
-    }
-
-    if (maxAge) {
-      query = query.lte("age", maxAge);
-    }
-
-    if (goal) {
-      query = query.eq(
-        "relationship_goal",
-        goal
-      );
-    }
+    if (minAge)
+      query =
+        query.gte(
+          "age",
+          minAge
+        );
 
 
-    const { data, error } =
+    if (maxAge)
+      query =
+        query.lte(
+          "age",
+          maxAge
+        );
+
+
+    if (goal)
+      query =
+        query.eq(
+          "relationship_goal",
+          goal
+        );
+
+
+    const {
+      data,
+      error
+    } =
       await query;
 
 
@@ -1770,58 +2068,84 @@ async function loadDiscover() {
     if (search) {
 
       profiles =
-        profiles.filter(profile => {
+        profiles.filter(
+          profile => {
 
-          const text = [
-            profile.name,
-            profile.city,
-            profile.bio,
-            profile.relationship_goal
-          ]
-            .filter(Boolean)
-            .join(" ")
-            .toLowerCase();
+            const text = [
+              profile.name,
+              profile.city,
+              profile.bio,
+              profile.relationship_goal
+            ]
+              .filter(Boolean)
+              .join(" ")
+              .toLowerCase();
 
 
-          return text.includes(search);
-        });
+            return text.includes(search);
+          }
+        );
     }
 
 
     renderDiscover(profiles);
 
-  } catch (error) {
+  } catch(error) {
 
     console.error(error);
 
     container.innerHTML = `
-      <div class="empty">
-        <div class="empty-icon">⚠</div>
-        <h3>Could not load profiles</h3>
-        <p>${escapeHtml(error.message)}</p>
+      <div class="empty"
+           style="grid-column:1/-1">
+
+        <div class="empty-icon">
+          ⚠
+        </div>
+
+        <h3>
+          Could not load profiles
+        </h3>
+
+        <p>
+          ${escapeHtml(error.message)}
+        </p>
+
       </div>
     `;
   }
 }
 
 
-/* ============================================================
+/* ==========================================================
    RENDER DISCOVER
-============================================================ */
+========================================================== */
 
 function renderDiscover(profiles) {
 
   const container =
-    document.getElementById("discoverList");
+    document.getElementById(
+      "discoverList"
+    );
 
 
   if (!profiles.length) {
 
     container.innerHTML = `
-      <div class="empty" style="grid-column:1/-1">
-        <div class="empty-icon">🦚</div>
-        <h3>No profiles found</h3>
-        <p>Try changing your search or filters.</p>
+      <div class="empty"
+           style="grid-column:1/-1">
+
+        <div class="empty-icon">
+          🦚
+        </div>
+
+        <h3>
+          No profiles found
+        </h3>
+
+        <p>
+          Try changing your search or filters.
+        </p>
+
       </div>
     `;
 
@@ -1838,13 +2162,25 @@ function renderDiscover(profiles) {
 
           ${
             profile.avatar_url
-              ? `<img
-                   src="${escapeHtml(profile.avatar_url)}"
-                   alt="${escapeHtml(profile.name)}"
-                 >`
-              : `<div class="avatar-placeholder">
-                   ${escapeHtml(initials(profile.name))}
-                 </div>`
+
+              ? `
+                <img
+                  src="${escapeHtml(
+                    profile.avatar_url
+                  )}"
+                  alt="${escapeHtml(
+                    profile.name
+                  )}"
+                >
+              `
+
+              : `
+                <div class="avatar-placeholder">
+                  ${escapeHtml(
+                    initials(profile.name)
+                  )}
+                </div>
+              `
           }
 
         </div>
@@ -1853,30 +2189,63 @@ function renderDiscover(profiles) {
         <div class="profile-info">
 
           <div class="profile-name">
-            ${escapeHtml(profile.name || "Member")}
-            ${profile.age ? `, ${escapeHtml(profile.age)}` : ""}
+
+            ${escapeHtml(
+              profile.name ||
+              "Member"
+            )}
+
+            ${
+              profile.age
+                ? `, ${escapeHtml(
+                    profile.age
+                  )}`
+                : ""
+            }
+
           </div>
 
 
           <div class="profile-meta">
-            ${escapeHtml(profile.city || "Offa")}
-            ${profile.sex ? ` • ${escapeHtml(profile.sex)}` : ""}
+
+            ${escapeHtml(
+              profile.city ||
+              "Offa"
+            )}
+
+            ${
+              profile.sex
+                ? ` • ${escapeHtml(
+                    profile.sex
+                  )}`
+                : ""
+            }
+
           </div>
 
 
           ${
             profile.relationship_goal
-              ? `<div class="goal">
-                   ${escapeHtml(profile.relationship_goal)}
-                 </div>`
+
+              ? `
+                <div class="goal">
+                  ${escapeHtml(
+                    profile.relationship_goal
+                  )}
+                </div>
+              `
+
               : ""
           }
 
 
           <div class="profile-bio">
+
             ${escapeHtml(
-              profile.bio || "No bio added yet."
+              profile.bio ||
+              "No bio added yet."
             )}
+
           </div>
 
 
@@ -1884,13 +2253,16 @@ function renderDiscover(profiles) {
 
             <button
               class="pass-btn"
+              type="button"
               onclick="passProfile('${profile.id}')"
             >
               Pass
             </button>
 
+
             <button
               class="like-btn"
+              type="button"
               onclick="likeProfile('${profile.id}')"
             >
               ♥ Like
@@ -1906,38 +2278,38 @@ function renderDiscover(profiles) {
 }
 
 
-/* ============================================================
+/* ==========================================================
    LIKE
-============================================================ */
+========================================================== */
 
 async function likeProfile(profileId) {
 
-  if (!session?.user?.id) return;
+  if (!session?.user?.id)
+    return;
 
 
   try {
 
-    const { error } =
+    const {
+      error
+    } =
       await db
         .from("likes")
         .upsert(
           {
-            from_user: session.user.id,
-            to_user: profileId
+            from_user:
+              session.user.id,
+            to_user:
+              profileId
           },
           {
-            onConflict: "from_user,to_user"
+            onConflict:
+              "from_user,to_user"
           }
         );
 
 
     if (error) throw error;
-
-
-    /*
-      The database trigger creates a match automatically
-      when the other person has already liked you.
-    */
 
 
     await loadDiscover();
@@ -1947,7 +2319,7 @@ async function likeProfile(profileId) {
 
     alert("Like sent ♥");
 
-  } catch (error) {
+  } catch(error) {
 
     console.error(error);
 
@@ -1959,76 +2331,111 @@ async function likeProfile(profileId) {
 }
 
 
-/* ============================================================
+/* ==========================================================
    PASS
-============================================================ */
+========================================================== */
 
 function passProfile(profileId) {
 
-  /*
-    Pass is intentionally local for this simple version.
-    The profile disappears after refreshing the discover list.
-  */
-
-  const card =
-    document
-      .querySelector(
-        `[onclick="passProfile('${profileId}')"]`
-      )
-      ?.closest(".profile-card");
+  const buttons =
+    document.querySelectorAll(
+      ".pass-btn"
+    );
 
 
-  if (card) {
-    card.remove();
-  }
+  buttons.forEach(button => {
+
+    if (
+      button.getAttribute(
+        "onclick"
+      ) ===
+      `passProfile('${profileId}')`
+    ) {
+
+      const card =
+        button.closest(
+          ".profile-card"
+        );
+
+      if (card)
+        card.remove();
+    }
+  });
 }
 
 
-/* ============================================================
-   MATCHES
-============================================================ */
+/* ==========================================================
+   LOAD MATCHES
+========================================================== */
 
-async function loadMatches() {
+function loadMatches() {
+  loadMatchesAsync();
+}
+
+
+async function loadMatchesAsync() {
 
   const container =
-    document.getElementById("matchesList");
+    document.getElementById(
+      "matchesList"
+    );
 
 
-  if (!session?.user?.id) return;
+  if (!session?.user?.id)
+    return;
 
 
   container.innerHTML =
-    `<div class="loading">Loading matches...</div>`;
+    `<div class="loading">
+       Loading matches...
+     </div>`;
 
 
   try {
 
-    const { data, error } =
+    const {
+      data:matches,
+      error
+    } =
       await db
         .from("matches")
         .select("*")
         .or(
           `user_one.eq.${session.user.id},user_two.eq.${session.user.id}`
         )
-        .order("created_at", {
-          ascending: false
-        });
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        );
 
 
-    if (error) throw error;
+    if (error)
+      throw error;
 
 
-    const matches =
-      data || [];
-
-
-    if (!matches.length) {
+    if (
+      !matches ||
+      matches.length === 0
+    ) {
 
       container.innerHTML = `
         <div class="empty">
-          <div class="empty-icon">♥</div>
-          <h3>No matches yet</h3>
-          <p>Start liking people to make connections.</p>
+
+          <div class="empty-icon">
+            ♥
+          </div>
+
+          <h3>
+            No matches yet
+          </h3>
+
+          <p>
+            When someone likes you back,
+            your match will appear here.
+          </p>
+
         </div>
       `;
 
@@ -2038,125 +2445,232 @@ async function loadMatches() {
 
     const otherIds =
       matches.map(match =>
-        match.user_one === session.user.id
+        match.user_one ===
+        session.user.id
+
           ? match.user_two
+
           : match.user_one
       );
 
 
-    const { data: profiles, error: profileError } =
+    const {
+      data:profiles,
+      error:profileError
+    } =
       await db
         .from("profiles")
         .select("*")
-        .in("id", otherIds);
+        .in(
+          "id",
+          otherIds
+        );
 
 
-    if (profileError) throw profileError;
+    if (profileError)
+      throw profileError;
 
 
     const profileMap = {};
 
-    (profiles || []).forEach(profile => {
-      profileMap[profile.id] = profile;
+
+    (profiles || [])
+      .forEach(profile => {
+
+        profileMap[
+          profile.id
+        ] = profile;
+
+      });
+
+
+    window.offaMatches = {};
+
+
+    let html = "";
+
+
+    matches.forEach(match => {
+
+      const otherId =
+        match.user_one ===
+        session.user.id
+
+          ? match.user_two
+
+          : match.user_one;
+
+
+      const profile =
+        profileMap[otherId];
+
+
+      if (!profile)
+        return;
+
+
+      /*
+        Store the match in JavaScript
+        instead of putting a JSON object
+        directly into onclick.
+      */
+
+      window.offaMatches[
+        String(match.id)
+      ] = {
+
+        matchId:
+          match.id,
+
+        profile:
+          profile
+      };
+
+
+      html += `
+
+        <div class="match-card">
+
+          <div class="match-avatar">
+
+            ${
+              profile.avatar_url
+
+                ? `
+                  <img
+                    src="${escapeHtml(
+                      profile.avatar_url
+                    )}"
+                    alt=""
+                  >
+                `
+
+                : escapeHtml(
+                    initials(
+                      profile.name
+                    )
+                  )
+            }
+
+          </div>
+
+
+          <div class="match-info">
+
+            <h3>
+              ${escapeHtml(
+                profile.name ||
+                "Member"
+              )}
+            </h3>
+
+
+            <p>
+
+              ${escapeHtml(
+                profile.city ||
+                "Offa"
+              )}
+
+              ${
+                profile.age
+                  ? ` • ${escapeHtml(
+                      profile.age
+                    )}`
+                  : ""
+              }
+
+            </p>
+
+          </div>
+
+
+          <button
+            class="chat-open"
+            type="button"
+            onclick="openChatByMatchId('${String(match.id)}')"
+          >
+            Chat
+          </button>
+
+        </div>
+
+      `;
     });
 
 
     container.innerHTML =
-      matches.map(match => {
+      html ||
 
-        const otherId =
-          match.user_one === session.user.id
-            ? match.user_two
-            : match.user_one;
+      `
+        <div class="empty">
 
-
-        const profile =
-          profileMap[otherId];
-
-
-        if (!profile) return "";
-
-
-        return `
-
-          <div class="match-card">
-
-            <div class="match-avatar">
-
-              ${
-                profile.avatar_url
-                  ? `<img
-                       src="${escapeHtml(profile.avatar_url)}"
-                       alt=""
-                     >`
-                  : escapeHtml(initials(profile.name))
-              }
-
-            </div>
-
-
-            <div class="match-info">
-
-              <h3>
-                ${escapeHtml(profile.name || "Member")}
-              </h3>
-
-              <p>
-                ${escapeHtml(profile.city || "Offa")}
-                ${profile.age ? ` • ${profile.age}` : ""}
-              </p>
-
-            </div>
-
-
-            <button
-              class="chat-open"
-              onclick="openChat(${JSON.stringify(JSON.stringify({
-                matchId: match.id,
-                profile
-              }))})"
-            >
-              Chat
-            </button>
-
+          <div class="empty-icon">
+            ♥
           </div>
 
-        `;
+          <h3>
+            No matches available
+          </h3>
 
-      }).join("");
+        </div>
+      `;
 
 
-  } catch (error) {
+  } catch(error) {
 
-    console.error(error);
+    console.error(
+      "MATCH ERROR:",
+      error
+    );
+
 
     container.innerHTML = `
       <div class="empty">
-        <div class="empty-icon">⚠</div>
-        <h3>Could not load matches</h3>
-        <p>${escapeHtml(error.message)}</p>
+
+        <div class="empty-icon">
+          ⚠
+        </div>
+
+        <h3>
+          Could not load matches
+        </h3>
+
+        <p>
+          ${escapeHtml(
+            error.message
+          )}
+        </p>
+
       </div>
     `;
   }
 }
 
 
-/* ============================================================
-   OPEN CHAT
-============================================================ */
+/* ==========================================================
+   OPEN CHAT — FIXED
+========================================================== */
 
-async function openChat(encodedData) {
+async function openChatByMatchId(matchId) {
 
-  let data;
+  const match =
+    window.offaMatches?.[
+      String(matchId)
+    ];
 
-  try {
-    data = JSON.parse(encodedData);
-  } catch {
+
+  if (!match) {
+
+    alert(
+      "This match could not be opened. Please refresh your matches."
+    );
+
     return;
   }
 
 
-  selectedMatch = data;
+  selectedMatch = match;
 
 
   showPage("chat");
@@ -2166,31 +2680,46 @@ async function openChat(encodedData) {
     .getElementById("chatEmpty")
     .classList.add("hidden");
 
+
   document
     .getElementById("chatBox")
     .classList.remove("hidden");
 
 
   const profile =
-    data.profile;
+    match.profile;
 
 
-  document.getElementById("chatName").textContent =
-    profile.name || "Chat";
+  document
+    .getElementById("chatName")
+    .textContent =
+      profile.name ||
+      "Chat";
 
 
-  document.getElementById("chatStatus").textContent =
-    profile.city || "Connected on Offa Connect";
+  document
+    .getElementById("chatStatus")
+    .textContent =
+      profile.city ||
+      "Connected on Offa Connect";
 
 
   const avatar =
-    document.getElementById("chatAvatar");
+    document.getElementById(
+      "chatAvatar"
+    );
 
 
   if (profile.avatar_url) {
 
-    avatar.innerHTML =
-      `<img src="${escapeHtml(profile.avatar_url)}" alt="">`;
+    avatar.innerHTML = `
+      <img
+        src="${escapeHtml(
+          profile.avatar_url
+        )}"
+        alt=""
+      >
+    `;
 
   } else {
 
@@ -2203,12 +2732,23 @@ async function openChat(encodedData) {
 
 
   subscribeToMessages();
+
+
+  setTimeout(() => {
+
+    document
+      .getElementById(
+        "messageInput"
+      )
+      ?.focus();
+
+  },100);
 }
 
 
-/* ============================================================
+/* ==========================================================
    CLOSE CHAT
-============================================================ */
+========================================================== */
 
 function closeChat() {
 
@@ -2217,7 +2757,9 @@ function closeChat() {
 
   if (messagesSubscription) {
 
-    db.removeChannel(messagesSubscription);
+    db.removeChannel(
+      messagesSubscription
+    );
 
     messagesSubscription = null;
   }
@@ -2227,77 +2769,125 @@ function closeChat() {
     .getElementById("chatBox")
     .classList.add("hidden");
 
+
   document
     .getElementById("chatEmpty")
     .classList.remove("hidden");
 }
 
 
-/* ============================================================
+/* ==========================================================
    LOAD MESSAGES
-============================================================ */
+========================================================== */
 
 async function loadMessages() {
 
   const container =
-    document.getElementById("messages");
+    document.getElementById(
+      "messages"
+    );
 
 
-  if (!selectedMatch) return;
+  if (!selectedMatch)
+    return;
 
 
   container.innerHTML =
-    `<div class="loading">Loading messages...</div>`;
+    `<div class="loading">
+       Loading messages...
+     </div>`;
 
 
   try {
 
-    const { data, error } =
+    const {
+      data,
+      error
+    } =
       await db
         .from("messages")
         .select("*")
-        .eq("match_id", selectedMatch.matchId)
-        .order("created_at", {
-          ascending: true
-        });
+        .eq(
+          "match_id",
+          selectedMatch.matchId
+        )
+        .order(
+          "created_at",
+          {
+            ascending:true
+          }
+        );
 
 
-    if (error) throw error;
+    if (error)
+      throw error;
 
 
-    renderMessages(data || []);
+    renderMessages(
+      data || []
+    );
 
 
-  } catch (error) {
+  } catch(error) {
 
-    console.error(error);
+    console.error(
+      "LOAD MESSAGES ERROR:",
+      error
+    );
+
 
     container.innerHTML = `
       <div class="empty">
-        <p>${escapeHtml(error.message)}</p>
+
+        <div class="empty-icon">
+          ⚠
+        </div>
+
+        <h3>
+          Could not load messages
+        </h3>
+
+        <p>
+          ${escapeHtml(
+            error.message
+          )}
+        </p>
+
       </div>
     `;
   }
 }
 
 
-/* ============================================================
+/* ==========================================================
    RENDER MESSAGES
-============================================================ */
+========================================================== */
 
 function renderMessages(messages) {
 
   const container =
-    document.getElementById("messages");
+    document.getElementById(
+      "messages"
+    );
 
 
   if (!messages.length) {
 
     container.innerHTML = `
       <div class="empty">
-        <div class="empty-icon">👋</div>
-        <h3>Start the conversation</h3>
-        <p>Say hello!</p>
+
+        <div class="empty-icon">
+          👋
+        </div>
+
+        <h3>
+          Start the conversation
+        </h3>
+
+        <p>
+          Say hello!
+        </p>
+
       </div>
     `;
 
@@ -2309,7 +2899,8 @@ function renderMessages(messages) {
     messages.map(message => {
 
       const mine =
-        message.sender_id === session.user.id;
+        message.sender_id ===
+        session.user.id;
 
 
       let content = "";
@@ -2317,8 +2908,13 @@ function renderMessages(messages) {
 
       if (message.message) {
 
-        content +=
-          `<div>${escapeHtml(message.message)}</div>`;
+        content += `
+          <div>
+            ${escapeHtml(
+              message.message
+            )}
+          </div>
+        `;
       }
 
 
@@ -2326,13 +2922,22 @@ function renderMessages(messages) {
 
         content += `
           <a
-            class="attachment-link"
-            href="${escapeHtml(message.attachment_url)}"
+            href="${escapeHtml(
+              message.attachment_url
+            )}"
             target="_blank"
             rel="noopener"
+            style="
+              display:block;
+              margin-top:6px;
+              color:inherit;
+              font-weight:700;
+            "
           >
-            📎 ${escapeHtml(
-              message.attachment_name || "Attachment"
+            📎
+            ${escapeHtml(
+              message.attachment_name ||
+              "Attachment"
             )}
           </a>
         `;
@@ -2341,15 +2946,31 @@ function renderMessages(messages) {
 
       return `
 
-        <div class="message-row ${mine ? "mine" : "theirs"}">
+        <div
+          class="message-row ${
+            mine
+              ? "mine"
+              : "theirs"
+          }"
+        >
 
           <div class="bubble">
 
             ${content}
 
             <span class="bubble-time">
-              ${formatTime(message.created_at)}
-              ${mine && message.read_at ? " ✓✓" : ""}
+
+              ${formatTime(
+                message.created_at
+              )}
+
+              ${
+                mine &&
+                message.read_at
+                  ? " ✓✓"
+                  : ""
+              }
+
             </span>
 
           </div>
@@ -2366,9 +2987,9 @@ function renderMessages(messages) {
 }
 
 
-/* ============================================================
-   SEND MESSAGE
-============================================================ */
+/* ==========================================================
+   SEND MESSAGE — FIXED
+========================================================== */
 
 async function sendMessage(event) {
 
@@ -2378,18 +2999,32 @@ async function sendMessage(event) {
   if (
     !session?.user?.id ||
     !selectedMatch
-  ) return;
+  ) {
+
+    alert(
+      "Please open a match first."
+    );
+
+    return;
+  }
 
 
   const input =
-    document.getElementById("messageInput");
+    document.getElementById(
+      "messageInput"
+    );
 
 
   const message =
     input.value.trim();
 
 
-  if (!message) return;
+  if (!message)
+    return;
+
+
+  const originalMessage =
+    message;
 
 
   input.value = "";
@@ -2397,82 +3032,122 @@ async function sendMessage(event) {
 
   try {
 
-    const { error } =
+    const {
+      data,
+      error
+    } =
       await db
         .from("messages")
         .insert({
-          match_id: selectedMatch.matchId,
-          sender_id: session.user.id,
-          message
-        });
+          match_id:
+            selectedMatch.matchId,
+
+          sender_id:
+            session.user.id,
+
+          message:
+            originalMessage
+        })
+        .select()
+        .single();
 
 
-    if (error) throw error;
+    if (error)
+      throw error;
 
+
+    /*
+      Immediately reload so the sender
+      sees the message without waiting
+      for realtime.
+    */
 
     await loadMessages();
 
-  } catch (error) {
 
-    console.error(error);
+  } catch(error) {
+
+    console.error(
+      "SEND MESSAGE ERROR:",
+      error
+    );
+
+
+    input.value =
+      originalMessage;
+
 
     alert(
       error.message ||
       "Message could not be sent."
     );
-
-    input.value = message;
   }
 }
 
 
-/* ============================================================
+/* ==========================================================
    REALTIME CHAT
-============================================================ */
+========================================================== */
 
 function subscribeToMessages() {
 
-  if (!selectedMatch) return;
+  if (!selectedMatch)
+    return;
 
 
   if (messagesSubscription) {
 
-    db.removeChannel(messagesSubscription);
+    db.removeChannel(
+      messagesSubscription
+    );
 
-    messagesSubscription = null;
+    messagesSubscription =
+      null;
   }
 
 
   messagesSubscription =
     db
       .channel(
-        "messages-" +
+        "offa-messages-" +
         selectedMatch.matchId +
         "-" +
         Date.now()
       )
+
       .on(
         "postgres_changes",
         {
-          event: "INSERT",
-          schema: "public",
-          table: "messages",
+          event:"INSERT",
+          schema:"public",
+          table:"messages",
           filter:
             `match_id=eq.${selectedMatch.matchId}`
         },
+
         async () => {
 
           await loadMessages();
 
         }
       )
-      .subscribe();
+
+      .subscribe(
+        status => {
+
+          console.log(
+            "Chat realtime status:",
+            status
+          );
+
+        }
+      );
 }
 
 
-/* ============================================================
+/* ==========================================================
    NAVIGATION
-============================================================ */
+========================================================== */
 
 function showPage(page) {
 
@@ -2487,7 +3162,10 @@ function showPage(page) {
   pages.forEach(name => {
 
     const element =
-      document.getElementById(name + "Page");
+      document.getElementById(
+        name + "Page"
+      );
+
 
     if (element) {
 
@@ -2532,16 +3210,26 @@ function showPage(page) {
 
     loadMyProfile();
   }
+
+
+  if (
+    page === "chat" &&
+    selectedMatch
+  ) {
+
+    loadMessages();
+  }
 }
 
 
-/* ============================================================
-   LAST SEEN / ONLINE
-============================================================ */
+/* ==========================================================
+   LAST SEEN
+========================================================== */
 
 async function updateLastSeen() {
 
-  if (!session?.user?.id) return;
+  if (!session?.user?.id)
+    return;
 
 
   try {
@@ -2549,11 +3237,15 @@ async function updateLastSeen() {
     await db
       .from("profiles")
       .update({
-        last_seen_at: new Date().toISOString()
+        last_seen_at:
+          new Date().toISOString()
       })
-      .eq("id", session.user.id);
+      .eq(
+        "id",
+        session.user.id
+      );
 
-  } catch (error) {
+  } catch(error) {
 
     console.warn(
       "Could not update last seen:",
@@ -2563,38 +3255,44 @@ async function updateLastSeen() {
 }
 
 
-/* ============================================================
+/* ==========================================================
    LOGOUT
-============================================================ */
+========================================================== */
 
 async function logout() {
 
   try {
 
+    if (messagesSubscription) {
+
+      await db.removeChannel(
+        messagesSubscription
+      );
+
+      messagesSubscription =
+        null;
+    }
+
+
     await db.auth.signOut();
 
-  } catch (error) {
+  } catch(error) {
 
     console.error(error);
   }
 
 
   session = null;
+
   myProfile = null;
+
   selectedMatch = null;
-
-
-  if (messagesSubscription) {
-
-    db.removeChannel(messagesSubscription);
-
-    messagesSubscription = null;
-  }
 
 
   document
     .getElementById("appScreen")
     .classList.add("hidden");
+
 
   document
     .getElementById("authScreen")
@@ -2605,29 +3303,33 @@ async function logout() {
 }
 
 
-/* ============================================================
+/* ==========================================================
    AUTH STATE
-============================================================ */
+========================================================== */
 
 db.auth.onAuthStateChange(
-  async (event, newSession) => {
+  async (event,newSession) => {
 
     if (
       newSession &&
       !session
     ) {
 
-      await startApp(newSession);
-
+      await startApp(
+        newSession
+      );
     }
+
 
     if (!newSession) {
 
       session = null;
 
+
       document
         .getElementById("appScreen")
         .classList.add("hidden");
+
 
       document
         .getElementById("authScreen")
@@ -2637,25 +3339,28 @@ db.auth.onAuthStateChange(
 );
 
 
-/* ============================================================
+/* ==========================================================
    INITIAL SESSION
-============================================================ */
+========================================================== */
 
 (async function init() {
 
   try {
 
-    const { data } =
+    const {
+      data
+    } =
       await db.auth.getSession();
 
 
     if (data.session) {
 
-      await startApp(data.session);
-
+      await startApp(
+        data.session
+      );
     }
 
-  } catch (error) {
+  } catch(error) {
 
     console.error(
       "Session initialization failed:",
@@ -2664,6 +3369,7 @@ db.auth.onAuthStateChange(
   }
 
 })();
+
 </script>
 
 </body>
