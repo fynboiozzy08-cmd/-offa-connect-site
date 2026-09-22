@@ -1,873 +1,554 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Offa Connect by Leo</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-    :root {
-      --navy:#071A2B;
-      --blue:#0B5C8E;
-      --teal:#0B8F87;
-      --green:#18A06A;
-      --gold:#D9A441;
-      --cream:#F7F4EE;
-      --white:#FFFFFF;
-      --ink:#132235;
-      --muted:#6E7D8C;
-      --line:#E4EAF0;
-      --danger:#D94B4B;
-      --shadow:0 12px 35px rgba(7,26,43,.10);
-    }
-
-    * {
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
-
-    body {
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-      background:var(--cream);
-      color:var(--ink);
-      min-height:100vh;
-    }
-
-    button,input,select,textarea {
-      font:inherit;
-    }
-
-    button {
-      cursor:pointer;
-    }
-
-    .hidden {
-      display:none!important;
-    }
-
-    /* AUTH */
-
-    #authScreen {
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding:24px;
-      background:
-        radial-gradient(circle at top right,rgba(24,160,106,.18),transparent 35%),
-        linear-gradient(145deg,#071A2B,#0B5C8E);
-    }
-
-    .auth-card {
-      width:100%;
-      max-width:430px;
-      background:rgba(255,255,255,.98);
-      border-radius:28px;
-      padding:32px;
-      box-shadow:0 25px 70px rgba(0,0,0,.25);
-    }
-
-    .brand {
-      text-align:center;
-      margin-bottom:26px;
-    }
-
-    .logo {
-      width:82px;
-      height:82px;
-      margin:0 auto 14px;
-      border-radius:50%;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      background:linear-gradient(135deg,var(--teal),var(--blue));
-      color:white;
-      font-size:40px;
-      box-shadow:0 12px 28px rgba(11,92,142,.25);
-    }
-
-    .brand h1 {
-      color:var(--navy);
-      font-size:29px;
-      letter-spacing:-.5px;
-    }
-
-    .brand p {
-      color:var(--muted);
-      margin-top:5px;
-      font-size:14px;
-    }
-
-    .gold {
-      color:var(--gold);
-    }
-
-    .form-group {
-      margin-bottom:15px;
-    }
-
-    label {
-      display:block;
-      font-size:13px;
-      font-weight:700;
-      margin-bottom:7px;
-    }
-
-    input,select,textarea {
-      width:100%;
-      border:1px solid var(--line);
-      border-radius:13px;
-      padding:13px 14px;
-      background:white;
-      color:var(--ink);
-      outline:none;
-      transition:.2s;
-    }
-
-    textarea {
-      min-height:110px;
-      resize:vertical;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color:var(--teal);
-      box-shadow:0 0 0 3px rgba(11,143,135,.10);
-    }
-
-    .primary-btn,
-    .secondary-btn,
-    .danger-btn {
-      width:100%;
-      border:none;
-      border-radius:13px;
-      padding:14px;
-      font-weight:800;
-      margin-top:7px;
-    }
-
-    .primary-btn {
-      background:linear-gradient(135deg,var(--teal),var(--green));
-      color:white;
-    }
-
-    .secondary-btn {
-      background:#EEF5F7;
-      color:var(--blue);
-    }
-
-    .danger-btn {
-      background:#FFF0F0;
-      color:var(--danger);
-    }
-
-    .switch-auth {
-      text-align:center;
-      margin-top:18px;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .switch-auth button {
-      border:none;
-      background:none;
-      color:var(--blue);
-      font-weight:800;
-    }
-
-    .message {
-      margin:12px 0;
-      padding:11px 13px;
-      border-radius:11px;
-      font-size:13px;
-      display:none;
-    }
-
-    .message.error {
-      display:block;
-      background:#FFF0F0;
-      color:#A52D2D;
-    }
-
-    .message.success {
-      display:block;
-      background:#ECFBF3;
-      color:#167546;
-    }
-
-    /* APP */
-
-    #appScreen {
-      min-height:100vh;
-      padding-bottom:82px;
-    }
-
-    .topbar {
-      height:70px;
-      background:var(--navy);
-      color:white;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:0 20px;
-      position:sticky;
-      top:0;
-      z-index:50;
-      box-shadow:0 5px 20px rgba(0,0,0,.12);
-    }
-
-    .top-brand {
-      font-weight:900;
-      font-size:19px;
-    }
-
-    .top-brand span {
-      color:var(--gold);
-    }
-
-    .online-dot {
-      width:8px;
-      height:8px;
-      background:#31D77C;
-      display:inline-block;
-      border-radius:50%;
-      margin-right:5px;
-    }
-
-    .page {
-      width:100%;
-      max-width:1100px;
-      margin:0 auto;
-      padding:22px 16px;
-    }
-
-    .section-title {
-      margin-bottom:16px;
-    }
-
-    .section-title h2 {
-      color:var(--navy);
-      font-size:25px;
-    }
-
-    .section-title p {
-      color:var(--muted);
-      font-size:14px;
-      margin-top:4px;
-    }
-
-    /* FILTERS */
-
-    .filters {
-      background:white;
-      padding:15px;
-      border-radius:18px;
-      box-shadow:var(--shadow);
-      margin-bottom:18px;
-    }
-
-    .filter-grid {
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:9px;
-    }
-
-    /* PROFILES */
-
-    .profile-grid {
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:18px;
-    }
-
-    .profile-card {
-      background:white;
-      border-radius:20px;
-      overflow:hidden;
-      box-shadow:var(--shadow);
-    }
-
-    .profile-image {
-      height:280px;
-      background:linear-gradient(135deg,#DCECEF,#B9D9D7);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-    }
-
-    .profile-image img {
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .avatar-placeholder {
-      font-size:72px;
-      color:var(--blue);
-      font-weight:900;
-    }
-
-    .profile-info {
-      padding:15px;
-    }
-
-    .profile-name {
-      font-size:19px;
-      font-weight:900;
-      color:var(--navy);
-    }
-
-    .profile-meta {
-      color:var(--muted);
-      font-size:13px;
-      margin-top:4px;
-    }
-
-    .profile-bio {
-      font-size:13px;
-      line-height:1.45;
-      margin:10px 0;
-      color:#405162;
-      min-height:38px;
-    }
-
-    .goal {
-      display:inline-block;
-      padding:5px 8px;
-      background:#EEF8F5;
-      color:var(--green);
-      border-radius:20px;
-      font-size:11px;
-      font-weight:800;
-      margin-top:9px;
-    }
-
-    .profile-actions {
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:8px;
-    }
-
-    .like-btn,
-    .pass-btn {
-      border:none;
-      border-radius:11px;
-      padding:10px;
-      font-weight:800;
-    }
-
-    .like-btn {
-      background:#E9F9F1;
-      color:var(--green);
-    }
-
-    .pass-btn {
-      background:#F2F4F6;
-      color:var(--muted);
-    }
-
-    /* MATCHES */
-
-    .match-list {
-      display:grid;
-      gap:12px;
-    }
-
-    .match-card {
-      background:white;
-      padding:14px;
-      border-radius:17px;
-      display:flex;
-      align-items:center;
-      gap:13px;
-      box-shadow:var(--shadow);
-    }
-
-    .match-avatar {
-      width:58px;
-      height:58px;
-      border-radius:50%;
-      overflow:hidden;
-      background:#DDECEF;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-shrink:0;
-      color:var(--blue);
-      font-size:23px;
-      font-weight:900;
-    }
-
-    .match-avatar img {
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .match-info {
-      flex:1;
-    }
-
-    .match-info h3 {
-      font-size:16px;
-    }
-
-    .match-info p {
-      color:var(--muted);
-      font-size:12px;
-      margin-top:3px;
-    }
-
-    .chat-open {
-      border:none;
-      border-radius:11px;
-      background:var(--blue);
-      color:white;
-      padding:9px 13px;
-      font-weight:800;
-    }
-
-    /* CHAT */
-
-    .chat-box {
-      background:white;
-      border-radius:20px;
-      box-shadow:var(--shadow);
-      overflow:hidden;
-      height:calc(100vh - 145px);
-      min-height:500px;
-      display:flex;
-      flex-direction:column;
-    }
-
-    .chat-header {
-      padding:14px 16px;
-      background:var(--navy);
-      color:white;
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-
-    .chat-header button {
-      border:none;
-      background:transparent;
-      color:white;
-      font-size:27px;
-    }
-
-    .chat-header-info {
-      flex:1;
-    }
-
-    .chat-header-info h3 {
-      font-size:16px;
-    }
-
-    .chat-header-info p {
-      color:#B9D2DF;
-      font-size:11px;
-      margin-top:2px;
-    }
-
-    .messages {
-      flex:1;
-      overflow-y:auto;
-      padding:16px;
-      background:#F7FAFB;
-    }
-
-    .message-row {
-      display:flex;
-      margin-bottom:10px;
-    }
-
-    .message-row.mine {
-      justify-content:flex-end;
-    }
-
-    .bubble {
-      max-width:75%;
-      padding:10px 13px;
-      border-radius:16px;
-      font-size:14px;
-      line-height:1.4;
-      word-break:break-word;
-    }
-
-    .mine .bubble {
-      background:var(--teal);
-      color:white;
-      border-bottom-right-radius:4px;
-    }
-
-    .theirs .bubble {
-      background:white;
-      color:var(--ink);
-      border-bottom-left-radius:4px;
-      box-shadow:0 3px 12px rgba(0,0,0,.05);
-    }
-
-    .bubble-time {
-      display:block;
-      font-size:9px;
-      margin-top:4px;
-      opacity:.65;
-    }
-
-    .chat-input {
-      padding:11px;
-      display:flex;
-      gap:8px;
-      border-top:1px solid var(--line);
-      background:white;
-    }
-
-    .chat-input input {
-      flex:1;
-    }
-
-    .send-btn {
-      border:none;
-      border-radius:12px;
-      background:var(--green);
-      color:white;
-      padding:0 18px;
-      font-weight:900;
-    }
-
-    /* PROFILE */
-
-    .profile-editor {
-      max-width:650px;
-      margin:auto;
-      background:white;
-      padding:22px;
-      border-radius:22px;
-      box-shadow:var(--shadow);
-    }
-
-    .photo-upload {
-      text-align:center;
-      margin-bottom:22px;
-    }
-
-    .big-avatar {
-      width:125px;
-      height:125px;
-      border-radius:50%;
-      overflow:hidden;
-      margin:auto;
-      background:#DDECEF;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:var(--blue);
-      font-size:48px;
-      font-weight:900;
-      border:4px solid white;
-      box-shadow:0 8px 25px rgba(0,0,0,.12);
-    }
-
-    .big-avatar img {
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .upload-label {
-      display:inline-block;
-      margin-top:10px;
-      background:#EEF5F7;
-      color:var(--blue);
-      padding:9px 14px;
-      border-radius:11px;
-      font-size:13px;
-      font-weight:800;
-      cursor:pointer;
-    }
-
-    #photoInput {
-      display:none;
-    }
-
-    /* NAV */
-
-    .bottom-nav {
-      position:fixed;
-      bottom:0;
-      left:0;
-      right:0;
-      height:72px;
-      background:white;
-      border-top:1px solid var(--line);
-      display:flex;
-      justify-content:center;
-      z-index:100;
-      box-shadow:0 -5px 20px rgba(0,0,0,.06);
-    }
-
-    .nav-inner {
-      width:100%;
-      max-width:650px;
-      display:flex;
-      justify-content:space-around;
-    }
-
-    .nav-btn {
-      flex:1;
-      border:none;
-      background:transparent;
-      color:var(--muted);
-      font-size:11px;
-      font-weight:800;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      gap:4px;
-    }
-
-    .nav-icon {
-      font-size:22px;
-    }
-
-    .nav-btn.active {
-      color:var(--teal);
-    }
-
-    .empty {
-      text-align:center;
-      padding:45px 20px;
-      background:white;
-      border-radius:20px;
-      color:var(--muted);
-      box-shadow:var(--shadow);
-    }
-
-    .empty-icon {
-      font-size:42px;
-      margin-bottom:10px;
-    }
-
-    .loading {
-      text-align:center;
-      padding:45px;
-      color:var(--muted);
-    }
-
-    @media (max-width:800px) {
-      .profile-grid {
-        grid-template-columns:repeat(2,1fr);
-      }
-
-      .filter-grid {
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
-
-    @media (max-width:560px) {
-      .auth-card {
-        padding:24px 19px;
-      }
-
-      .profile-grid {
-        grid-template-columns:1fr;
-      }
-
-      .profile-image {
-        height:340px;
-      }
-
-      .filter-grid {
-        grid-template-columns:1fr;
-      }
-
-      .page {
-        padding:18px 12px;
-      }
-
-      .chat-box {
-        height:calc(100vh - 145px);
-        border-radius:15px;
-      }
-
-      .topbar {
-        padding:0 13px;
-      }
-
-      .top-brand {
-        font-size:16px;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Offa Connect by Leo</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:#f7f4ee;
+  color:#132235
+}
+
+button,input,textarea,select{font:inherit}
+button{cursor:pointer;border:0}
+
+:root{
+  --navy:#071A2B;
+  --blue:#0B5C8E;
+  --teal:#0B8F87;
+  --green:#18A06A;
+  --gold:#D9A441;
+  --cream:#F7F4EE;
+  --white:#FFFFFF;
+  --ink:#132235;
+  --muted:#6E7D8C;
+  --line:#E4EAF0;
+}
+
+.hidden{display:none!important}
+
+.app{min-height:100vh}
+
+.top{
+  background:var(--navy);
+  color:white;
+  padding:18px;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.brand{
+  font-weight:900;
+  font-size:22px;
+}
+
+.tag{
+  font-size:12px;
+  opacity:.8;
+  margin-top:2px;
+}
+
+.main{
+  max-width:720px;
+  margin:auto;
+  padding:18px 14px 95px;
+}
+
+.card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:16px;
+  margin-bottom:14px;
+  box-shadow:0 5px 20px #071a2b0b;
+}
+
+.btn{
+  background:var(--blue);
+  color:white;
+  padding:12px 16px;
+  border-radius:12px;
+  font-weight:800;
+}
+
+.btn.green{background:var(--green)}
+.btn.gold{background:var(--gold);color:var(--navy)}
+.btn.gray{background:#edf1f4;color:var(--ink)}
+.btn.danger{background:#c93636;color:white}
+
+.row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.grow{flex:1}
+
+input,
+textarea,
+select{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px;
+  background:white;
+  outline:none;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:white;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:center;
+  z-index:20;
+}
+
+.nav button{
+  flex:1;
+  max-width:180px;
+  background:white;
+  padding:13px 5px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.nav button.active{
+  color:var(--blue);
+  font-weight:900;
+}
+
+.avatar{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  overflow:hidden;
+  background:#dceaf1;
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  color:var(--blue);
+  flex:none;
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.profile-card{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.actions button{
+  flex:1;
+}
+
+.match{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  margin-bottom:10px;
+}
+
+.chat-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.messages{
+  height:55vh;
+  overflow:auto;
+  background:#f1f5f7;
+  border-radius:16px;
+  padding:12px;
+}
+
+.bubble{
+  max-width:78%;
+  padding:10px 12px;
+  border-radius:16px;
+  margin:6px 0;
+  word-break:break-word;
+}
+
+.mine{
+  margin-left:auto;
+  background:#d8f2e5;
+  border-bottom-right-radius:5px;
+}
+
+.theirs{
+  background:white;
+  border-bottom-left-radius:5px;
+}
+
+.bubble img{
+  max-width:100%;
+  max-height:280px;
+  border-radius:12px;
+  display:block;
+  margin-bottom:5px;
+}
+
+.attachment{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:#f3f6f8;
+  border-radius:10px;
+  padding:9px;
+  text-decoration:none;
+  color:var(--ink);
+}
+
+.composer{
+  display:flex;
+  gap:7px;
+  margin-top:10px;
+  align-items:flex-end;
+}
+
+.composer textarea{
+  min-height:46px;
+  max-height:130px;
+}
+
+.attachbtn{
+  width:46px;
+  height:46px;
+  border-radius:12px;
+  background:#edf1f4;
+  font-size:22px;
+}
+
+.send{
+  width:54px;
+  height:46px;
+  border-radius:12px;
+  background:var(--green);
+  color:white;
+  font-weight:900;
+}
+
+.file-preview{
+  font-size:12px;
+  color:var(--muted);
+  padding:4px 2px;
+}
+
+.auth{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  background:linear-gradient(150deg,var(--navy),#0b5c8e);
+}
+
+.authbox{
+  width:min(440px,100%);
+  background:white;
+  border-radius:25px;
+  padding:25px;
+}
+
+.logo{
+  font-size:34px;
+  font-weight:950;
+  color:var(--navy);
+}
+
+.logo span{
+  color:var(--gold);
+}
+
+.muted{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.empty{
+  text-align:center;
+  padding:35px 15px;
+  color:var(--muted);
+}
+
+.toast{
+  position:fixed;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--navy);
+  color:white;
+  padding:11px 15px;
+  border-radius:12px;
+  z-index:99;
+  display:none;
+}
+</style>
 </head>
 
 <body>
 
-<!-- ==========================================================
-     AUTH
-========================================================== -->
+<div id="toast" class="toast"></div>
 
-<section id="authScreen">
+<!-- AUTH -->
+<section id="auth" class="auth">
 
-  <div class="auth-card">
+  <div class="authbox">
 
-    <div class="brand">
-      <div class="logo">🦚</div>
-
-      <h1>
-        Offa Connect
-        <span class="gold">by Leo</span>
-      </h1>
-
-      <p>Meet. Connect. Belong.</p>
+    <div class="logo">
+      Offa <span>Connect</span>
     </div>
 
-    <div id="authMessage" class="message"></div>
+    <p>
+      <b>by Leo</b> · Meet. Connect. Belong.
+    </p>
 
-    <!-- LOGIN -->
+    <div id="authMsg" class="muted"></div>
 
-    <div id="loginForm">
+    <div id="signupFields" class="hidden">
 
-      <div class="form-group">
-        <label>Email</label>
+      <input
+        id="signupName"
+        placeholder="Full name"
+      >
 
-        <input
-          id="loginEmail"
-          type="email"
-          placeholder="Enter your email"
-          autocomplete="email"
-        />
-      </div>
+      <br><br>
 
-      <div class="form-group">
-        <label>Password</label>
+      <input
+        id="signupAge"
+        type="number"
+        min="18"
+        placeholder="Age"
+      >
 
-        <input
-          id="loginPassword"
-          type="password"
-          placeholder="Enter your password"
-          autocomplete="current-password"
-        />
-      </div>
-
-      <button class="primary-btn" onclick="login()">
-        Login
-      </button>
-
-      <div class="switch-auth">
-        Don't have an account?
-        <button onclick="showSignup()">
-          Create account
-        </button>
-      </div>
+      <br><br>
 
     </div>
 
+    <input
+      id="email"
+      type="email"
+      placeholder="Email"
+    >
 
-    <!-- SIGNUP -->
+    <br><br>
 
-    <div id="signupForm" class="hidden">
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+    >
 
-      <div class="form-group">
-        <label>Your name</label>
+    <br><br>
 
-        <input
-          id="signupName"
-          type="text"
-          placeholder="Your name"
-        />
-      </div>
+    <button
+      id="authBtn"
+      class="btn"
+      style="width:100%"
+    >
+      Log in
+    </button>
 
-      <div class="form-group">
-        <label>Email</label>
+    <p style="text-align:center">
 
-        <input
-          id="signupEmail"
-          type="email"
-          placeholder="Email address"
-        />
-      </div>
-
-      <div class="form-group">
-        <label>Password</label>
-
-        <input
-          id="signupPassword"
-          type="password"
-          placeholder="At least 6 characters"
-        />
-      </div>
-
-      <div class="form-group">
-        <label>Age</label>
-
-        <input
-          id="signupAge"
-          type="number"
-          min="18"
-          placeholder="18+"
-        />
-      </div>
-
-      <div class="form-group">
-        <label>Sex</label>
-
-        <select id="signupSex">
-          <option value="">Select</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>City</label>
-
-        <input
-          id="signupCity"
-          type="text"
-          value="Offa"
-          placeholder="City"
-        />
-      </div>
-
-      <div class="form-group">
-        <label>Relationship goal</label>
-
-        <select id="signupGoal">
-          <option value="">Select</option>
-          <option value="Serious relationship">
-            Serious relationship
-          </option>
-          <option value="Marriage">
-            Marriage
-          </option>
-          <option value="Friendship">
-            Friendship
-          </option>
-          <option value="Getting to know someone">
-            Getting to know someone
-          </option>
-        </select>
-      </div>
-
-      <button class="primary-btn" onclick="signup()">
+      <button
+        id="toggleAuth"
+        class="btn gray"
+      >
         Create account
       </button>
 
-      <div class="switch-auth">
-        Already have an account?
-        <button onclick="showLogin()">
-          Login
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- APP -->
+<div id="app" class="app hidden">
+
+<header class="top">
+
+  <div class="brand">
+    Offa Connect by Leo
+  </div>
+
+  <div class="tag">
+    Meet. Connect. Belong.
+  </div>
+
+</header>
+
+
+<main class="main">
+
+
+<!-- DISCOVER -->
+<section id="page-discover">
+
+  <div class="card">
+
+    <h2>Discover</h2>
+
+    <input
+      id="search"
+      placeholder="Search by name, city or bio"
+    >
+
+  </div>
+
+  <div id="discoverList"></div>
+
+</section>
+
+
+<!-- MATCHES -->
+<section
+  id="page-matches"
+  class="hidden"
+>
+
+  <div class="card">
+
+    <h2>Your Matches</h2>
+
+    <div id="matchesList"></div>
+
+  </div>
+
+</section>
+
+
+<!-- CHAT -->
+<section
+  id="page-chat"
+  class="hidden"
+>
+
+  <div class="card">
+
+    <div
+      id="chatEmpty"
+      class="empty"
+    >
+      Open a match to start chatting.
+    </div>
+
+
+    <div
+      id="chatBox"
+      class="hidden"
+    >
+
+      <div class="chat-head">
+
+        <button
+          class="btn gray"
+          onclick="showPage('matches')"
+        >
+          ←
         </button>
+
+        <div
+          id="chatAvatar"
+          class="avatar"
+        ></div>
+
+        <div class="grow">
+
+          <b id="chatName">
+            Chat
+          </b>
+
+          <div
+            id="chatStatus"
+            class="muted"
+          ></div>
+
+        </div>
+
       </div>
+
+
+      <div
+        id="messages"
+        class="messages"
+      ></div>
+
+
+      <div
+        id="filePreview"
+        class="file-preview"
+      ></div>
+
+
+      <form
+        id="composer"
+        class="composer"
+      >
+
+        <input
+          id="fileInput"
+          type="file"
+          hidden
+          multiple
+        >
+
+        <button
+          type="button"
+          class="attachbtn"
+          onclick="document.getElementById('fileInput').click()"
+        >
+          📎
+        </button>
+
+        <textarea
+          id="messageInput"
+          placeholder="Write a message..."
+        ></textarea>
+
+        <button
+          class="send"
+          type="submit"
+        >
+          ➤
+        </button>
+
+      </form>
 
     </div>
 
@@ -876,1015 +557,1582 @@
 </section>
 
 
-<!-- ==========================================================
-     APP
-========================================================== -->
+<!-- PROFILE -->
+<section
+  id="page-profile"
+  class="hidden"
+>
 
-<section id="appScreen" class="hidden">
+  <div class="card">
 
-  <header class="topbar">
+    <h2>My Profile</h2>
 
-    <div class="top-brand">
-      Offa Connect <span>by Leo</span>
-    </div>
-
-    <div>
-      <span class="online-dot"></span>
-      <span id="topUserName">Online</span>
-    </div>
-
-  </header>
-
-
-  <!-- DISCOVER -->
-
-  <main id="discoverPage" class="page">
-
-    <div class="section-title">
-      <h2>Discover</h2>
-      <p>Meet people from Offa and beyond.</p>
-    </div>
-
-    <div class="filters">
-
-      <div class="filter-grid">
-
-        <input
-          id="searchInput"
-          type="text"
-          placeholder="Search name, city or bio"
-          oninput="loadDiscover()"
-        />
-
-        <input
-          id="minAge"
-          type="number"
-          min="18"
-          placeholder="Min age"
-          oninput="loadDiscover()"
-        />
-
-        <input
-          id="maxAge"
-          type="number"
-          min="18"
-          placeholder="Max age"
-          oninput="loadDiscover()"
-        />
-
-        <select
-          id="goalFilter"
-          onchange="loadDiscover()"
-        >
-          <option value="">All goals</option>
-          <option value="Serious relationship">
-            Serious relationship
-          </option>
-          <option value="Marriage">
-            Marriage
-          </option>
-          <option value="Friendship">
-            Friendship
-          </option>
-          <option value="Getting to know someone">
-            Getting to know someone
-          </option>
-        </select>
-
-      </div>
-
-    </div>
-
-    <div id="discoverList" class="profile-grid">
-      <div class="loading">
-        Loading profiles...
-      </div>
-    </div>
-
-  </main>
-
-
-  <!-- MATCHES -->
-
-  <main id="matchesPage" class="page hidden">
-
-    <div class="section-title">
-      <h2>Your Matches</h2>
-      <p>People you've connected with.</p>
-    </div>
-
-    <div id="matchesList" class="match-list">
-      <div class="loading">
-        Loading matches...
-      </div>
-    </div>
-
-  </main>
-
-
-  <!-- CHAT -->
-
-  <main id="chatPage" class="page hidden">
-
-    <div id="chatEmpty" class="empty">
-
-      <div class="empty-icon">💬</div>
-
-      <h3>Select a match</h3>
-
-      <p>
-        Open one of your matches to start chatting.
-      </p>
-
-    </div>
-
-
-    <div id="chatBox" class="chat-box hidden">
-
-      <div class="chat-header">
-
-        <button
-          type="button"
-          onclick="closeChat()"
-        >
-          ‹
-        </button>
-
-        <div id="chatAvatar" class="match-avatar">
-          ?
-        </div>
-
-        <div class="chat-header-info">
-
-          <h3 id="chatName">
-            Chat
-          </h3>
-
-          <p id="chatStatus">
-            Connected on Offa Connect
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div id="messages" class="messages"></div>
-
-
-      <form
-        class="chat-input"
-        onsubmit="sendMessage(event)"
-      >
-
-        <input
-          id="messageInput"
-          type="text"
-          placeholder="Write a message..."
-          autocomplete="off"
-        />
-
-        <button
-          class="send-btn"
-          type="submit"
-        >
-          Send
-        </button>
-
-      </form>
-
-    </div>
-
-  </main>
-
-
-  <!-- PROFILE -->
-
-  <main id="profilePage" class="page hidden">
-
-    <div class="section-title">
-      <h2>My Profile</h2>
-      <p>Keep your profile up to date.</p>
-    </div>
-
-
-    <div class="profile-editor">
-
-      <div class="photo-upload">
-
-        <div id="bigAvatar" class="big-avatar">
-          ?
-        </div>
-
-        <label
-          class="upload-label"
-          for="photoInput"
-        >
-          Change photo
-        </label>
-
-        <input
-          id="photoInput"
-          type="file"
-          accept="image/*"
-          onchange="uploadAvatar(event)"
-        />
-
-      </div>
-
+    <div class="row">
 
       <div
-        id="profileMessage"
-        class="message"
+        id="myAvatar"
+        class="avatar"
       ></div>
 
-
-      <div class="form-group">
-        <label>Name</label>
+      <div class="grow">
 
         <input
           id="profileName"
-          type="text"
-        />
-      </div>
+          placeholder="Name"
+        >
 
-
-      <div class="form-group">
-        <label>Age</label>
-
-        <input
-          id="profileAge"
-          type="number"
-          min="18"
-        />
-      </div>
-
-
-      <div class="form-group">
-        <label>Sex</label>
-
-        <select id="profileSex">
-          <option value="">Select</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-
-
-      <div class="form-group">
-        <label>City</label>
+        <br><br>
 
         <input
           id="profileCity"
-          type="text"
-        />
+          placeholder="City"
+        >
+
       </div>
-
-
-      <div class="form-group">
-        <label>Relationship goal</label>
-
-        <select id="profileGoal">
-          <option value="">Select</option>
-          <option value="Serious relationship">
-            Serious relationship
-          </option>
-          <option value="Marriage">
-            Marriage
-          </option>
-          <option value="Friendship">
-            Friendship
-          </option>
-          <option value="Getting to know someone">
-            Getting to know someone
-          </option>
-        </select>
-      </div>
-
-
-      <div class="form-group">
-        <label>Bio</label>
-
-        <textarea
-          id="profileBio"
-          placeholder="Tell people a little about yourself..."
-        ></textarea>
-      </div>
-
-
-      <button
-        class="primary-btn"
-        onclick="saveProfile()"
-      >
-        Save profile
-      </button>
-
-
-      <button
-        class="danger-btn"
-        onclick="logout()"
-      >
-        Logout
-      </button>
 
     </div>
 
-  </main>
+    <br>
 
+    <input
+      id="profileAge"
+      type="number"
+      min="18"
+      placeholder="Age"
+    >
 
-  <!-- BOTTOM NAV -->
+    <br><br>
 
-  <nav class="bottom-nav">
+    <textarea
+      id="profileBio"
+      placeholder="Tell people about yourself"
+    ></textarea>
 
-    <div class="nav-inner">
+    <br><br>
 
-      <button
-        id="navDiscover"
-        class="nav-btn active"
-        onclick="showPage('discover')"
-      >
-        <span class="nav-icon">⌕</span>
-        Discover
-      </button>
+    <input
+      id="avatarInput"
+      type="file"
+      accept="image/*"
+    >
 
+    <br><br>
 
-      <button
-        id="navMatches"
-        class="nav-btn"
-        onclick="showPage('matches')"
-      >
-        <span class="nav-icon">♥</span>
-        Matches
-      </button>
+    <button
+      class="btn green"
+      onclick="saveProfile()"
+    >
+      Save profile
+    </button>
 
+    <button
+      class="btn danger"
+      onclick="logout()"
+      style="float:right"
+    >
+      Log out
+    </button>
 
-      <button
-        id="navChat"
-        class="nav-btn"
-        onclick="showPage('chat')"
-      >
-        <span class="nav-icon">◌</span>
-        Chat
-      </button>
-
-
-      <button
-        id="navProfile"
-        class="nav-btn"
-        onclick="showPage('profile')"
-      >
-        <span class="nav-icon">●</span>
-        Profile
-      </button>
-
-    </div>
-
-  </nav>
+  </div>
 
 </section>
+
+</main>
+
+
+<!-- NAV -->
+<nav class="nav">
+
+  <button
+    id="nav-discover"
+    class="active"
+    onclick="showPage('discover')"
+  >
+    ♥<br>
+    Discover
+  </button>
+
+  <button
+    id="nav-matches"
+    onclick="showPage('matches')"
+  >
+    ♡<br>
+    Matches
+  </button>
+
+  <button
+    id="nav-chat"
+    onclick="showPage('chat')"
+  >
+    ▣<br>
+    Chat
+  </button>
+
+  <button
+    id="nav-profile"
+    onclick="showPage('profile')"
+  >
+    ●<br>
+    Profile
+  </button>
+
+</nav>
+
+</div>
 
 
 <script>
 
-/* ==========================================================
+/* =========================
    SUPABASE
-========================================================== */
+========================= */
 
 const SUPABASE_URL =
-  "https://irjahjpdjuvlmlcgtusr.supabase.co";
+"https://irjahjpdjuvlmlcgtusr.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_HoMz0Vb4krVkz1p4Dm5_dg_hFuaxwxl";
+"sb_publishable_HoMz0Vb4krVkz1p4Dm5_dg_hFuaxwxl";
 
 const db =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 
-/* ==========================================================
-   STATE
-========================================================== */
+/* =========================
+   APP STATE
+========================= */
 
 let session = null;
-
-let myProfile = null;
-
+let profile = null;
+let signup = false;
 let selectedMatch = null;
-
-let messagesSubscription = null;
+let realtime = null;
 
 window.offaMatches = {};
 
 
-/* ==========================================================
+/* =========================
    HELPERS
-========================================================== */
+========================= */
 
-function escapeHtml(value) {
+const $ = id =>
+  document.getElementById(id);
 
-  if (
-    value === null ||
-    value === undefined
-  ) {
-    return "";
-  }
 
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+function esc(value){
+
+  return String(value ?? "")
+    .replace(
+      /[&<>"']/g,
+      m => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[m])
+    );
+
 }
 
 
-function initials(name) {
+function initials(name){
 
-  if (!name) return "?";
-
-  return name
-    .trim()
+  return (name || "OC")
     .split(/\s+/)
     .slice(0,2)
     .map(x => x[0])
     .join("")
     .toUpperCase();
+
 }
 
 
-function formatTime(date) {
+function toast(message){
 
-  if (!date) return "";
+  $("toast").textContent = message;
 
-  return new Date(date).toLocaleTimeString([],{
-    hour:"numeric",
-    minute:"2-digit"
+  $("toast").style.display = "block";
+
+  setTimeout(() => {
+
+    $("toast").style.display = "none";
+
+  },2600);
+
+}
+
+
+function avatarHtml(p){
+
+  if(p?.avatar_url){
+
+    return `
+      <img
+        src="${esc(p.avatar_url)}"
+        alt=""
+      >
+    `;
+
+  }
+
+  return esc(initials(p?.name));
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function showPage(page){
+
+  [
+    "discover",
+    "matches",
+    "chat",
+    "profile"
+  ].forEach(p => {
+
+    $("page-"+p)
+      .classList
+      .toggle("hidden",p !== page);
+
+    $("nav-"+p)
+      .classList
+      .toggle("active",p === page);
+
   });
-}
 
 
-function showMessage(
-  elementId,
-  text,
-  type="error"
-) {
+  if(page === "discover")
+    loadDiscover();
 
-  const el =
-    document.getElementById(elementId);
-
-  if (!el) return;
-
-  el.textContent = text;
-
-  el.className =
-    "message " + type;
-}
+  if(page === "matches")
+    loadMatches();
 
 
-function clearMessage(elementId) {
+  if(
+    page === "chat" &&
+    !selectedMatch
+  ){
 
-  const el =
-    document.getElementById(elementId);
+    $("chatEmpty")
+      .classList
+      .remove("hidden");
 
-  if (!el) return;
+    $("chatBox")
+      .classList
+      .add("hidden");
 
-  el.textContent = "";
-
-  el.className = "message";
-}
-
-
-/* ==========================================================
-   AUTH SCREENS
-========================================================== */
-
-function showSignup() {
-
-  document
-    .getElementById("loginForm")
-    .classList.add("hidden");
-
-  document
-    .getElementById("signupForm")
-    .classList.remove("hidden");
-
-  clearMessage("authMessage");
-}
-
-
-function showLogin() {
-
-  document
-    .getElementById("signupForm")
-    .classList.add("hidden");
-
-  document
-    .getElementById("loginForm")
-    .classList.remove("hidden");
-
-  clearMessage("authMessage");
-}
-
-
-/* ==========================================================
-   SIGNUP
-========================================================== */
-
-async function signup() {
-
-  clearMessage("authMessage");
-
-  const name =
-    document.getElementById("signupName")
-      .value.trim();
-
-  const email =
-    document.getElementById("signupEmail")
-      .value.trim();
-
-  const password =
-    document.getElementById("signupPassword")
-      .value;
-
-  const age =
-    Number(
-      document.getElementById("signupAge")
-        .value
-    );
-
-  const sex =
-    document.getElementById("signupSex")
-      .value;
-
-  const city =
-    document.getElementById("signupCity")
-      .value.trim() || "Offa";
-
-  const goal =
-    document.getElementById("signupGoal")
-      .value;
-
-
-  if (!name) {
-    showMessage(
-      "authMessage",
-      "Please enter your name."
-    );
-    return;
   }
 
-
-  if (!email) {
-    showMessage(
-      "authMessage",
-      "Please enter your email."
-    );
-    return;
-  }
+}
 
 
-  if (password.length < 6) {
-    showMessage(
-      "authMessage",
-      "Password must be at least 6 characters."
-    );
-    return;
-  }
+/* =========================
+   AUTH
+========================= */
+
+function setAuthMode(){
+
+  $("signupFields")
+    .classList
+    .toggle("hidden",!signup);
+
+  $("authBtn").textContent =
+    signup
+      ? "Create account"
+      : "Log in";
+
+  $("toggleAuth").textContent =
+    signup
+      ? "Back to login"
+      : "Create account";
+
+}
 
 
-  if (!age || age < 18) {
-    showMessage(
-      "authMessage",
-      "You must be 18 or older to use Offa Connect."
-    );
-    return;
-  }
+$("toggleAuth").onclick = () => {
+
+  signup = !signup;
+
+  setAuthMode();
+
+};
 
 
-  try {
+$("authBtn").onclick = async () => {
 
-    const {
-      data,
-      error
-    } =
+  $("authMsg").textContent =
+    "Working...";
+
+  try{
+
+    if(signup){
+
+      const email =
+        $("email").value.trim();
+
+      const password =
+        $("password").value;
+
+      const name =
+        $("signupName").value.trim();
+
+      const age =
+        Number($("signupAge").value);
+
+
+      if(!name || age < 18){
+
+        throw Error(
+          "Enter your name and an age of 18 or older."
+        );
+
+      }
+
+
+      const {
+        data,
+        error
+      } =
       await db.auth.signUp({
-        email,
-        password,
-        options:{
-          data:{
-            name
-          }
-        }
-      });
-
-
-    if (error) throw error;
-
-
-    if (!data.user) {
-      throw new Error(
-        "Account could not be created."
-      );
-    }
-
-
-    const {
-      error:profileError
-    } =
-      await db
-        .from("profiles")
-        .upsert({
-          id:data.user.id,
-          name,
-          age,
-          sex:sex || null,
-          city,
-          bio:"",
-          relationship_goal:
-            goal || null
-        });
-
-
-    if (profileError) {
-      console.warn(
-        "Profile creation:",
-        profileError
-      );
-    }
-
-
-    if (data.session) {
-
-      await startApp(data.session);
-
-    } else {
-
-      showMessage(
-        "authMessage",
-        "Account created. Check your email if confirmation is required, then log in.",
-        "success"
-      );
-
-      showLogin();
-    }
-
-  } catch(error) {
-
-    console.error(error);
-
-    showMessage(
-      "authMessage",
-      error.message ||
-      "Could not create account."
-    );
-  }
-}
-
-
-/* ==========================================================
-   LOGIN
-========================================================== */
-
-async function login() {
-
-  clearMessage("authMessage");
-
-  const email =
-    document.getElementById("loginEmail")
-      .value.trim();
-
-  const password =
-    document.getElementById("loginPassword")
-      .value;
-
-
-  if (!email || !password) {
-
-    showMessage(
-      "authMessage",
-      "Enter your email and password."
-    );
-
-    return;
-  }
-
-
-  try {
-
-    const {
-      data,
-      error
-    } =
-      await db.auth.signInWithPassword({
         email,
         password
       });
 
 
-    if (error) throw error;
+      if(error)
+        throw error;
 
 
-    await startApp(data.session);
+      if(data.user){
 
-  } catch(error) {
+        const {
+          error:e
+        } =
+        await db
+          .from("profiles")
+          .upsert({
+            id:data.user.id,
+            name,
+            age,
+            city:"Offa",
+            bio:""
+          });
 
-    console.error(error);
 
-    showMessage(
-      "authMessage",
-      error.message ||
-      "Login failed."
-    );
+        if(e)
+          throw e;
+
+      }
+
+
+      toast(
+        "Account created. Check your email if confirmation is required."
+      );
+
+    }else{
+
+      const {
+        error
+      } =
+      await db.auth.signInWithPassword({
+
+        email:
+          $("email").value.trim(),
+
+        password:
+          $("password").value
+
+      });
+
+
+      if(error)
+        throw error;
+
+    }
+
+
+    $("authMsg").textContent = "";
+
+  }catch(error){
+
+    $("authMsg").textContent =
+      error.message;
+
   }
+
+};
+
+
+/* =========================
+   START
+========================= */
+
+async function start(){
+
+  const {
+    data
+  } =
+  await db.auth.getSession();
+
+  session =
+    data.session;
+
+  await updateUI();
+
+
+  db.auth.onAuthStateChange(
+    async (_event,newSession) => {
+
+      session =
+        newSession;
+
+      await updateUI();
+
+    }
+  );
+
 }
 
 
-/* ==========================================================
-   START APP
-========================================================== */
+async function updateUI(){
 
-async function startApp(newSession) {
+  if(!session){
 
-  session = newSession;
+    $("auth")
+      .classList
+      .remove("hidden");
 
-  if (!session) return;
+    $("app")
+      .classList
+      .add("hidden");
+
+    return;
+
+  }
 
 
-  document
-    .getElementById("authScreen")
-    .classList.add("hidden");
+  $("auth")
+    .classList
+    .add("hidden");
 
-
-  document
-    .getElementById("appScreen")
-    .classList.remove("hidden");
+  $("app")
+    .classList
+    .remove("hidden");
 
 
   await loadMyProfile();
 
-  await updateLastSeen();
-
   showPage("discover");
 
-  await loadDiscover();
 }
 
 
-/* ==========================================================
-   LOAD MY PROFILE
-========================================================== */
+/* =========================
+   PROFILE
+========================= */
 
-async function loadMyProfile() {
+async function loadMyProfile(){
 
-  if (!session?.user?.id) return;
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("profiles")
+    .select("*")
+    .eq("id",session.user.id)
+    .maybeSingle();
+
+
+  if(error)
+    toast(error.message);
+
+
+  profile = data;
+
+
+  if(!profile){
+
+    const newProfile = {
+
+      id:
+        session.user.id,
+
+      name:
+        session.user.email
+          ?.split("@")[0] ||
+        "Member",
+
+      age:18,
+
+      city:"Offa",
+
+      bio:""
+
+    };
+
+
+    const result =
+      await db
+        .from("profiles")
+        .insert(newProfile)
+        .select()
+        .single();
+
+
+    profile =
+      result.data;
+
+  }
+
+
+  if(profile){
+
+    $("profileName").value =
+      profile.name || "";
+
+    $("profileAge").value =
+      profile.age || 18;
+
+    $("profileCity").value =
+      profile.city || "Offa";
+
+    $("profileBio").value =
+      profile.bio || "";
+
+
+    $("myAvatar").innerHTML =
+      avatarHtml(profile);
+
+  }
+
+}
+
+
+/* =========================
+   DISCOVER
+========================= */
+
+async function loadDiscover(){
+
+  const q =
+    $("search").value.trim();
+
+
+  const query =
+    db
+      .from("profiles")
+      .select("*")
+      .neq("id",session.user.id)
+      .order(
+        "created_at",
+        {ascending:false}
+      )
+      .limit(50);
 
 
   const {
     data,
     error
   } =
-    await db
-      .from("profiles")
-      .select("*")
-      .eq("id",session.user.id)
-      .maybeSingle();
+  await query;
 
 
-  if (error) {
+  if(error){
 
-    console.error(error);
+    $("discoverList").innerHTML =
+      `<div class="card">
+        ${esc(error.message)}
+      </div>`;
 
     return;
+
   }
 
 
-  myProfile = data;
+  const rows =
+    (data || []).filter(p => {
+
+      if(!q)
+        return true;
 
 
-  if (myProfile) {
+      return [
+        p.name,
+        p.city,
+        p.bio
+      ]
+      .join(" ")
+      .toLowerCase()
+      .includes(q.toLowerCase());
 
-    document
-      .getElementById("topUserName")
-      .textContent =
-        myProfile.name ||
-        "Online";
-
-    fillProfileForm();
-  }
-}
-
-
-/* ==========================================================
-   PROFILE FORM
-========================================================== */
-
-function fillProfileForm() {
-
-  if (!myProfile) return;
+    });
 
 
-  document.getElementById("profileName")
-    .value =
-      myProfile.name || "";
+  $("discoverList").innerHTML =
+    rows.length
+
+    ?
+
+    rows.map(p => `
+
+      <div class="card profile-card">
+
+        <div class="avatar">
+
+          ${avatarHtml(p)}
+
+        </div>
 
 
-  document.getElementById("profileAge")
-    .value =
-      myProfile.age || "";
+        <div class="grow">
+
+          <h3 style="margin:0">
+            ${esc(p.name)}
+          </h3>
+
+          <div class="muted">
+
+            ${esc(p.age || "")}
+            ·
+            ${esc(p.city || "Offa")}
+
+          </div>
 
 
-  document.getElementById("profileSex")
-    .value =
-      myProfile.sex || "";
+          <p>
+            ${esc(p.bio || "")}
+          </p>
+
+        </div>
 
 
-  document.getElementById("profileCity")
-    .value =
-      myProfile.city || "Offa";
+        <div>
 
+          <button
+            class="btn green"
+            onclick="likeProfile('${p.id}')"
+          >
+            ♥ Like
+          </button>
 
-  document.getElementById("profileGoal")
-    .value =
-      myProfile.relationship_goal || "";
+          <br><br>
 
+          <button
+            class="btn gray"
+            onclick="this.closest('.card').remove()"
+          >
+            × Pass
+          </button>
 
-  document.getElementById("profileBio")
-    .value =
-      myProfile.bio || "";
+        </div>
 
+      </div>
 
-  const avatar =
-    document.getElementById("bigAvatar");
+    `).join("")
 
+    :
 
-  if (myProfile.avatar_url) {
-
-    avatar.innerHTML = `
-      <img
-        src="${escapeHtml(myProfile.avatar_url)}"
-        alt="Profile photo"
-      >
+    `
+      <div class="card empty">
+        No members found.
+      </div>
     `;
 
-  } else {
-
-    avatar.textContent =
-      initials(myProfile.name);
-  }
 }
 
 
-/* ==========================================================
-   SAVE PROFILE
-========================================================== */
-
-async function saveProfile() {
-
-  if (!session?.user?.id) return;
+$("search")
+  .addEventListener(
+    "input",
+    loadDiscover
+  );
 
 
-  clearMessage("profileMessage");
+/* =========================
+   LIKE
+========================= */
 
+async function likeProfile(id){
 
-  const name =
-    document.getElementById("profileName")
-      .value.trim();
+  const {
+    error
+  } =
+  await db
+    .from("likes")
+    .upsert(
+      {
+        from_user:
+          session.user.id,
 
-  const age =
-    Number(
-      document.getElementById("profileAge")
-        .value
+        to_user:
+          id
+      },
+      {
+        onConflict:
+          "from_user,to_user"
+      }
     );
 
-  const sex =
-    document.getElementById("profileSex")
-      .value;
 
-  const city =
-    document.getElementById("profileCity")
-      .value.trim();
+  if(error){
 
-  const goal =
-    document.getElementById("profileGoal")
-      .value;
-
-  const bio =
-    document.getElementById("profileBio")
-      .value.trim();
-
-
-  if (!name) {
-
-    showMessage(
-      "profileMessage",
-      "Enter your name."
-    );
+    toast(error.message);
 
     return;
+
   }
 
 
-  if (!age || age < 18) {
+  toast("Like sent ♥");
 
-    showMessage(
-      "profileMessage",
-      "Age must be 18 or older."
+
+  const {
+    data
+  } =
+  await db
+    .from("matches")
+    .select("*")
+    .or(
+      `user_one.eq.${session.user.id},user_two.eq.${session.user.id}`
     );
 
+
+  if(
+    (data || [])
+      .some(
+        m =>
+          m.user_one === id ||
+          m.user_two === id
+      )
+  ){
+
+    toast("It's a match! ♥");
+
+  }
+
+}
+
+
+/* =========================
+   MATCHES
+========================= */
+
+async function loadMatches(){
+
+  const box =
+    $("matchesList");
+
+
+  box.innerHTML =
+    "<div class='muted'>Loading...</div>";
+
+
+  const {
+    data:matches,
+    error
+  } =
+  await db
+    .from("matches")
+    .select("*")
+    .or(
+      `user_one.eq.${session.user.id},user_two.eq.${session.user.id}`
+    )
+    .order(
+      "created_at",
+      {ascending:false}
+    );
+
+
+  if(error){
+
+    box.innerHTML =
+      `<div class="muted">
+        ${esc(error.message)}
+      </div>`;
+
     return;
+
   }
 
 
-  try {
+  if(!matches?.length){
 
-    const {
-      data,
-      error
-    } =
+    box.innerHTML =
+      `
+        <div class="empty">
+          No matches yet.
+        </div>
+      `;
+
+    return;
+
+  }
+
+
+  const ids =
+    matches.map(
+      m =>
+        m.user_one === session.user.id
+          ? m.user_two
+          : m.user_one
+    );
+
+
+  const {
+    data:profiles,
+    error:profileError
+  } =
+  await db
+    .from("profiles")
+    .select("*")
+    .in("id",ids);
+
+
+  if(profileError){
+
+    box.innerHTML =
+      esc(profileError.message);
+
+    return;
+
+  }
+
+
+  const map =
+    Object.fromEntries(
+      (profiles || [])
+        .map(
+          p => [p.id,p]
+        )
+    );
+
+
+  window.offaMatches = {};
+
+
+  box.innerHTML =
+    matches
+      .map(match => {
+
+        const otherId =
+          match.user_one === session.user.id
+            ? match.user_two
+            : match.user_one;
+
+
+        const p =
+          map[otherId];
+
+
+        if(!p)
+          return "";
+
+
+        window.offaMatches[
+          String(match.id)
+        ] = {
+
+          matchId:
+            match.id,
+
+          profile:
+            p
+
+        };
+
+
+        return `
+
+          <div class="match">
+
+            <div class="avatar">
+              ${avatarHtml(p)}
+            </div>
+
+
+            <div class="grow">
+
+              <b>
+                ${esc(p.name)}
+              </b>
+
+              <div class="muted">
+                ${esc(p.city || "Offa")}
+              </div>
+
+            </div>
+
+
+            <button
+              class="btn"
+              onclick="openChat('${match.id}')"
+            >
+              Chat
+            </button>
+
+          </div>
+
+        `;
+
+      })
+      .join("");
+
+}
+
+
+/* =========================
+   OPEN CHAT
+========================= */
+
+async function openChat(id){
+
+  selectedMatch =
+    window.offaMatches[
+      String(id)
+    ];
+
+
+  if(!selectedMatch){
+
+    toast(
+      "Refresh your matches and try again."
+    );
+
+    return;
+
+  }
+
+
+  showPage("chat");
+
+
+  $("chatEmpty")
+    .classList
+    .add("hidden");
+
+
+  $("chatBox")
+    .classList
+    .remove("hidden");
+
+
+  const p =
+    selectedMatch.profile;
+
+
+  $("chatName").textContent =
+    p.name || "Chat";
+
+
+  $("chatStatus").textContent =
+    p.city || "";
+
+
+  $("chatAvatar").innerHTML =
+    avatarHtml(p);
+
+
+  await loadMessages();
+
+  subscribe();
+
+}
+
+
+/* =========================
+   LOAD MESSAGES
+========================= */
+
+async function loadMessages(){
+
+  if(!selectedMatch)
+    return;
+
+
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("messages")
+    .select("*")
+    .eq(
+      "match_id",
+      selectedMatch.matchId
+    )
+    .order(
+      "created_at",
+      {ascending:true}
+    );
+
+
+  if(error){
+
+    $("messages").innerHTML =
+      `
+        <div class="empty">
+          ${esc(error.message)}
+        </div>
+      `;
+
+    return;
+
+  }
+
+
+  $("messages").innerHTML =
+    (data || [])
+      .map(messageHtml)
+      .join("")
+
+
+    ||
+
+    `
+      <div class="empty">
+        No messages yet.
+        Say hello 👋
+      </div>
+    `;
+
+
+  $("messages").scrollTop =
+    $("messages").scrollHeight;
+
+
+  const unread =
+    (data || [])
+      .filter(
+        m =>
+          m.sender_id !== session.user.id &&
+          !m.read_at
+      )
+      .map(
+        m => m.id
+      );
+
+
+  if(unread.length){
+
+    await db
+      .from("messages")
+      .update({
+        read_at:
+          new Date().toISOString()
+      })
+      .in(
+        "id",
+        unread
+      );
+
+  }
+
+}
+
+
+/* =========================
+   MESSAGE DISPLAY
+========================= */
+
+function messageHtml(m){
+
+  const mine =
+    m.sender_id === session.user.id;
+
+
+  let body = "";
+
+
+  if(m.attachment_url){
+
+    if(
+      (m.attachment_type || "")
+        .startsWith("image/")
+    ){
+
+      body += `
+
+        <a
+          href="${esc(m.attachment_url)}"
+          target="_blank"
+          rel="noopener"
+        >
+
+          <img
+            src="${esc(m.attachment_url)}"
+            alt="${esc(
+              m.attachment_name ||
+              "image"
+            )}"
+          >
+
+        </a>
+
+      `;
+
+    }else{
+
+      body += `
+
+        <a
+          class="attachment"
+          href="${esc(m.attachment_url)}"
+          target="_blank"
+          rel="noopener"
+        >
+
+          📎
+          ${esc(
+            m.attachment_name ||
+            "Attachment"
+          )}
+
+        </a>
+
+      `;
+
+    }
+
+  }
+
+
+  if(m.message){
+
+    body += `
+
+      <div>
+        ${esc(m.message)}
+      </div>
+
+    `;
+
+  }
+
+
+  return `
+
+    <div
+      class="bubble ${
+        mine
+          ? "mine"
+          : "theirs"
+      }"
+    >
+
+      ${body}
+
+      <div
+        class="muted"
+        style="margin-top:4px"
+      >
+
+        ${
+          mine
+            ? (
+                m.read_at
+                  ? "Seen"
+                  : "Sent"
+              )
+            : ""
+        }
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================
+   REALTIME CHAT
+========================= */
+
+function subscribe(){
+
+  if(realtime)
+    db.removeChannel(realtime);
+
+
+  realtime =
+    db
+      .channel(
+        "offa-chat-" +
+        selectedMatch.matchId +
+        "-" +
+        Date.now()
+      )
+      .on(
+        "postgres_changes",
+        {
+          event:"*",
+          schema:"public",
+          table:"messages",
+          filter:
+            `match_id=eq.${selectedMatch.matchId}`
+        },
+        () => {
+
+          loadMessages();
+
+        }
+      )
+      .subscribe();
+
+}
+
+
+/* =========================
+   CHAT TEXT
+========================= */
+
+$("composer")
+  .addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+      await sendText();
+
+    }
+  );
+
+
+$("messageInput")
+  .addEventListener(
+    "keydown",
+    event => {
+
+      if(
+        event.key === "Enter" &&
+        !event.shiftKey
+      ){
+
+        event.preventDefault();
+
+        $("composer")
+          .requestSubmit();
+
+      }
+
+    }
+  );
+
+
+/* =========================
+   FILE SELECTION
+========================= */
+
+$("fileInput")
+  .addEventListener(
+    "change",
+    () => {
+
+      const files =
+        [
+          ...$("fileInput").files
+        ];
+
+
+      $("filePreview")
+        .textContent =
+          files.length
+
+            ?
+
+            `${files.length} file${
+              files.length > 1
+                ? "s"
+                : ""
+            } selected — send to upload.`
+
+            :
+
+            "";
+
+    }
+  );
+
+
+/* =========================
+   SEND TEXT + FILES
+========================= */
+
+async function sendText(){
+
+  if(!selectedMatch){
+
+    toast(
+      "Open a match first."
+    );
+
+    return;
+
+  }
+
+
+  const text =
+    $("messageInput")
+      .value
+      .trim();
+
+
+  if(!text){
+
+    await sendAttachments();
+
+    return;
+
+  }
+
+
+  $("messageInput").value = "";
+
+
+  const {
+    error
+  } =
+  await db
+    .from("messages")
+    .insert({
+
+      match_id:
+        selectedMatch.matchId,
+
+      sender_id:
+        session.user.id,
+
+      message:
+        text
+
+    });
+
+
+  if(error){
+
+    $("messageInput").value =
+      text;
+
+    toast(error.message);
+
+    return;
+
+  }
+
+
+  await sendAttachments();
+
+  await loadMessages();
+
+}
+
+
+/* =========================
+   SEND ATTACHMENTS
+========================= */
+
+async function sendAttachments(){
+
+  const files =
+    [
+      ...$("fileInput").files
+    ];
+
+
+  if(!files.length)
+    return;
+
+
+  for(
+    const file of files
+  ){
+
+    try{
+
+      if(
+        file.size >
+        15 * 1024 * 1024
+      ){
+
+        throw Error(
+          `${file.name} is larger than 15MB.`
+        );
+
+      }
+
+
+      const safe =
+        file.name.replace(
+          /[^a-zA-Z0-9._-]/g,
+          "_"
+        );
+
+
+      const path =
+        `${session.user.id}/` +
+        `${selectedMatch.matchId}/` +
+        `${Date.now()}-${safe}`;
+
+
+      /* UPLOAD FILE */
+
+      const {
+        error:uploadError
+      } =
       await db
-        .from("profiles")
-        .upsert({
-          id:session.user.id,
-          name,
-          age,
-          sex:sex || null,
-          city:city || "Offa",
-          relationship_goal:
-            goal || null,
-          bio
-        })
-        .select()
-        .single();
+        .storage
+        .from("chat-attachments")
+        .upload(
+          path,
+          file,
+          {
+            contentType:
+              file.type ||
+              "application/octet-stream",
+
+            upsert:false
+          }
+        );
 
 
-    if (error) throw error;
+      if(uploadError)
+        throw uploadError;
 
 
-    myProfile = data;
+      /* GET PUBLIC URL */
+
+      const {
+        data:publicData
+      } =
+      db
+        .storage
+        .from("chat-attachments")
+        .getPublicUrl(path);
 
 
-    document
-      .getElementById("topUserName")
-      .textContent =
-        data.name || "Online";
+      const publicUrl =
+        publicData.publicUrl;
 
 
-    showMessage(
-      "profileMessage",
-      "Profile saved successfully.",
-      "success"
-    );
+      /* SAVE MESSAGE */
+
+      const {
+        error:messageError
+      } =
+      await db
+        .from("messages")
+        .insert({
+
+          match_id:
+            selectedMatch.matchId,
+
+          sender_id:
+            session.user.id,
+
+          message:"",
+
+          attachment_url:
+            publicUrl,
+
+          attachment_name:
+            safe,
+
+          attachment_type:
+            file.type ||
+            "application/octet-stream"
+
+        });
 
 
-    await loadDiscover();
+      if(messageError)
+        throw messageError;
 
-  } catch(error) {
 
-    console.error(error);
+    }catch(error){
 
-    showMessage(
-      "profileMessage",
-      error.message ||
-      "Could not save profile."
-    );
+      toast(
+        "Attachment failed: " +
+        error.message
+      );
+
+    }
+
   }
+
+
+  $("fileInput").value = "";
+
+  $("filePreview").textContent = "";
+
+  await loadMessages();
+
 }
 
 
-/* ==========================================================
-   AVATAR UPLOAD
-========================================================== */
+/* =========================
+   SAVE PROFILE
+========================= */
 
-async function uploadAvatar(event) {
+async function saveProfile(){
 
-  const file =
-    event.target.files?.[0];
+  try{
 
-  if (!file || !session?.user?.id)
-    return;
-
-
-  clearMessage("profileMessage");
+    let avatar =
+      profile?.avatar_url ||
+      null;
 
 
-  try {
-
-    const extension =
-      file.name.split(".").pop() ||
-      "jpg";
+    const file =
+      $("avatarInput").files[0];
 
 
-    const path =
-      `${session.user.id}/${Date.now()}.${extension}`;
+    if(file){
+
+      if(
+        file.size >
+        8 * 1024 * 1024
+      ){
+
+        throw Error(
+          "Profile photo must be under 8MB."
+        );
+
+      }
 
 
-    const {
-      error:uploadError
-    } =
-      await db.storage
+      const ext =
+        (
+          file.name
+            .split(".")
+            .pop() ||
+          "jpg"
+        )
+        .replace(
+          /[^a-zA-Z0-9]/g,
+          ""
+        );
+
+
+      const path =
+        `${session.user.id}/` +
+        `avatar-${Date.now()}.` +
+        ext;
+
+
+      const {
+        error
+      } =
+      await db
+        .storage
         .from("avatars")
         .upload(
           path,
@@ -1893,1482 +2141,123 @@ async function uploadAvatar(event) {
             contentType:
               file.type ||
               "image/jpeg",
-            upsert:true
+
+            upsert:false
           }
         );
 
 
-    if (uploadError)
-      throw uploadError;
+      if(error)
+        throw error;
 
 
-    const {
-      data:publicData
-    } =
-      db.storage
-        .from("avatars")
-        .getPublicUrl(path);
+      avatar =
+        db
+          .storage
+          .from("avatars")
+          .getPublicUrl(path)
+          .data
+          .publicUrl;
 
-
-    const avatarUrl =
-      publicData.publicUrl;
-
-
-    const {
-      error:updateError
-    } =
-      await db
-        .from("profiles")
-        .update({
-          avatar_url:avatarUrl
-        })
-        .eq(
-          "id",
-          session.user.id
-        );
-
-
-    if (updateError)
-      throw updateError;
-
-
-    myProfile.avatar_url =
-      avatarUrl;
-
-
-    fillProfileForm();
-
-
-    showMessage(
-      "profileMessage",
-      "Profile photo updated.",
-      "success"
-    );
-
-
-    await loadDiscover();
-
-  } catch(error) {
-
-    console.error(error);
-
-    showMessage(
-      "profileMessage",
-      error.message ||
-      "Photo upload failed."
-    );
-  }
-}
-
-
-/* ==========================================================
-   DISCOVER
-========================================================== */
-
-async function loadDiscover() {
-
-  const container =
-    document.getElementById(
-      "discoverList"
-    );
-
-
-  if (!session?.user?.id)
-    return;
-
-
-  container.innerHTML =
-    `<div class="loading">
-       Loading profiles...
-     </div>`;
-
-
-  try {
-
-    let query =
-      db
-        .from("profiles")
-        .select("*")
-        .neq(
-          "id",
-          session.user.id
-        )
-        .gte("age",18)
-        .order(
-          "created_at",
-          {
-            ascending:false
-          }
-        );
-
-
-    const minAge =
-      Number(
-        document.getElementById("minAge")
-          .value
-      );
-
-    const maxAge =
-      Number(
-        document.getElementById("maxAge")
-          .value
-      );
-
-    const goal =
-      document.getElementById(
-        "goalFilter"
-      ).value;
-
-    const search =
-      document.getElementById(
-        "searchInput"
-      ).value
-        .trim()
-        .toLowerCase();
-
-
-    if (minAge)
-      query =
-        query.gte(
-          "age",
-          minAge
-        );
-
-
-    if (maxAge)
-      query =
-        query.lte(
-          "age",
-          maxAge
-        );
-
-
-    if (goal)
-      query =
-        query.eq(
-          "relationship_goal",
-          goal
-        );
+    }
 
 
     const {
       data,
       error
     } =
-      await query;
-
-
-    if (error) throw error;
-
-
-    let profiles =
-      data || [];
-
-
-    if (search) {
-
-      profiles =
-        profiles.filter(
-          profile => {
-
-            const text = [
-              profile.name,
-              profile.city,
-              profile.bio,
-              profile.relationship_goal
-            ]
-              .filter(Boolean)
-              .join(" ")
-              .toLowerCase();
-
-
-            return text.includes(search);
-          }
-        );
-    }
-
-
-    renderDiscover(profiles);
-
-  } catch(error) {
-
-    console.error(error);
-
-    container.innerHTML = `
-      <div class="empty"
-           style="grid-column:1/-1">
-
-        <div class="empty-icon">
-          ⚠
-        </div>
-
-        <h3>
-          Could not load profiles
-        </h3>
-
-        <p>
-          ${escapeHtml(error.message)}
-        </p>
-
-      </div>
-    `;
-  }
-}
-
-
-/* ==========================================================
-   RENDER DISCOVER
-========================================================== */
-
-function renderDiscover(profiles) {
-
-  const container =
-    document.getElementById(
-      "discoverList"
-    );
-
-
-  if (!profiles.length) {
-
-    container.innerHTML = `
-      <div class="empty"
-           style="grid-column:1/-1">
-
-        <div class="empty-icon">
-          🦚
-        </div>
-
-        <h3>
-          No profiles found
-        </h3>
-
-        <p>
-          Try changing your search or filters.
-        </p>
-
-      </div>
-    `;
-
-    return;
-  }
-
-
-  container.innerHTML =
-    profiles.map(profile => `
-
-      <article class="profile-card">
-
-        <div class="profile-image">
-
-          ${
-            profile.avatar_url
-
-              ? `
-                <img
-                  src="${escapeHtml(
-                    profile.avatar_url
-                  )}"
-                  alt="${escapeHtml(
-                    profile.name
-                  )}"
-                >
-              `
-
-              : `
-                <div class="avatar-placeholder">
-                  ${escapeHtml(
-                    initials(profile.name)
-                  )}
-                </div>
-              `
-          }
-
-        </div>
-
-
-        <div class="profile-info">
-
-          <div class="profile-name">
-
-            ${escapeHtml(
-              profile.name ||
-              "Member"
-            )}
-
-            ${
-              profile.age
-                ? `, ${escapeHtml(
-                    profile.age
-                  )}`
-                : ""
-            }
-
-          </div>
-
-
-          <div class="profile-meta">
-
-            ${escapeHtml(
-              profile.city ||
-              "Offa"
-            )}
-
-            ${
-              profile.sex
-                ? ` • ${escapeHtml(
-                    profile.sex
-                  )}`
-                : ""
-            }
-
-          </div>
-
-
-          ${
-            profile.relationship_goal
-
-              ? `
-                <div class="goal">
-                  ${escapeHtml(
-                    profile.relationship_goal
-                  )}
-                </div>
-              `
-
-              : ""
-          }
-
-
-          <div class="profile-bio">
-
-            ${escapeHtml(
-              profile.bio ||
-              "No bio added yet."
-            )}
-
-          </div>
-
-
-          <div class="profile-actions">
-
-            <button
-              class="pass-btn"
-              type="button"
-              onclick="passProfile('${profile.id}')"
-            >
-              Pass
-            </button>
-
-
-            <button
-              class="like-btn"
-              type="button"
-              onclick="likeProfile('${profile.id}')"
-            >
-              ♥ Like
-            </button>
-
-          </div>
-
-        </div>
-
-      </article>
-
-    `).join("");
-}
-
-
-/* ==========================================================
-   LIKE
-========================================================== */
-
-async function likeProfile(profileId) {
-
-  if (!session?.user?.id)
-    return;
-
-
-  try {
-
-    const {
-      error
-    } =
-      await db
-        .from("likes")
-        .upsert(
-          {
-            from_user:
-              session.user.id,
-            to_user:
-              profileId
-          },
-          {
-            onConflict:
-              "from_user,to_user"
-          }
-        );
-
-
-    if (error) throw error;
-
-
-    await loadDiscover();
-
-    await loadMatches();
-
-
-    alert("Like sent ♥");
-
-  } catch(error) {
-
-    console.error(error);
-
-    alert(
-      error.message ||
-      "Could not send like."
-    );
-  }
-}
-
-
-/* ==========================================================
-   PASS
-========================================================== */
-
-function passProfile(profileId) {
-
-  const buttons =
-    document.querySelectorAll(
-      ".pass-btn"
-    );
-
-
-  buttons.forEach(button => {
-
-    if (
-      button.getAttribute(
-        "onclick"
-      ) ===
-      `passProfile('${profileId}')`
-    ) {
-
-      const card =
-        button.closest(
-          ".profile-card"
-        );
-
-      if (card)
-        card.remove();
-    }
-  });
-}
-
-
-/* ==========================================================
-   LOAD MATCHES
-========================================================== */
-
-function loadMatches() {
-  loadMatchesAsync();
-}
-
-
-async function loadMatchesAsync() {
-
-  const container =
-    document.getElementById(
-      "matchesList"
-    );
-
-
-  if (!session?.user?.id)
-    return;
-
-
-  container.innerHTML =
-    `<div class="loading">
-       Loading matches...
-     </div>`;
-
-
-  try {
-
-    const {
-      data:matches,
-      error
-    } =
-      await db
-        .from("matches")
-        .select("*")
-        .or(
-          `user_one.eq.${session.user.id},user_two.eq.${session.user.id}`
-        )
-        .order(
-          "created_at",
-          {
-            ascending:false
-          }
-        );
-
-
-    if (error)
-      throw error;
-
-
-    if (
-      !matches ||
-      matches.length === 0
-    ) {
-
-      container.innerHTML = `
-        <div class="empty">
-
-          <div class="empty-icon">
-            ♥
-          </div>
-
-          <h3>
-            No matches yet
-          </h3>
-
-          <p>
-            When someone likes you back,
-            your match will appear here.
-          </p>
-
-        </div>
-      `;
-
-      return;
-    }
-
-
-    const otherIds =
-      matches.map(match =>
-        match.user_one ===
-        session.user.id
-
-          ? match.user_two
-
-          : match.user_one
-      );
-
-
-    const {
-      data:profiles,
-      error:profileError
-    } =
-      await db
-        .from("profiles")
-        .select("*")
-        .in(
-          "id",
-          otherIds
-        );
-
-
-    if (profileError)
-      throw profileError;
-
-
-    const profileMap = {};
-
-
-    (profiles || [])
-      .forEach(profile => {
-
-        profileMap[
-          profile.id
-        ] = profile;
-
-      });
-
-
-    window.offaMatches = {};
-
-
-    let html = "";
-
-
-    matches.forEach(match => {
-
-      const otherId =
-        match.user_one ===
-        session.user.id
-
-          ? match.user_two
-
-          : match.user_one;
-
-
-      const profile =
-        profileMap[otherId];
-
-
-      if (!profile)
-        return;
-
-
-      /*
-        Store the match in JavaScript
-        instead of putting a JSON object
-        directly into onclick.
-      */
-
-      window.offaMatches[
-        String(match.id)
-      ] = {
-
-        matchId:
-          match.id,
-
-        profile:
-          profile
-      };
-
-
-      html += `
-
-        <div class="match-card">
-
-          <div class="match-avatar">
-
-            ${
-              profile.avatar_url
-
-                ? `
-                  <img
-                    src="${escapeHtml(
-                      profile.avatar_url
-                    )}"
-                    alt=""
-                  >
-                `
-
-                : escapeHtml(
-                    initials(
-                      profile.name
-                    )
-                  )
-            }
-
-          </div>
-
-
-          <div class="match-info">
-
-            <h3>
-              ${escapeHtml(
-                profile.name ||
-                "Member"
-              )}
-            </h3>
-
-
-            <p>
-
-              ${escapeHtml(
-                profile.city ||
-                "Offa"
-              )}
-
-              ${
-                profile.age
-                  ? ` • ${escapeHtml(
-                      profile.age
-                    )}`
-                  : ""
-              }
-
-            </p>
-
-          </div>
-
-
-          <button
-            class="chat-open"
-            type="button"
-            onclick="openChatByMatchId('${String(match.id)}')"
-          >
-            Chat
-          </button>
-
-        </div>
-
-      `;
-    });
-
-
-    container.innerHTML =
-      html ||
-
-      `
-        <div class="empty">
-
-          <div class="empty-icon">
-            ♥
-          </div>
-
-          <h3>
-            No matches available
-          </h3>
-
-        </div>
-      `;
-
-
-  } catch(error) {
-
-    console.error(
-      "MATCH ERROR:",
-      error
-    );
-
-
-    container.innerHTML = `
-      <div class="empty">
-
-        <div class="empty-icon">
-          ⚠
-        </div>
-
-        <h3>
-          Could not load matches
-        </h3>
-
-        <p>
-          ${escapeHtml(
-            error.message
-          )}
-        </p>
-
-      </div>
-    `;
-  }
-}
-
-
-/* ==========================================================
-   OPEN CHAT — FIXED
-========================================================== */
-
-async function openChatByMatchId(matchId) {
-
-  const match =
-    window.offaMatches?.[
-      String(matchId)
-    ];
-
-
-  if (!match) {
-
-    alert(
-      "This match could not be opened. Please refresh your matches."
-    );
-
-    return;
-  }
-
-
-  selectedMatch = match;
-
-
-  showPage("chat");
-
-
-  document
-    .getElementById("chatEmpty")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("chatBox")
-    .classList.remove("hidden");
-
-
-  const profile =
-    match.profile;
-
-
-  document
-    .getElementById("chatName")
-    .textContent =
-      profile.name ||
-      "Chat";
-
-
-  document
-    .getElementById("chatStatus")
-    .textContent =
-      profile.city ||
-      "Connected on Offa Connect";
-
-
-  const avatar =
-    document.getElementById(
-      "chatAvatar"
-    );
-
-
-  if (profile.avatar_url) {
-
-    avatar.innerHTML = `
-      <img
-        src="${escapeHtml(
-          profile.avatar_url
-        )}"
-        alt=""
-      >
-    `;
-
-  } else {
-
-    avatar.textContent =
-      initials(profile.name);
-  }
-
-
-  await loadMessages();
-
-
-  subscribeToMessages();
-
-
-  setTimeout(() => {
-
-    document
-      .getElementById(
-        "messageInput"
-      )
-      ?.focus();
-
-  },100);
-}
-
-
-/* ==========================================================
-   CLOSE CHAT
-========================================================== */
-
-function closeChat() {
-
-  selectedMatch = null;
-
-
-  if (messagesSubscription) {
-
-    db.removeChannel(
-      messagesSubscription
-    );
-
-    messagesSubscription = null;
-  }
-
-
-  document
-    .getElementById("chatBox")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("chatEmpty")
-    .classList.remove("hidden");
-}
-
-
-/* ==========================================================
-   LOAD MESSAGES
-========================================================== */
-
-async function loadMessages() {
-
-  const container =
-    document.getElementById(
-      "messages"
-    );
-
-
-  if (!selectedMatch)
-    return;
-
-
-  container.innerHTML =
-    `<div class="loading">
-       Loading messages...
-     </div>`;
-
-
-  try {
-
-    const {
-      data,
-      error
-    } =
-      await db
-        .from("messages")
-        .select("*")
-        .eq(
-          "match_id",
-          selectedMatch.matchId
-        )
-        .order(
-          "created_at",
-          {
-            ascending:true
-          }
-        );
-
-
-    if (error)
-      throw error;
-
-
-    renderMessages(
-      data || []
-    );
-
-
-  } catch(error) {
-
-    console.error(
-      "LOAD MESSAGES ERROR:",
-      error
-    );
-
-
-    container.innerHTML = `
-      <div class="empty">
-
-        <div class="empty-icon">
-          ⚠
-        </div>
-
-        <h3>
-          Could not load messages
-        </h3>
-
-        <p>
-          ${escapeHtml(
-            error.message
-          )}
-        </p>
-
-      </div>
-    `;
-  }
-}
-
-
-/* ==========================================================
-   RENDER MESSAGES
-========================================================== */
-
-function renderMessages(messages) {
-
-  const container =
-    document.getElementById(
-      "messages"
-    );
-
-
-  if (!messages.length) {
-
-    container.innerHTML = `
-      <div class="empty">
-
-        <div class="empty-icon">
-          👋
-        </div>
-
-        <h3>
-          Start the conversation
-        </h3>
-
-        <p>
-          Say hello!
-        </p>
-
-      </div>
-    `;
-
-    return;
-  }
-
-
-  container.innerHTML =
-    messages.map(message => {
-
-      const mine =
-        message.sender_id ===
-        session.user.id;
-
-
-      let content = "";
-
-
-      if (message.message) {
-
-        content += `
-          <div>
-            ${escapeHtml(
-              message.message
-            )}
-          </div>
-        `;
-      }
-
-
-      if (message.attachment_url) {
-
-        content += `
-          <a
-            href="${escapeHtml(
-              message.attachment_url
-            )}"
-            target="_blank"
-            rel="noopener"
-            style="
-              display:block;
-              margin-top:6px;
-              color:inherit;
-              font-weight:700;
-            "
-          >
-            📎
-            ${escapeHtml(
-              message.attachment_name ||
-              "Attachment"
-            )}
-          </a>
-        `;
-      }
-
-
-      return `
-
-        <div
-          class="message-row ${
-            mine
-              ? "mine"
-              : "theirs"
-          }"
-        >
-
-          <div class="bubble">
-
-            ${content}
-
-            <span class="bubble-time">
-
-              ${formatTime(
-                message.created_at
-              )}
-
-              ${
-                mine &&
-                message.read_at
-                  ? " ✓✓"
-                  : ""
-              }
-
-            </span>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-
-  container.scrollTop =
-    container.scrollHeight;
-}
-
-
-/* ==========================================================
-   SEND MESSAGE — FIXED
-========================================================== */
-
-async function sendMessage(event) {
-
-  event.preventDefault();
-
-
-  if (
-    !session?.user?.id ||
-    !selectedMatch
-  ) {
-
-    alert(
-      "Please open a match first."
-    );
-
-    return;
-  }
-
-
-  const input =
-    document.getElementById(
-      "messageInput"
-    );
-
-
-  const message =
-    input.value.trim();
-
-
-  if (!message)
-    return;
-
-
-  const originalMessage =
-    message;
-
-
-  input.value = "";
-
-
-  try {
-
-    const {
-      data,
-      error
-    } =
-      await db
-        .from("messages")
-        .insert({
-          match_id:
-            selectedMatch.matchId,
-
-          sender_id:
-            session.user.id,
-
-          message:
-            originalMessage
-        })
-        .select()
-        .single();
-
-
-    if (error)
-      throw error;
-
-
-    /*
-      Immediately reload so the sender
-      sees the message without waiting
-      for realtime.
-    */
-
-    await loadMessages();
-
-
-  } catch(error) {
-
-    console.error(
-      "SEND MESSAGE ERROR:",
-      error
-    );
-
-
-    input.value =
-      originalMessage;
-
-
-    alert(
-      error.message ||
-      "Message could not be sent."
-    );
-  }
-}
-
-
-/* ==========================================================
-   REALTIME CHAT
-========================================================== */
-
-function subscribeToMessages() {
-
-  if (!selectedMatch)
-    return;
-
-
-  if (messagesSubscription) {
-
-    db.removeChannel(
-      messagesSubscription
-    );
-
-    messagesSubscription =
-      null;
-  }
-
-
-  messagesSubscription =
-    db
-      .channel(
-        "offa-messages-" +
-        selectedMatch.matchId +
-        "-" +
-        Date.now()
-      )
-
-      .on(
-        "postgres_changes",
-        {
-          event:"INSERT",
-          schema:"public",
-          table:"messages",
-          filter:
-            `match_id=eq.${selectedMatch.matchId}`
-        },
-
-        async () => {
-
-          await loadMessages();
-
-        }
-      )
-
-      .subscribe(
-        status => {
-
-          console.log(
-            "Chat realtime status:",
-            status
-          );
-
-        }
-      );
-}
-
-
-/* ==========================================================
-   NAVIGATION
-========================================================== */
-
-function showPage(page) {
-
-  const pages = [
-    "discover",
-    "matches",
-    "chat",
-    "profile"
-  ];
-
-
-  pages.forEach(name => {
-
-    const element =
-      document.getElementById(
-        name + "Page"
-      );
-
-
-    if (element) {
-
-      element.classList.toggle(
-        "hidden",
-        name !== page
-      );
-    }
-
-
-    const nav =
-      document.getElementById(
-        "nav" +
-        name.charAt(0).toUpperCase() +
-        name.slice(1)
-      );
-
-
-    if (nav) {
-
-      nav.classList.toggle(
-        "active",
-        name === page
-      );
-    }
-  });
-
-
-  if (page === "discover") {
-
-    loadDiscover();
-  }
-
-
-  if (page === "matches") {
-
-    loadMatches();
-  }
-
-
-  if (page === "profile") {
-
-    loadMyProfile();
-  }
-
-
-  if (
-    page === "chat" &&
-    selectedMatch
-  ) {
-
-    loadMessages();
-  }
-}
-
-
-/* ==========================================================
-   LAST SEEN
-========================================================== */
-
-async function updateLastSeen() {
-
-  if (!session?.user?.id)
-    return;
-
-
-  try {
-
     await db
       .from("profiles")
       .update({
-        last_seen_at:
-          new Date().toISOString()
+
+        name:
+          $("profileName")
+            .value
+            .trim() ||
+          "Member",
+
+        age:
+          Math.max(
+            18,
+            Number(
+              $("profileAge").value
+            ) || 18
+          ),
+
+        city:
+          $("profileCity")
+            .value
+            .trim() ||
+          "Offa",
+
+        bio:
+          $("profileBio")
+            .value
+            .trim(),
+
+        avatar_url:
+          avatar
+
       })
       .eq(
         "id",
         session.user.id
-      );
+      )
+      .select()
+      .single();
 
-  } catch(error) {
 
-    console.warn(
-      "Could not update last seen:",
-      error
+    if(error)
+      throw error;
+
+
+    profile = data;
+
+
+    $("myAvatar").innerHTML =
+      avatarHtml(profile);
+
+
+    $("avatarInput").value = "";
+
+    toast(
+      "Profile saved"
     );
+
+
+  }catch(error){
+
+    toast(
+      error.message
+    );
+
   }
+
 }
 
 
-/* ==========================================================
+/* =========================
    LOGOUT
-========================================================== */
+========================= */
 
-async function logout() {
+async function logout(){
 
-  try {
-
-    if (messagesSubscription) {
-
-      await db.removeChannel(
-        messagesSubscription
-      );
-
-      messagesSubscription =
-        null;
-    }
+  if(realtime)
+    db.removeChannel(
+      realtime
+    );
 
 
-    await db.auth.signOut();
+  await db.auth.signOut();
 
-  } catch(error) {
-
-    console.error(error);
-  }
-
-
-  session = null;
-
-  myProfile = null;
-
-  selectedMatch = null;
-
-
-  document
-    .getElementById("appScreen")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("authScreen")
-    .classList.remove("hidden");
-
-
-  showLogin();
 }
 
 
-/* ==========================================================
-   AUTH STATE
-========================================================== */
+/* =========================
+   START APP
+========================= */
 
-db.auth.onAuthStateChange(
-  async (event,newSession) => {
-
-    if (
-      newSession &&
-      !session
-    ) {
-
-      await startApp(
-        newSession
-      );
-    }
-
-
-    if (!newSession) {
-
-      session = null;
-
-
-      document
-        .getElementById("appScreen")
-        .classList.add("hidden");
-
-
-      document
-        .getElementById("authScreen")
-        .classList.remove("hidden");
-    }
-  }
-);
-
-
-/* ==========================================================
-   INITIAL SESSION
-========================================================== */
-
-(async function init() {
-
-  try {
-
-    const {
-      data
-    } =
-      await db.auth.getSession();
-
-
-    if (data.session) {
-
-      await startApp(
-        data.session
-      );
-    }
-
-  } catch(error) {
-
-    console.error(
-      "Session initialization failed:",
-      error
-    );
-  }
-
-})();
+start();
 
 </script>
 
