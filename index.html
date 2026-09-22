@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#071A2B" />
+  <title>Offa Connect by Leo</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f7f4ee;
+      color: #132235;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .app {
+      min-height: 100vh;
+    }
+
+    /* ---------- AUTH ---------- */
+
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top right, #0b8f87 0, transparent 35%),
+        linear-gradient(145deg, #071a2b, #0b5c8e 55%, #0b8f87);
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 430px;
+      background: rgba(255,255,255,.97);
+      border-radius: 28px;
+      padding: 32px;
+      box-shadow: 0 25px 80px rgba(0,0,0,.25);
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .brand-logo {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 46px;
+      background: linear-gradient(145deg, #071a2b, #0b5c8e);
+      border: 5px solid #d9a441;
+      box-shadow: 0 12px 30px rgba(7,26,43,.25);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 30px;
+      color: #071a2b;
+    }
+
+    .brand p {
+      margin: 8px 0 0;
+      color: #6e7d8c;
+    }
+
+    .tagline {
+      color: #0b8f87 !important;
+      font-weight: 700;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid #dfe6ed;
+      border-radius: 14px;
+      padding: 13px 14px;
+      background: #fff;
+      color: #132235;
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #0b8f87;
+      box-shadow: 0 0 0 3px rgba(11,143,135,.1);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .primary {
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      padding: 14px;
+      color: white;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0b5c8e, #0b8f87);
+      box-shadow: 0 10px 25px rgba(11,92,142,.22);
+    }
+
+    .secondary {
+      width: 100%;
+      border: 1px solid #dfe6ed;
+      border-radius: 14px;
+      padding: 13px;
+      background: white;
+      color: #071a2b;
+      font-weight: 700;
+    }
+
+    .link-button {
+      background: none;
+      border: 0;
+      color: #0b5c8e;
+      font-weight: 800;
+      padding: 10px;
+    }
+
+    .auth-switch {
+      text-align: center;
+      margin-top: 18px;
+      color: #6e7d8c;
+    }
+
+    .message {
+      padding: 12px 14px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    .error {
+      background: #fff0f0;
+      color: #a32929;
+    }
+
+    .success {
+      background: #edf9f3;
+      color: #157347;
+    }
+
+    /* ---------- APP ---------- */
+
+    .topbar {
+      height: 72px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(7,26,43,.97);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      box-shadow: 0 5px 25px rgba(0,0,0,.15);
+    }
+
+    .topbar-brand {
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    .topbar-brand span {
+      color: #d9a441;
+    }
+
+    .logout {
+      border: 1px solid rgba(255,255,255,.25);
+      background: transparent;
+      color: white;
+      padding: 9px 13px;
+      border-radius: 10px;
+    }
+
+    .content {
+      max-width: 1100px;
+      margin: auto;
+      padding: 25px 18px 100px;
+    }
+
+    .welcome {
+      margin-bottom: 20px;
+    }
+
+    .welcome h2 {
+      margin: 0 0 5px;
+    }
+
+    .muted {
+      color: #6e7d8c;
+    }
+
+    .filters {
+      background: white;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 30px rgba(7,26,43,.07);
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .profiles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .profile-card {
+      overflow: hidden;
+      background: white;
+      border-radius: 22px;
+      box-shadow: 0 10px 30px rgba(7,26,43,.09);
+    }
+
+    .profile-image {
+      width: 100%;
+      height: 290px;
+      object-fit: cover;
+      background: linear-gradient(135deg, #071a2b, #0b8f87);
+    }
+
+    .profile-body {
+      padding: 17px;
+    }
+
+    .profile-name {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .profile-meta {
+      color: #6e7d8c;
+      margin: 4px 0 10px;
+    }
+
+    .goal {
+      display: inline-block;
+      padding: 6px 9px;
+      background: #eef8f6;
+      color: #08786f;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .bio {
+      margin: 12px 0;
+      line-height: 1.5;
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .like {
+      border: 0;
+      background: #0b8f87;
+      color: white;
+      border-radius: 12px;
+      padding: 11px;
+      font-weight: 800;
+    }
+
+    .pass {
+      border: 1px solid #dfe6ed;
+      background: white;
+      color: #132235;
+      border-radius: 12px;
+      padding: 11px;
+      font-weight: 800;
+    }
+
+    /* ---------- NAV ---------- */
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: rgba(255,255,255,.97);
+      border-top: 1px solid #e6ebef;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      z-index: 30;
+    }
+
+    .nav-btn {
+      border: 0;
+      background: transparent;
+      min-width: 90px;
+      color: #6e7d8c;
+      font-weight: 700;
+    }
+
+    .nav-btn.active {
+      color: #0b8f87;
+    }
+
+    .nav-icon {
+      font-size: 22px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* ---------- MATCHES ---------- */
+
+    .match-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .match-item {
+      background: white;
+      border-radius: 18px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      box-shadow: 0 7px 25px rgba(7,26,43,.07);
+      cursor: pointer;
+    }
+
+    .avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #0b5c8e;
+    }
+
+    /* ---------- CHAT ---------- */
+
+    .chat {
+      background: white;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(7,26,43,.08);
+    }
+
+    .chat-header {
+      padding: 16px;
+      border-bottom: 1px solid #edf0f2;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chat-messages {
+      height: 430px;
+      overflow-y: auto;
+      padding: 18px;
+      background: #f7f9fa;
+    }
+
+    .bubble {
+      max-width: 75%;
+      padding: 10px 13px;
+      border-radius: 16px;
+      margin-bottom: 9px;
+      line-height: 1.4;
+    }
+
+    .mine {
+      margin-left: auto;
+      background: #0b8f87;
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .theirs {
+      background: white;
+      border-bottom-left-radius: 4px;
+    }
+
+    .chat-compose {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      border-top: 1px solid #edf0f2;
+    }
+
+    .chat-compose input {
+      flex: 1;
+    }
+
+    .send {
+      border: 0;
+      background: #0b5c8e;
+      color: white;
+      border-radius: 12px;
+      padding: 0 18px;
+      font-weight: 800;
+    }
+
+    /* ---------- PROFILE ---------- */
+
+    .panel {
+      background: white;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(7,26,43,.07);
+    }
+
+    .profile-preview {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .big-avatar {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      background: #0b5c8e;
+      border: 5px solid #d9a441;
+    }
+
+    .upload {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 9px 14px;
+      border-radius: 10px;
+      background: #edf5f8;
+      color: #0b5c8e;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+
+    @media (max-width: 800px) {
+      .profiles {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .filter-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .auth-card {
+        padding: 24px;
+      }
+
+      .profiles {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-image {
+        height: 330px;
+      }
+
+      .nav-btn {
+        min-width: 70px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script>
+/* ============================================================
+   OFFA CONNECT BY LEO
+   Supabase configuration
+   ============================================================ */
+
+const SUPABASE_URL = "https://irjahjpdjuvlmlcgtusr.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_HoMz0Vb4krVkz1p4Dm5_dg_hFuaxwxl";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+let session = null;
+let myProfile = null;
+let currentScreen = "discover";
+let matches = [];
+let selectedMatch = null;
+let messagesSubscription = null;
+
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+
+function esc(value) {
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function avatar(url) {
+  return url ||
+    "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500";
+}
+
+function showMessage(text, type = "error") {
+  const box = document.getElementById("message");
+  if (!box) return;
+
+  box.innerHTML = `<div class="message ${type}">${esc(text)}</div>`;
+
+  setTimeout(() => {
+    box.innerHTML = "";
+  }, 5000);
+}
+
+
+/* ============================================================
+   AUTH
+   ============================================================ */
+
+function renderAuth(mode = "login") {
+  const signup = mode === "signup";
+
+  document.getElementById("root").innerHTML = `
+    <div class="auth-page">
+      <div class="auth-card">
+
+        <div class="brand">
+          <div class="brand-logo">🦚</div>
+          <h1>Offa Connect by Leo</h1>
+          <p class="tagline">Meet. Connect. Belong.</p>
+          <p>Connect with people from Offa and beyond.</p>
+        </div>
+
+        <div id="message"></div>
+
+        ${
+          signup
+          ? `
+            <div class="form-group">
+              <label>Full name</label>
+              <input id="name" placeholder="Your name" />
+            </div>
+
+            <div class="form-group">
+              <label>Age</label>
+              <input id="age" type="number" min="18" placeholder="18+" />
+            </div>
+
+            <div class="form-group">
+              <label>Sex</label>
+              <select id="sex">
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>City</label>
+              <input id="city" value="Offa" />
+            </div>
+          `
+          : ""
+        }
+
+        <div class="form-group">
+          <label>Email</label>
+          <input id="email" type="email" placeholder="you@example.com" />
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input id="password" type="password" placeholder="••••••••" />
+        </div>
+
+        <button class="primary" onclick="${signup ? "signup()" : "login()}">
+          ${signup ? "Create account" : "Log in"}
+        </button>
+
+        <div class="auth-switch">
+          ${
+            signup
+            ? `Already have an account?
+              <button class="link-button" onclick="renderAuth('login')">Log in</button>`
+            : `New to Offa Connect?
+              <button class="link-button" onclick="renderAuth('signup')">Create account</button>`
+          }
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
+async function login() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (!email || !password) {
+    showMessage("Enter your email and password.");
+    return;
+  }
+
+  const { error } = await db.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    showMessage(error.message);
+    return;
+  }
+
+  await startApp();
+}
+
+async function signup() {
+  const name = document.getElementById("name").value.trim();
+  const age = Number(document.getElementById("age").value);
+  const sex = document.getElementById("sex").value;
+  const city = document.getElementById("city").value.trim() || "Offa";
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (!name || !age || age < 18 || !email || !password) {
+    showMessage("Please complete all required fields. You must be 18 or older.");
+    return;
+  }
+
+  const { data, error } = await db.auth.signUp({
+    email,
+    password
+  });
+
+  if (error) {
+    showMessage(error.message);
+    return;
+  }
+
+  if (!data.user) {
+    showMessage("Account created. Check your email to confirm your account.", "success");
+    return;
+  }
+
+  const { error: profileError } = await db.from("profiles").insert({
+    id: data.user.id,
+    name,
+    age,
+    sex,
+    city,
+    bio: "",
+    relationship_goal: ""
+  });
+
+  if (profileError) {
+    showMessage(profileError.message);
+    return;
+  }
+
+  showMessage(
+    "Account created successfully. Welcome to Offa Connect!",
+    "success"
+  );
+
+  await startApp();
+}
+
+
+/* ============================================================
+   APP START
+   ============================================================ */
+
+async function startApp() {
+  const result = await db.auth.getSession();
+
+  session = result.data.session;
+
+  if (!session) {
+    renderAuth("login");
+    return;
+  }
+
+  await loadMyProfile();
+  await loadMatches();
+  renderApp();
+}
+
+async function loadMyProfile() {
+  const { data } = await db
+    .from("profiles")
+    .select("*")
+    .eq("id", session.user.id)
+    .maybeSingle();
+
+  myProfile = data;
+}
+
+async function loadMatches() {
+  const { data } = await db
+    .from("matches")
+    .select(`
+      *,
+      user_one_profile:profiles!matches_user_one_fkey(*),
+      user_two_profile:profiles!matches_user_two_fkey(*)
+    `)
+    .or(
+      `user_one.eq.${session.user.id},user_two.eq.${session.user.id}`
+    )
+    .order("created_at", { ascending: false });
+
+  matches = data || [];
+}
+
+
+/* ============================================================
+   MAIN APP
+   ============================================================ */
+
+function renderApp() {
+  document.getElementById("root").innerHTML = `
+    <div class="app">
+
+      <header class="topbar">
+        <div class="topbar-brand">
+          Offa Connect <span>by Leo</span>
+        </div>
+
+        <button class="logout" onclick="logout()">
+          Log out
+        </button>
+      </header>
+
+      <main class="content">
+        <div id="screen"></div>
+      </main>
+
+      <nav class="bottom-nav">
+
+        <button class="nav-btn ${
+          currentScreen === "discover" ? "active" : ""
+        }" onclick="go('discover')">
+          <span class="nav-icon">♥</span>
+          Discover
+        </button>
+
+        <button class="nav-btn ${
+          currentScreen === "matches" ? "active" : ""
+        }" onclick="go('matches')">
+          <span class="nav-icon">💚</span>
+          Matches
+        </button>
+
+        <button class="nav-btn ${
+          currentScreen === "profile" ? "active" : ""
+        }" onclick="go('profile')">
+          <span class="nav-icon">●</span>
+          Profile
+        </button>
+
+      </nav>
+
+    </div>
+  `;
+
+  renderScreen();
+}
+
+function go(screen) {
+  currentScreen = screen;
+  renderApp();
+}
+
+async function renderScreen() {
+  if (currentScreen === "discover") {
+    await renderDiscover();
+  }
+
+  if (currentScreen === "matches") {
+    renderMatches();
+  }
+
+  if (currentScreen === "profile") {
+    renderProfile();
+  }
+
+  if (currentScreen === "chat") {
+    renderChat();
+  }
+}
+
+
+/* ============================================================
+   DISCOVER
+   ============================================================ */
+
+async function renderDiscover() {
+  const screen = document.getElementById("screen");
+
+  screen.innerHTML = `
+    <div class="welcome">
+      <h2>Discover people</h2>
+      <div class="muted">
+        Find your connection in the Offa community.
+      </div>
+    </div>
+
+    <div class="filters">
+
+      <div class="filter-grid">
+
+        <input
+          id="search"
+          placeholder="Search name or bio"
+        />
+
+        <input
+          id="cityFilter"
+          placeholder="City"
+        />
+
+        <input
+          id="minAge"
+          type="number"
+          placeholder="Min age"
+        />
+
+        <input
+          id="maxAge"
+          type="number"
+          placeholder="Max age"
+        />
+
+      </div>
+
+      <br />
+
+      <button class="primary" onclick="loadDiscover()">
+        Search
+      </button>
+
+    </div>
+
+    <div id="profiles" class="profiles">
+      Loading people...
+    </div>
+  `;
+
+  await loadDiscover();
+}
+
+async function loadDiscover() {
+  const box = document.getElementById("profiles");
+
+  if (!box) return;
+
+  let query = db
+    .from("profiles")
+    .select("*")
+    .neq("id", session.user.id)
+    .gte("age", 18)
+    .order("created_at", { ascending: false })
+    .limit(30);
+
+  const search = document.getElementById("search")?.value.trim();
+  const city = document.getElementById("cityFilter")?.value.trim();
+  const minAge = Number(document.getElementById("minAge")?.value);
+  const maxAge = Number(document.getElementById("maxAge")?.value);
+
+  if (search) {
+    query = query.or(
+      `name.ilike.%${search}%,bio.ilike.%${search}%`
+    );
+  }
+
+  if (city) {
+    query = query.ilike("city", `%${city}%`);
+  }
+
+  if (minAge) {
+    query = query.gte("age", minAge);
+  }
+
+  if (maxAge) {
+    query = query.lte("age", maxAge);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    box.innerHTML = `<div class="panel">${esc(error.message)}</div>`;
+    return;
+  }
+
+  if (!data?.length) {
+    box.innerHTML = `
+      <div class="panel">
+        No profiles found yet.
+      </div>
+    `;
+    return;
+  }
+
+  box.innerHTML = data.map(profile => `
+    <article class="profile-card">
+
+      <img
+        class="profile-image"
+        src="${esc(avatar(profile.avatar_url))}"
+        alt="${esc(profile.name)}"
+      />
+
+      <div class="profile-body">
+
+        <div class="profile-name">
+          ${esc(profile.name)}, ${esc(profile.age)}
+        </div>
+
+        <div class="profile-meta">
+          ${esc(profile.city || "Offa")}
+          ${profile.sex ? " • " + esc(profile.sex) : ""}
+        </div>
+
+        ${
+          profile.relationship_goal
+          ? `<span class="goal">${esc(profile.relationship_goal)}</span>`
+          : ""
+        }
+
+        <div class="bio">
+          ${esc(profile.bio || "No bio yet.")}
+        </div>
+
+        <div class="card-actions">
+
+          <button
+            class="pass"
+            onclick="passProfile('${profile.id}')"
+          >
+            Pass
+          </button>
+
+          <button
+            class="like"
+            onclick="likeProfile('${profile.id}')"
+          >
+            ♥ Like
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+  `).join("");
+}
+
+
+/* ============================================================
+   LIKE / PASS
+   ============================================================ */
+
+async function passProfile(id) {
+  const button = event?.target;
+
+  if (button) button.disabled = true;
+
+  await likeAction(id, false);
+
+  await loadDiscover();
+}
+
+async function likeProfile(id) {
+  const button = event?.target;
+
+  if (button) button.disabled = true;
+
+  await likeAction(id, true);
+
+  await loadDiscover();
+}
+
+async function likeAction(id, liked) {
+  if (!liked) return;
+
+  const { error } = await db
+    .from("likes")
+    .insert({
+      from_user: session.user.id,
+      to_user: id
+    });
+
+  if (error && !error.message.includes("duplicate")) {
+    alert(error.message);
+    return;
+  }
+
+  await loadMatches();
+
+  if (matches.some(m =>
+    m.user_one === session.user.id ||
+    m.user_two === session.user.id
+  )) {
+    alert("It's a match! 💚");
+  }
+}
+
+
+/* ============================================================
+   MATCHES
+   ============================================================ */
+
+function otherProfile(match) {
+  return match.user_one === session.user.id
+    ? match.user_two_profile
+    : match.user_one_profile;
+}
+
+function renderMatches() {
+  const screen = document.getElementById("screen");
+
+  if (!matches.length) {
+    screen.innerHTML = `
+      <div class="welcome">
+        <h2>Your matches</h2>
+      </div>
+
+      <div class="panel">
+        You don't have any matches yet.
+        Keep discovering people. 💚
+      </div>
+    `;
+    return;
+  }
+
+  screen.innerHTML = `
+    <div class="welcome">
+      <h2>Your matches</h2>
+      <div class="muted">
+        People you've connected with.
+      </div>
+    </div>
+
+    <div class="match-list">
+
+      ${matches.map(match => {
+        const p = otherProfile(match);
+
+        return `
+          <div
+            class="match-item"
+            onclick="openChat(${match.id})"
+          >
+
+            <img
+              class="avatar"
+              src="${esc(avatar(p?.avatar_url))}"
+            />
+
+            <div>
+              <strong>${esc(p?.name || "Match")}</strong>
+              <div class="muted">
+                ${esc(p?.city || "Offa")}
+              </div>
+            </div>
+
+          </div>
+        `;
+      }).join("")}
+
+    </div>
+  `;
+}
+
+
+/* ============================================================
+   CHAT
+   ============================================================ */
+
+async function openChat(matchId) {
+  selectedMatch = matches.find(m => m.id === matchId);
+
+  currentScreen = "chat";
+  renderApp();
+
+  await loadMessages();
+
+  if (messagesSubscription) {
+    db.removeChannel(messagesSubscription);
+  }
+
+  messagesSubscription = db
+    .channel("chat-" + matchId)
+    .on(
+      "postgres_changes",
+      {
+        event: "INSERT",
+        schema: "public",
+        table: "messages",
+        filter: `match_id=eq.${matchId}`
+      },
+      payload => {
+        addMessageToChat(payload.new);
+      }
+    )
+    .subscribe();
+}
+
+async function loadMessages() {
+  const box = document.getElementById("chatMessages");
+
+  if (!box || !selectedMatch) return;
+
+  const { data, error } = await db
+    .from("messages")
+    .select("*")
+    .eq("match_id", selectedMatch.id)
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    box.innerHTML = `<div>${esc(error.message)}</div>`;
+    return;
+  }
+
+  box.innerHTML = "";
+
+  (data || []).forEach(addMessageToChat);
+
+  box.scrollTop = box.scrollHeight;
+}
+
+function addMessageToChat(message) {
+  const box = document.getElementById("chatMessages");
+
+  if (!box) return;
+
+  if (
+    document.getElementById("message-" + message.id)
+  ) return;
+
+  const div = document.createElement("div");
+
+  div.id = "message-" + message.id;
+
+  div.className =
+    "bubble " +
+    (message.sender_id === session.user.id
+      ? "mine"
+      : "theirs");
+
+  div.innerHTML = esc(message.message);
+
+  box.appendChild(div);
+
+  box.scrollTop = box.scrollHeight;
+}
+
+function renderChat() {
+  const p = selectedMatch
+    ? otherProfile(selectedMatch)
+    : null;
+
+  document.getElementById("screen").innerHTML = `
+    <div class="chat">
+
+      <div class="chat-header">
+
+        <button
+          class="secondary"
+          style="width:auto"
+          onclick="go('matches')"
+        >
+          ←
+        </button>
+
+        <img
+          class="avatar"
+          src="${esc(avatar(p?.avatar_url))}"
+        />
+
+        <div>
+          <strong>${esc(p?.name || "Match")}</strong>
+          <div class="muted">
+            ${esc(p?.city || "Offa")}
+          </div>
+        </div>
+
+      </div>
+
+      <div id="chatMessages" class="chat-messages">
+        Loading...
+      </div>
+
+      <form
+        class="chat-compose"
+        onsubmit="sendMessage(event)"
+      >
+        <input
+          id="chatInput"
+          placeholder="Write a message..."
+          autocomplete="off"
+        />
+
+        <button class="send">
+          Send
+        </button>
+      </form>
+
+    </div>
+  `;
+}
+
+async function sendMessage(e) {
+  e.preventDefault();
+
+  if (!selectedMatch) return;
+
+  const input = document.getElementById("chatInput");
+  const message = input.value.trim();
+
+  if (!message) return;
+
+  input.value = "";
+
+  const { error } = await db
+    .from("messages")
+    .insert({
+      match_id: selectedMatch.id,
+      sender_id: session.user.id,
+      message
+    });
+
+  if (error) {
+    alert(error.message);
+  }
+}
+
+
+/* ============================================================
+   PROFILE
+   ============================================================ */
+
+function renderProfile() {
+  const p = myProfile || {};
+
+  document.getElementById("screen").innerHTML = `
+    <div class="welcome">
+      <h2>Your profile</h2>
+      <div class="muted">
+        Make your profile stand out.
+      </div>
+    </div>
+
+    <div class="panel">
+
+      <div class="profile-preview">
+
+        <img
+          id="profilePhoto"
+          class="big-avatar"
+          src="${esc(avatar(p.avatar_url))}"
+        />
+
+        <br />
+
+        <label class="upload">
+          Choose photo
+          <input
+            type="file"
+            accept="image/*"
+            hidden
+            onchange="uploadProfilePhoto(event)"
+          />
+        </label>
+
+      </div>
+
+      <div class="form-group">
+        <label>Name</label>
+        <input id="profileName" value="${esc(p.name)}" />
+      </div>
+
+      <div class="form-group">
+        <label>Age</label>
+        <input
+          id="profileAge"
+          type="number"
+          min="18"
+          value="${esc(p.age)}"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Sex</label>
+        <select id="profileSex">
+          <option value="">Select</option>
+          <option value="Male" ${p.sex === "Male" ? "selected" : ""}>Male</option>
+          <option value="Female" ${p.sex === "Female" ? "selected" : ""}>Female</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>City</label>
+        <input id="profileCity" value="${esc(p.city || "Offa")}" />
+      </div>
+
+      <div class="form-group">
+        <label>Relationship goal</label>
+        <select id="profileGoal">
+          <option value="">Select</option>
+          <option ${p.relationship_goal === "Serious relationship" ? "selected" : ""}>
+            Serious relationship
+          </option>
+          <option ${p.relationship_goal === "Marriage" ? "selected" : ""}>
+            Marriage
+          </option>
+          <option ${p.relationship_goal === "Friendship" ? "selected" : ""}>
+            Friendship
+          </option>
+          <option ${p.relationship_goal === "Dating" ? "selected" : ""}>
+            Dating
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Bio</label>
+        <textarea id="profileBio">${esc(p.bio)}</textarea>
+      </div>
+
+      <button class="primary" onclick="saveProfile()">
+        Save profile
+      </button>
+
+      <br><br>
+
+      <button
+        class="secondary"
+        onclick="logout()"
+      >
+        Log out
+      </button>
+
+    </div>
+  `;
+}
+
+async function saveProfile() {
+  const updates = {
+    name: document.getElementById("profileName").value.trim(),
+    age: Number(document.getElementById("profileAge").value),
+    sex: document.getElementById("profileSex").value,
+    city: document.getElementById("profileCity").value.trim(),
+    relationship_goal:
+      document.getElementById("profileGoal").value,
+    bio:
+      document.getElementById("profileBio").value.trim()
+  };
+
+  if (!updates.name || updates.age < 18) {
+    alert("Please enter a valid name and age 18+.");
+    return;
+  }
+
+  const { error } = await db
+    .from("profiles")
+    .update(updates)
+    .eq("id", session.user.id);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  myProfile = {
+    ...myProfile,
+    ...updates
+  };
+
+  alert("Profile updated successfully.");
+}
+
+async function uploadProfilePhoto(event) {
+  const file = event.target.files?.[0];
+
+  if (!file) return;
+
+  const extension =
+    file.name.split(".").pop() || "jpg";
+
+  const path =
+    `${session.user.id}/${Date.now()}.${extension}`;
+
+  const { error } = await db
+    .storage
+    .from("avatars")
+    .upload(path, file, {
+      contentType: file.type,
+      upsert: true
+    });
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  const { data } =
+    db.storage
+      .from("avatars")
+      .getPublicUrl(path);
+
+  const avatarUrl = data.publicUrl;
+
+  const { error: updateError } =
+    await db
+      .from("profiles")
+      .update({
+        avatar_url: avatarUrl
+      })
+      .eq("id", session.user.id);
+
+  if (updateError) {
+    alert(updateError.message);
+    return;
+  }
+
+  myProfile.avatar_url = avatarUrl;
+
+  document.getElementById("profilePhoto").src =
+    avatarUrl;
+
+  alert("Profile photo updated.");
+}
+
+
+/* ============================================================
+   LOGOUT
+   ============================================================ */
+
+async function logout() {
+  if (messagesSubscription) {
+    db.removeChannel(messagesSubscription);
+    messagesSubscription = null;
+  }
+
+  await db.auth.signOut();
+
+  session = null;
+  myProfile = null;
+  matches = [];
+  selectedMatch = null;
+
+  renderAuth("login");
+}
+
+
+/* ============================================================
+   AUTH STATE
+   ============================================================ */
+
+db.auth.onAuthStateChange(async (_event, newSession) => {
+  session = newSession;
+
+  if (newSession) {
+    await loadMyProfile();
+  }
+});
+
+
+/* ============================================================
+   START
+   ============================================================ */
+
+startApp();
+
+</script>
+
+</body>
+</html>
