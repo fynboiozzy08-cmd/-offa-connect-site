@@ -1,8 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#071A2B">
+
 <title>Offa Connect by Leo</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -15,76 +17,117 @@
   --green:#18A06A;
   --gold:#D9A441;
   --cream:#F7F4EE;
+  --white:#FFFFFF;
   --ink:#132235;
   --muted:#6E7D8C;
   --line:#E4EAF0;
   --red:#C83D4B;
 }
 
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  background:linear-gradient(145deg,#061827,#0B5C8E,#0B8F87);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-  color:var(--ink);
-  min-height:100vh
+*{
+  box-sizing:border-box;
 }
 
-button,input,textarea,select{font:inherit}
-button{border:0;cursor:pointer}
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+}
+
+body{
+  min-height:100vh;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  color:var(--ink);
+  background:
+    linear-gradient(
+      145deg,
+      #061827 0%,
+      #0B5C8E 48%,
+      #0B8F87 100%
+    );
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+#root{
+  min-height:100vh;
+}
 
 .app{
   max-width:1000px;
-  margin:auto;
   min-height:100vh;
-  padding-bottom:88px
+  margin:auto;
+  padding-bottom:90px;
 }
 
 .top{
-  color:#fff;
-  padding:25px 20px
+  padding:25px 20px;
+  color:white;
 }
 
 .brand{
   font-size:32px;
-  font-weight:900
+  line-height:1;
+  font-weight:900;
 }
 
-.brand b{color:var(--gold)}
+.brand span{
+  color:var(--gold);
+}
 
 .tag{
+  margin-top:8px;
+  color:#D9E6ED;
   font-weight:700;
-  color:#d9e6ed;
-  margin-top:4px
 }
 
 .shell{
-  background:var(--cream);
+  min-height:calc(100vh - 140px);
   margin:0 12px;
+  overflow:hidden;
   border-radius:30px;
-  min-height:calc(100vh - 145px);
-  overflow:hidden
+  background:var(--cream);
 }
 
-.content{padding:20px}
+.content{
+  padding:20px;
+}
 
 .card{
-  background:#fff;
+  margin-bottom:15px;
+  padding:20px;
   border:1px solid var(--line);
   border-radius:24px;
-  padding:20px;
-  margin-bottom:15px;
-  box-shadow:0 12px 35px #071a2b12
+  background:white;
+  box-shadow:0 12px 35px rgba(7,26,43,.07);
 }
 
 h1{
   margin:0 0 17px;
-  font-size:31px
+  font-size:31px;
 }
 
 h2{
-  margin:0 0 14px
+  margin:0 0 14px;
+}
+
+.meta{
+  color:var(--muted);
+  font-weight:700;
 }
 
 .input,
@@ -95,162 +138,172 @@ h2{
   padding:14px;
   border:2px solid var(--line);
   border-radius:16px;
-  background:#fff;
-  outline:none
+  outline:none;
+  background:white;
+  color:var(--ink);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus,
+.search:focus{
+  border-color:var(--teal);
 }
 
 .textarea{
-  min-height:100px;
-  resize:vertical
+  min-height:110px;
+  resize:vertical;
 }
 
-.search:focus,
-.input:focus,
-.select:focus,
-.textarea:focus{
-  border-color:var(--teal)
+.stack{
+  display:grid;
+  gap:11px;
 }
 
 .filters{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-top:10px
-}
-
-.person{
-  display:flex;
-  align-items:center;
-  gap:15px
-}
-
-.avatar{
-  width:86px;
-  height:86px;
-  border-radius:50%;
-  object-fit:cover;
-  background:#eaf0f3;
-  border:3px solid #fff;
-  box-shadow:0 5px 15px #071a2b16
-}
-
-.avatar.big{
-  width:125px;
-  height:125px
-}
-
-.name{
-  font-size:21px;
-  font-weight:900
-}
-
-.meta{
-  color:var(--muted);
-  font-weight:700
-}
-
-.bio{
-  margin-top:12px;
-  line-height:1.5
-}
-
-.goal{
-  display:inline-block;
-  background:#e6f5f1;
-  color:#08766f;
-  border-radius:99px;
-  padding:6px 10px;
-  margin-top:8px;
-  font-size:13px;
-  font-weight:900
-}
-
-.actions{
-  display:flex;
-  gap:9px;
-  justify-content:flex-end;
-  margin-top:15px;
-  flex-wrap:wrap
+  margin-top:10px;
 }
 
 .btn{
   padding:13px 17px;
   border-radius:15px;
-  font-weight:900
-}
-
-.green{
-  background:var(--green);
-  color:#fff
+  font-weight:900;
 }
 
 .blue{
+  color:white;
   background:var(--blue);
-  color:#fff
 }
 
-.ghost{
-  background:#edf2f5;
-  color:var(--ink)
+.green{
+  color:white;
+  background:var(--green);
 }
 
 .gold{
+  color:white;
   background:var(--gold);
-  color:#fff
+}
+
+.ghost{
+  color:var(--ink);
+  background:#EDF2F5;
 }
 
 .danger{
-  background:#fff0f1;
-  color:var(--red)
+  color:var(--red);
+  background:#FFF0F1;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:9px;
+  margin-top:15px;
+}
+
+.person{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.avatar{
+  width:86px;
+  height:86px;
+  flex:none;
+  object-fit:cover;
+  border:3px solid white;
+  border-radius:50%;
+  background:#EAF0F3;
+  box-shadow:0 5px 15px rgba(7,26,43,.12);
+}
+
+.avatar.big{
+  width:125px;
+  height:125px;
+}
+
+.name{
+  font-size:21px;
+  font-weight:900;
+}
+
+.bio{
+  margin-top:12px;
+  line-height:1.5;
+}
+
+.goal{
+  display:inline-block;
+  margin-top:8px;
+  padding:6px 10px;
+  border-radius:99px;
+  color:#08766F;
+  background:#E6F5F1;
+  font-size:13px;
+  font-weight:900;
+}
+
+.online{
+  margin-top:3px;
+  color:var(--green);
+  font-size:12px;
+  font-weight:900;
 }
 
 .empty{
-  text-align:center;
   padding:35px;
   color:var(--muted);
-  font-weight:800
+  text-align:center;
+  font-weight:800;
 }
 
 .bottom{
   position:fixed;
+  z-index:20;
   bottom:0;
   left:50%;
-  transform:translateX(-50%);
   width:min(1000px,100%);
-  background:#fffffff5;
-  border-top:1px solid var(--line);
+  padding:9px 8px calc(9px + env(safe-area-inset-bottom));
+  transform:translateX(-50%);
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  padding:9px 8px calc(9px + env(safe-area-inset-bottom));
-  z-index:20
+  border-top:1px solid var(--line);
+  background:rgba(255,255,255,.97);
 }
 
 .nav{
-  background:none;
+  padding:5px;
   color:var(--muted);
+  background:none;
   font-weight:900;
-  padding:5px
 }
 
 .nav.active{
-  color:var(--blue)
+  color:var(--blue);
 }
 
 .ni{
+  display:block;
   font-size:21px;
-  display:block
 }
 
 .nl{
-  font-size:12px
+  font-size:12px;
 }
 
 .badge{
-  background:var(--gold);
-  color:white;
-  border-radius:20px;
+  display:inline-block;
   padding:2px 6px;
-  font-size:10px
+  border-radius:20px;
+  color:white;
+  background:var(--gold);
+  font-size:10px;
 }
 
 .auth{
@@ -258,162 +311,154 @@ h2{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:22px
+  padding:22px;
 }
 
 .authbox{
   width:min(520px,100%);
-  background:#fff;
-  border-radius:30px;
   padding:30px;
-  box-shadow:0 25px 70px #0005
+  border-radius:30px;
+  background:white;
+  box-shadow:0 25px 70px rgba(0,0,0,.3);
 }
 
 .authlogo{
-  font-size:44px;
-  font-weight:950
+  font-size:42px;
+  font-weight:950;
 }
 
-.authlogo b{
-  color:var(--gold)
+.authlogo span{
+  color:var(--gold);
 }
 
 .sub{
+  margin:8px 0 23px;
   color:var(--muted);
   font-size:18px;
-  margin:7px 0 23px
-}
-
-.stack{
-  display:grid;
-  gap:11px
 }
 
 .error{
-  color:#c43d4b;
+  min-height:25px;
+  margin-bottom:5px;
+  color:var(--red);
   font-weight:800;
-  min-height:25px
 }
 
 .link{
-  background:none;
+  padding:0;
   color:var(--blue);
-  font-weight:900
+  background:none;
+  font-weight:900;
 }
 
 .chatrow{
   display:flex;
   align-items:center;
   gap:12px;
+  margin-bottom:9px;
   padding:12px;
   border:1px solid var(--line);
   border-radius:18px;
-  margin-bottom:9px
+  cursor:pointer;
 }
 
 .chatrow .avatar{
   width:56px;
-  height:56px
+  height:56px;
 }
 
 .messages{
-  height:52vh;
   min-height:350px;
-  overflow:auto;
+  height:52vh;
   display:flex;
   flex-direction:column;
   gap:8px;
-  padding:15px 2px
+  overflow:auto;
+  padding:15px 2px;
 }
 
 .bubble{
   max-width:80%;
   padding:11px 13px;
   border-radius:18px;
-  word-break:break-word
+  word-break:break-word;
 }
 
 .mine{
   align-self:flex-end;
+  color:white;
   background:var(--blue);
-  color:#fff;
-  border-bottom-right-radius:5px
+  border-bottom-right-radius:5px;
 }
 
 .theirs{
   align-self:flex-start;
-  background:#edf2f5;
-  border-bottom-left-radius:5px
+  background:#EDF2F5;
+  border-bottom-left-radius:5px;
 }
 
 .small{
-  font-size:10px;
+  margin-top:4px;
   opacity:.65;
-  margin-top:4px
+  font-size:10px;
 }
 
 .photo{
-  max-width:240px;
-  border-radius:13px;
   display:block;
-  margin-bottom:5px
+  max-width:240px;
+  margin-bottom:5px;
+  border-radius:13px;
 }
 
 .composer{
   display:flex;
-  gap:7px;
   align-items:center;
+  gap:7px;
+  padding-top:11px;
   border-top:1px solid var(--line);
-  padding-top:11px
 }
 
 .composer .input{
-  flex:1
+  flex:1;
 }
 
 .attach,
 .send{
   height:46px;
-  border-radius:14px
+  border-radius:14px;
 }
 
 .attach{
   width:46px;
-  background:#edf2f5;
-  font-size:20px
+  background:#EDF2F5;
+  font-size:20px;
 }
 
 .send{
   width:50px;
+  color:white;
   background:var(--green);
-  color:#fff
 }
 
 .typing{
-  font-size:12px;
+  height:18px;
   color:var(--teal);
-  font-weight:800;
-  height:18px
-}
-
-.online{
-  color:var(--green);
   font-size:12px;
-  font-weight:900
+  font-weight:800;
 }
 
 .profile-cover{
-  background:linear-gradient(135deg,var(--navy),var(--teal));
-  border-radius:22px;
+  margin-bottom:15px;
   padding:22px;
-  color:#fff;
+  border-radius:22px;
+  color:white;
   text-align:center;
-  margin-bottom:15px
+  background:linear-gradient(135deg,var(--navy),var(--teal));
 }
 
 .avatar-wrap{
   position:relative;
-  display:inline-block
+  display:inline-block;
 }
 
 .camera{
@@ -423,98 +468,148 @@ h2{
   width:35px;
   height:35px;
   border-radius:50%;
+  color:white;
   background:var(--gold);
-  color:#fff
-}
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:#0009;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-  z-index:40
-}
-
-.modal.show{
-  display:flex
-}
-
-.modalbox{
-  background:#fff;
-  border-radius:25px;
-  padding:22px;
-  width:min(540px,100%);
-  max-height:90vh;
-  overflow:auto
-}
-
-.modalhead{
-  display:flex;
-  justify-content:space-between;
-  align-items:center
-}
-
-.close{
-  width:40px;
-  height:40px;
-  border-radius:12px;
-  background:#edf2f5
 }
 
 .pillrow{
   display:flex;
   flex-wrap:wrap;
   gap:8px;
-  margin-top:8px
+  margin-top:8px;
 }
 
 .pill{
   padding:8px 11px;
   border-radius:99px;
-  background:#edf2f5;
   color:var(--ink);
+  background:#EDF2F5;
+  font-size:12px;
   font-weight:800;
-  font-size:12px
+}
+
+.modal{
+  position:fixed;
+  z-index:40;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(0,0,0,.6);
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modalbox{
+  width:min(540px,100%);
+  max-height:90vh;
+  overflow:auto;
+  padding:22px;
+  border-radius:25px;
+  background:white;
+}
+
+.modalhead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.close{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  color:var(--ink);
+  background:#EDF2F5;
+  font-size:22px;
 }
 
 .toast{
   position:fixed;
+  z-index:100;
   top:16px;
   left:50%;
-  transform:translateX(-50%);
-  background:var(--navy);
-  color:#fff;
-  padding:12px 16px;
-  border-radius:14px;
-  z-index:100;
-  font-weight:800;
+  display:none;
   max-width:90%;
-  display:none
+  padding:12px 16px;
+  transform:translateX(-50%);
+  border-radius:14px;
+  color:white;
+  background:var(--navy);
+  font-weight:800;
+}
+
+.loading{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+  color:white;
+  text-align:center;
+}
+
+.loadingbox{
+  width:min(420px,100%);
+  padding:30px;
+  border-radius:25px;
+  background:rgba(7,26,43,.65);
+  backdrop-filter:blur(12px);
+}
+
+.loadinglogo{
+  font-size:34px;
+  font-weight:900;
+}
+
+.loadinglogo span{
+  color:var(--gold);
+}
+
+.debug{
+  margin-top:15px;
+  padding:12px;
+  border-radius:12px;
+  color:#FFECEC;
+  background:rgba(0,0,0,.3);
+  font-family:monospace;
+  font-size:12px;
+  text-align:left;
+  word-break:break-word;
 }
 
 @media(max-width:600px){
+
   .filters{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
   }
 
   .content{
-    padding:15px
+    padding:15px;
   }
 
   .shell{
     margin:0;
-    border-radius:28px 28px 0 0
+    border-radius:28px 28px 0 0;
   }
 
   .authbox{
-    padding:24px
+    padding:24px;
   }
 
   .messages{
-    height:49vh
+    height:49vh;
+  }
+
+  .brand{
+    font-size:29px;
+  }
+
+  .authlogo{
+    font-size:36px;
   }
 }
 </style>
@@ -522,1784 +617,2734 @@ h2{
 
 <body>
 
-<div id="root"></div>
+<div id="root">
+  <div class="loading">
+    <div class="loadingbox">
+      <div class="loadinglogo">
+        Offa <span>Connect</span>
+      </div>
+      <p>Loading your community...</p>
+    </div>
+  </div>
+</div>
+
 <div id="toast" class="toast"></div>
 
 <script>
 
+/* =========================================================
+   OFFA CONNECT BY LEO
+   ========================================================= */
+
 const SUPABASE_URL =
-"https://irjahjpdjuvlmlcgtusr.supabase.co";
+  "https://irjahjpdjuvlmlcgtusr.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_HoMz0Vb4krVkz1p4Dm5_dg_hFuaxwxl";
+  "sb_publishable_HoMz0Vb4krVkz1p4Dm5_dg_hFuaxwxl";
 
-const sb =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const root =
+  document.getElementById("root");
 
-let session=null;
-let me=null;
-let people=[];
-let matches=[];
-let selected=null;
-let messages=[];
-let tab="discover";
-let query="";
-let goalFilter="";
-let sexFilter="";
-let minAge=18;
-let maxAge=100;
-let typingTimer=null;
-let presenceTimer=null;
-let messageChannel=null;
-let file=null;
+const toastBox =
+  document.getElementById("toast");
 
-const $=id=>document.getElementById(id);
 
-const esc=s=>
-String(s??"").replace(
-  /[&<>"']/g,
-  c=>({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
-  }[c])
-);
+/* =========================================================
+   SUPABASE STARTUP
+   ========================================================= */
 
-const avatar=p=>
-p?.avatar_url ||
-"data:image/svg+xml;charset=utf-8,"+
-encodeURIComponent(
-`<svg xmlns="http://www.w3.org/2000/svg"
-width="200" height="200">
-<rect width="100%" height="100%" fill="#e9eff3"/>
-<text x="50%" y="58%"
-text-anchor="middle"
-font-size="80"
-fill="#0B5C8E">♥</text>
-</svg>`
-);
+let sb = null;
 
-function toast(t){
+try {
 
-  $("toast").textContent=t;
-  $("toast").style.display="block";
+  if (!window.supabase) {
+    throw new Error(
+      "Supabase library did not load. Check your internet connection and try again."
+    );
+  }
 
-  clearTimeout(window.tt);
+  sb =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
-  window.tt=setTimeout(
-    ()=>$("toast").style.display="none",
-    2800
+} catch (e) {
+
+  showFatalError(e);
+
+}
+
+
+/* =========================================================
+   APP STATE
+   ========================================================= */
+
+let session = null;
+let me = null;
+
+let people = [];
+let matches = [];
+
+let selected = null;
+let messages = [];
+
+let tab = "discover";
+
+let query = "";
+let goalFilter = "";
+let sexFilter = "";
+
+let minAge = 18;
+let maxAge = 100;
+
+let typingTimer = null;
+let presenceTimer = null;
+let messageChannel = null;
+
+let file = null;
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(
+      /[&<>"']/g,
+      function(char){
+
+        const map = {
+          "&":"&amp;",
+          "<":"&lt;",
+          ">":"&gt;",
+          '"':"&quot;",
+          "'":"&#39;"
+        };
+
+        return map[char];
+      }
+    );
+}
+
+
+function avatar(profile){
+
+  if(profile && profile.avatar_url){
+    return profile.avatar_url;
+  }
+
+  return (
+    "data:image/svg+xml;charset=utf-8," +
+    encodeURIComponent(`
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="200"
+        height="200">
+
+        <rect
+          width="100%"
+          height="100%"
+          fill="#e9eff3"/>
+
+        <text
+          x="50%"
+          y="58%"
+          text-anchor="middle"
+          font-size="80"
+          fill="#0B5C8E">
+          ♥
+        </text>
+
+      </svg>
+    `)
   );
 }
 
-function err(e){
-  return e?.message ||
-         e?.error_description ||
-         "Something went wrong.";
+
+function errorMessage(error){
+
+  return (
+    error?.message ||
+    error?.error_description ||
+    "Something went wrong."
+  );
 }
 
-function auth(sign=false,error=""){
 
-root.innerHTML=`
+function toast(message){
 
-<div class=auth>
+  toastBox.textContent = message;
+  toastBox.style.display = "block";
 
-<div class=authbox>
+  clearTimeout(window.offaToastTimer);
 
-<div class=authlogo>
-Offa <b>Connect</b>
-</div>
-
-<div class=sub>
-<b>by Leo</b> · Meet. Connect. Belong.
-</div>
-
-<div class=error>
-${esc(error)}
-</div>
-
-<div class=stack>
-
-${
-sign
-?
-`
-<input
- id=aName
- class=input
- placeholder="Your name">
-
-<input
- id=aAge
- class=input
- type=number
- min=18
- placeholder="Age">
-`
-:""
+  window.offaToastTimer =
+    setTimeout(
+      function(){
+        toastBox.style.display = "none";
+      },
+      3000
+    );
 }
 
-<input
- id=aEmail
- class=input
- type=email
- placeholder="Email address">
 
-<input
- id=aPass
- class=input
- type=password
- placeholder="Password">
+function showFatalError(error){
 
-${
-sign
-?
-`
-<select id=aSex class=select>
+  const message =
+    errorMessage(error);
 
-<option value="">
-Sex (optional)
-</option>
+  root.innerHTML = `
 
-<option>Male</option>
-<option>Female</option>
+    <div class="loading">
 
-</select>
-`
-:""
+      <div class="loadingbox">
+
+        <div class="loadinglogo">
+          Offa <span>Connect</span>
+        </div>
+
+        <h2>
+          The app could not start
+        </h2>
+
+        <p>
+          Something prevented the website from loading.
+        </p>
+
+        <div class="debug">
+          ${esc(message)}
+        </div>
+
+        <button
+          class="btn green"
+          style="margin-top:15px"
+          onclick="location.reload()">
+
+          Reload
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
 }
 
-<button
- class="btn blue"
- onclick="${sign?"signup()":"login()"}">
 
-${sign?"Create account":"Log in"}
+/* =========================================================
+   AUTH
+   ========================================================= */
 
-</button>
+function showAuth(signupMode = false, error = ""){
 
-</div>
+  root.innerHTML = `
 
-<p style="text-align:center;color:var(--muted)">
+    <div class="auth">
 
-${
-sign
-?"Already have an account?"
-:"New to Offa Connect?"
+      <div class="authbox">
+
+        <div class="authlogo">
+          Offa <span>Connect</span>
+        </div>
+
+        <div class="sub">
+          <b>by Leo</b>
+          · Meet. Connect. Belong.
+        </div>
+
+        <div class="error">
+          ${esc(error)}
+        </div>
+
+        <div class="stack">
+
+          ${
+            signupMode
+            ?
+            `
+
+              <input
+                id="aName"
+                class="input"
+                placeholder="Your name"
+                autocomplete="name">
+
+              <input
+                id="aAge"
+                class="input"
+                type="number"
+                min="18"
+                max="100"
+                placeholder="Age">
+
+              <select
+                id="aSex"
+                class="select">
+
+                <option value="">
+                  Sex (optional)
+                </option>
+
+                <option value="Male">
+                  Male
+                </option>
+
+                <option value="Female">
+                  Female
+                </option>
+
+              </select>
+
+            `
+            :
+            ""
+          }
+
+          <input
+            id="aEmail"
+            class="input"
+            type="email"
+            placeholder="Email address"
+            autocomplete="email">
+
+          <input
+            id="aPass"
+            class="input"
+            type="password"
+            placeholder="Password"
+            autocomplete="${
+              signupMode
+              ? "new-password"
+              : "current-password"
+            }">
+
+          <button
+            class="btn blue"
+            onclick="${
+              signupMode
+              ? "signup()"
+              : "login()"
+            }">
+
+            ${
+              signupMode
+              ? "Create account"
+              : "Log in"
+            }
+
+          </button>
+
+        </div>
+
+        <p style="text-align:center;color:var(--muted)">
+
+          ${
+            signupMode
+            ? "Already have an account?"
+            : "New to Offa Connect?"
+          }
+
+          <button
+            class="link"
+            onclick="showAuth(${!signupMode})">
+
+            ${
+              signupMode
+              ? "Back to login"
+              : "Create account"
+            }
+
+          </button>
+
+        </p>
+
+      </div>
+
+    </div>
+
+  `;
 }
 
-<button
-class=link
-onclick="auth(${!sign})">
-
-${sign?"Back to login":"Create account"}
-
-</button>
-
-</p>
-
-</div>
-</div>
-
-`;
-}
 
 async function login(){
 
-const email=$("aEmail").value.trim();
-const password=$("aPass").value;
+  const email =
+    document.getElementById("aEmail")
+      ?.value.trim();
 
-if(!email||!password)
-return auth(
-false,
-"Enter your email and password."
-);
+  const password =
+    document.getElementById("aPass")
+      ?.value;
 
-const r=
-await sb.auth.signInWithPassword({
-  email,
-  password
-});
+  if(!email || !password){
 
-if(r.error)
-return auth(false,err(r.error));
+    showAuth(
+      false,
+      "Enter your email and password."
+    );
 
-session=r.data.session;
+    return;
+  }
 
-await boot();
+  try{
+
+    const result =
+      await sb.auth.signInWithPassword({
+        email,
+        password
+      });
+
+    if(result.error){
+      throw result.error;
+    }
+
+    session =
+      result.data.session;
+
+    await boot();
+
+  }catch(error){
+
+    showAuth(
+      false,
+      errorMessage(error)
+    );
+
+  }
 }
+
 
 async function signup(){
 
-const name=$("aName").value.trim();
-const age=Number($("aAge").value);
-const email=$("aEmail").value.trim();
-const password=$("aPass").value;
-const sex=$("aSex").value;
+  const name =
+    document.getElementById("aName")
+      ?.value.trim();
 
-if(
-!name ||
-age<18 ||
-!email ||
-password.length<6
-)
-return auth(
-true,
-"Enter your name, age 18+, valid email and a password of at least 6 characters."
-);
+  const age =
+    Number(
+      document.getElementById("aAge")
+        ?.value
+    );
 
-const r=
-await sb.auth.signUp({
-  email,
-  password
-});
+  const sex =
+    document.getElementById("aSex")
+      ?.value || null;
 
-if(r.error)
-return auth(true,err(r.error));
+  const email =
+    document.getElementById("aEmail")
+      ?.value.trim();
 
-if(!r.data.session)
-return auth(
-false,
-"Account created. Check your email to confirm, then log in."
-);
+  const password =
+    document.getElementById("aPass")
+      ?.value;
 
-session=r.data.session;
+  if(
+    !name ||
+    !age ||
+    age < 18 ||
+    !email ||
+    !password ||
+    password.length < 6
+  ){
 
-const p=
-await sb.from("profiles")
-.upsert({
-  id:r.data.user.id,
-  name,
-  age,
-  city:"Offa",
-  bio:"",
-  sex:sex||null
-});
+    showAuth(
+      true,
+      "Enter your name, age 18+, email and a password of at least 6 characters."
+    );
 
-if(p.error)
-return auth(true,err(p.error));
+    return;
+  }
 
-await boot();
+  try{
+
+    const result =
+      await sb.auth.signUp({
+        email,
+        password
+      });
+
+    if(result.error){
+      throw result.error;
+    }
+
+    if(!result.data.session){
+
+      showAuth(
+        false,
+        "Account created. Check your email to confirm your account, then log in."
+      );
+
+      return;
+    }
+
+    session =
+      result.data.session;
+
+    const profileResult =
+      await sb
+        .from("profiles")
+        .upsert({
+          id:result.data.user.id,
+          name:name,
+          age:age,
+          city:"Offa",
+          bio:"",
+          sex:sex
+        })
+        .select()
+        .single();
+
+    if(profileResult.error){
+      throw profileResult.error;
+    }
+
+    await boot();
+
+  }catch(error){
+
+    showAuth(
+      true,
+      errorMessage(error)
+    );
+
+  }
 }
+
+
+/* =========================================================
+   START APP
+   ========================================================= */
 
 async function boot(){
 
-await loadMe();
-await loadPeople();
-await loadMatches();
+  try{
 
-render();
+    await loadMe();
 
-startPresence();
-subscribeRealtime();
+    await loadPeople();
+
+    await loadMatches();
+
+    render();
+
+    startPresence();
+
+    subscribeRealtime();
+
+  }catch(error){
+
+    showFatalError(error);
+
+  }
 }
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
 
 async function loadMe(){
 
-const r=
-await sb.from("profiles")
-.select("*")
-.eq("id",session.user.id)
-.single();
+  const result =
+    await sb
+      .from("profiles")
+      .select("*")
+      .eq("id",session.user.id)
+      .maybeSingle();
 
-if(r.error)
-throw r.error;
+  if(result.error){
+    throw result.error;
+  }
 
-me=r.data;
+  if(!result.data){
+
+    const createResult =
+      await sb
+        .from("profiles")
+        .insert({
+          id:session.user.id,
+          name:
+            session.user.email
+              ?.split("@")[0] ||
+            "Offa User",
+          age:18,
+          city:"Offa",
+          bio:""
+        })
+        .select()
+        .single();
+
+    if(createResult.error){
+      throw createResult.error;
+    }
+
+    me=createResult.data;
+
+  }else{
+
+    me=result.data;
+
+  }
 }
+
+
+/* =========================================================
+   DISCOVER
+   ========================================================= */
 
 async function loadPeople(){
 
-const r=
-await sb.from("profiles")
-.select("*")
-.neq("id",session.user.id)
-.order("created_at",{ascending:false});
+  const result =
+    await sb
+      .from("profiles")
+      .select("*")
+      .neq("id",session.user.id)
+      .order(
+        "created_at",
+        {ascending:false}
+      );
 
-people=r.data||[];
+  if(result.error){
+    throw result.error;
+  }
+
+  people =
+    result.data || [];
 }
 
-async function loadMatches(){
-
-const r=
-await sb.from("matches")
-.select(
-"id,user_one,user_two,"+
-"user_one_profile:profiles!matches_user_one_fkey(*),"+
-"user_two_profile:profiles!matches_user_two_fkey(*)"
-)
-.or(
-`user_one.eq.${session.user.id},user_two.eq.${session.user.id}`
-)
-.order(
-"created_at",
-{ascending:false}
-);
-
-matches=
-(r.data||[]).map(m=>({
-  ...m,
-  person:
-    m.user_one===session.user.id
-    ?m.user_two_profile
-    :m.user_one_profile
-}));
-}
-
-async function loadMessages(){
-
-if(!selected)return;
-
-const r=
-await sb.from("messages")
-.select("*")
-.eq("match_id",selected.id)
-.order("created_at",{ascending:true});
-
-messages=r.data||[];
-
-render();
-
-await markRead();
-
-scrollMessages();
-}
-
-async function markRead(){
-
-if(!selected)return;
-
-await sb.from("messages")
-.update({
-  read_at:new Date().toISOString()
-})
-.eq("match_id",selected.id)
-.neq("sender_id",session.user.id)
-.is("read_at",null);
-}
-
-function scrollMessages(){
-
-setTimeout(()=>{
-
-const x=$("messages");
-
-if(x)
-x.scrollTop=x.scrollHeight;
-
-},50);
-}
-
-function startPresence(){
-
-clearInterval(presenceTimer);
-
-const beat=async()=>{
-
-await sb.from("profiles")
-.update({
-  last_seen_at:new Date().toISOString()
-})
-.eq("id",session.user.id);
-
-};
-
-beat();
-
-presenceTimer=
-setInterval(
-beat,
-45000
-);
-}
-
-function subscribeRealtime(){
-
-if(messageChannel)
-sb.removeChannel(messageChannel);
-
-messageChannel=
-sb.channel(
-"offa-messages-"+session.user.id
-)
-
-.on(
-"postgres_changes",
-{
-event:"INSERT",
-schema:"public",
-table:"messages"
-},
-async p=>{
-
-if(
-selected &&
-p.new.match_id===selected.id &&
-!messages.some(
-m=>m.id===p.new.id
-)
-){
-
-messages.push(p.new);
-
-render();
-
-await markRead();
-
-scrollMessages();
-
-}
-
-await loadMatches();
-
-}
-)
-
-.subscribe();
-}
-
-function isOnline(p){
-
-return p?.last_seen_at &&
-Date.now()-
-new Date(
-p.last_seen_at
-).getTime()
-<120000;
-}
-
-function render(){
-
-if(!session)
-return auth();
-
-root.innerHTML=`
-
-<div class=app>
-
-<header class=top>
-
-<div class=brand>
-Offa <b>Connect</b>
-</div>
-
-<div class=tag>
-<b>by Leo</b> · Meet. Connect. Belong.
-</div>
-
-</header>
-
-<main class=shell>
-
-<section class=content>
-
-${
-tab==="discover"
-?discoverView()
-:tab==="matches"
-?matchesView()
-:tab==="chat"
-?chatView()
-:profileView()
-}
-
-</section>
-
-</main>
-
-<nav class=bottom>
-
-<button
-class="nav ${tab==="discover"?"active":""}"
-onclick="go('discover')">
-
-<span class=ni>♥</span>
-<span class=nl>Discover</span>
-
-</button>
-
-<button
-class="nav ${tab==="matches"?"active":""}"
-onclick="go('matches')">
-
-<span class=ni>
-♡
-${
-matches.length
-?`<span class=badge>${matches.length}</span>`
-:""
-}
-</span>
-
-<span class=nl>Matches</span>
-
-</button>
-
-<button
-class="nav ${tab==="chat"?"active":""}"
-onclick="go('chat')">
-
-<span class=ni>▣</span>
-<span class=nl>Chat</span>
-
-</button>
-
-<button
-class="nav ${tab==="profile"?"active":""}"
-onclick="go('profile')">
-
-<span class=ni>●</span>
-<span class=nl>Profile</span>
-
-</button>
-
-</nav>
-
-</div>
-`;
-}
 
 function discoverView(){
 
-let list=people.filter(p=>{
+  const list =
+    people.filter(function(profile){
 
-const q=
-!query ||
-[
-p.name,
-p.city,
-p.bio,
-p.relationship_goal,
-p.sex
-]
-.join(" ")
-.toLowerCase()
-.includes(
-query.toLowerCase()
-);
+      const searchable =
+        [
+          profile.name,
+          profile.city,
+          profile.bio,
+          profile.relationship_goal,
+          profile.sex
+        ]
+        .join(" ")
+        .toLowerCase();
 
-const g=
-!goalFilter ||
-p.relationship_goal===goalFilter;
+      const searchMatch =
+        !query ||
+        searchable.includes(
+          query.toLowerCase()
+        );
 
-const s=
-!sexFilter ||
-p.sex===sexFilter;
+      const goalMatch =
+        !goalFilter ||
+        profile.relationship_goal === goalFilter;
 
-const a=
-Number(p.age)>=minAge &&
-Number(p.age)<=maxAge;
+      const sexMatch =
+        !sexFilter ||
+        profile.sex === sexFilter;
 
-return q&&g&&s&&a;
-});
+      const ageMatch =
+        Number(profile.age) >= minAge &&
+        Number(profile.age) <= maxAge;
 
-return `
+      return (
+        searchMatch &&
+        goalMatch &&
+        sexMatch &&
+        ageMatch
+      );
 
-<div class=card>
+    });
 
-<h1>Discover</h1>
+  return `
 
-<input
-class=search
-placeholder="Search by name, city or bio"
-value="${esc(query)}"
-oninput="query=this.value;render()"
->
+    <div class="card">
 
-<div class=filters>
+      <h1>Discover</h1>
 
-<select
-class=select
-onchange="goalFilter=this.value;render()">
+      <input
+        class="search"
+        placeholder="Search by name, city or bio"
+        value="${esc(query)}"
+        oninput="
+          query=this.value;
+          render();
+        ">
 
-<option value="">
-All goals
-</option>
+      <div class="filters">
 
-<option
-${goalFilter==="Single"?"selected":""}>
-Single
-</option>
+        <select
+          class="select"
+          onchange="
+            goalFilter=this.value;
+            render();
+          ">
 
-<option
-${goalFilter==="Dating"?"selected":""}>
-Dating
-</option>
+          <option value="">
+            All goals
+          </option>
 
-<option
-${goalFilter==="Relationship"?"selected":""}>
-Relationship
-</option>
+          <option
+            value="Single"
+            ${goalFilter==="Single"?"selected":""}>
+            Single
+          </option>
 
-<option
-${goalFilter==="Friendship"?"selected":""}>
-Friendship
-</option>
+          <option
+            value="Dating"
+            ${goalFilter==="Dating"?"selected":""}>
+            Dating
+          </option>
 
-</select>
+          <option
+            value="Relationship"
+            ${goalFilter==="Relationship"?"selected":""}>
+            Relationship
+          </option>
 
-<select
-class=select
-onchange="sexFilter=this.value;render()">
+          <option
+            value="Friendship"
+            ${goalFilter==="Friendship"?"selected":""}>
+            Friendship
+          </option>
 
-<option value="">
-All sexes
-</option>
+        </select>
 
-<option
-${sexFilter==="Male"?"selected":""}>
-Male
-</option>
+        <select
+          class="select"
+          onchange="
+            sexFilter=this.value;
+            render();
+          ">
 
-<option
-${sexFilter==="Female"?"selected":""}>
-Female
-</option>
+          <option value="">
+            All sexes
+          </option>
 
-</select>
+          <option
+            value="Male"
+            ${sexFilter==="Male"?"selected":""}>
+            Male
+          </option>
 
-</div>
+          <option
+            value="Female"
+            ${sexFilter==="Female"?"selected":""}>
+            Female
+          </option>
 
-<div class=filters>
+        </select>
 
-<input
-class=input
-type=number
-min=18
-max=100
-value="${minAge}"
-onchange="minAge=Number(this.value)||18;render()"
-placeholder="Min age">
+      </div>
 
-<input
-class=input
-type=number
-min=18
-max=100
-value="${maxAge}"
-onchange="maxAge=Number(this.value)||100;render()"
-placeholder="Max age">
+      <div class="filters">
 
-</div>
+        <input
+          class="input"
+          type="number"
+          min="18"
+          max="100"
+          value="${minAge}"
+          placeholder="Minimum age"
+          onchange="
+            minAge=Number(this.value)||18;
+            render();
+          ">
 
-</div>
+        <input
+          class="input"
+          type="number"
+          min="18"
+          max="100"
+          value="${maxAge}"
+          placeholder="Maximum age"
+          onchange="
+            maxAge=Number(this.value)||100;
+            render();
+          ">
 
-${
-list.map(profileCard).join("")
-||
-'<div class="card empty">No profiles match your filters.</div>'
+      </div>
+
+    </div>
+
+    ${
+      list.length
+      ?
+      list.map(profileCard).join("")
+      :
+      `
+        <div class="card empty">
+          No profiles match your filters.
+        </div>
+      `
+    }
+
+  `;
 }
 
-`;
+
+function profileCard(profile){
+
+  return `
+
+    <div class="card">
+
+      <div class="person">
+
+        <img
+          class="avatar"
+          src="${avatar(profile)}"
+          alt="${esc(profile.name || "Profile")}">
+
+        <div style="flex:1">
+
+          <div class="name">
+            ${esc(profile.name)},
+            ${esc(profile.age)}
+          </div>
+
+          <div class="meta">
+            📍 ${esc(profile.city || "Offa")}
+          </div>
+
+          <div class="online">
+            ${
+              isOnline(profile)
+              ? "● Online"
+              : "Recently active"
+            }
+          </div>
+
+          ${
+            profile.relationship_goal
+            ?
+            `
+              <span class="goal">
+                ${esc(profile.relationship_goal)}
+              </span>
+            `
+            :
+            ""
+          }
+
+        </div>
+
+      </div>
+
+      ${
+        profile.bio
+        ?
+        `
+          <div class="bio">
+            ${esc(profile.bio)}
+          </div>
+        `
+        :
+        ""
+      }
+
+      ${
+        profile.sex
+        ?
+        `
+          <div class="pillrow">
+            <span class="pill">
+              ${esc(profile.sex)}
+            </span>
+          </div>
+        `
+        :
+        ""
+      }
+
+      <div class="actions">
+
+        <button
+          class="btn danger"
+          onclick="blockUser('${profile.id}')">
+
+          Block
+
+        </button>
+
+        <button
+          class="btn ghost"
+          onclick="passProfile('${profile.id}')">
+
+          ✕ Pass
+
+        </button>
+
+        <button
+          class="btn green"
+          onclick="likeProfile('${profile.id}')">
+
+          ♥ Like
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
 }
 
-function profileCard(p){
-
-return `
-
-<div class=card>
-
-<div class=person>
-
-<img
-class=avatar
-src="${avatar(p)}">
-
-<div style="flex:1">
-
-<div class=name>
-${esc(p.name)}, ${esc(p.age)}
-</div>
-
-<div class=meta>
-📍 ${esc(p.city||"Offa")}
-</div>
-
-<div class=online>
-${isOnline(p)?"● Online":"Recently active"}
-</div>
-
-${
-p.relationship_goal
-?`<span class=goal>
-${esc(p.relationship_goal)}
-</span>`
-:""
-}
-
-</div>
-
-</div>
-
-${
-p.bio
-?`<div class=bio>${esc(p.bio)}</div>`
-:""
-}
-
-${
-p.sex
-?`<div class=pillrow>
-<span class=pill>${esc(p.sex)}</span>
-</div>`
-:""
-}
-
-<div class=actions>
-
-<button
-class="btn danger"
-onclick="blockUser('${p.id}')">
-Block
-</button>
-
-<button
-class="btn ghost"
-onclick="passProfile('${p.id}')">
-✕ Pass
-</button>
-
-<button
-class="btn green"
-onclick="likeProfile('${p.id}')">
-♥ Like
-</button>
-
-</div>
-
-</div>
-
-`;
-}
 
 async function likeProfile(id){
 
-const r=
-await sb.from("likes")
-.insert({
-  from_user:session.user.id,
-  to_user:id
-});
+  try{
 
-if(
-r.error &&
-!r.error.message
-.toLowerCase()
-.includes("duplicate")
-)
-return toast(err(r.error));
+    const result =
+      await sb
+        .from("likes")
+        .insert({
+          from_user:session.user.id,
+          to_user:id
+        });
 
-people=
-people.filter(
-p=>p.id!==id
-);
+    if(
+      result.error &&
+      !result.error.message
+        .toLowerCase()
+        .includes("duplicate")
+    ){
 
-await loadMatches();
+      throw result.error;
 
-toast("Like sent ♥");
+    }
 
-render();
+    people =
+      people.filter(
+        p=>p.id!==id
+      );
+
+    await loadMatches();
+
+    toast("Like sent ♥");
+
+    render();
+
+  }catch(error){
+
+    toast(
+      "Like failed: " +
+      errorMessage(error)
+    );
+
+  }
 }
+
 
 function passProfile(id){
 
-people=
-people.filter(
-p=>p.id!==id
-);
+  people =
+    people.filter(
+      p=>p.id!==id
+    );
 
-render();
+  render();
 }
+
+
+/* =========================================================
+   MATCHES
+   ========================================================= */
+
+async function loadMatches(){
+
+  const result =
+    await sb
+      .from("matches")
+      .select(
+        `
+        id,
+        user_one,
+        user_two,
+        user_one_profile:profiles!matches_user_one_fkey(*),
+        user_two_profile:profiles!matches_user_two_fkey(*)
+        `
+      )
+      .or(
+        `user_one.eq.${session.user.id},user_two.eq.${session.user.id}`
+      )
+      .order(
+        "created_at",
+        {ascending:false}
+      );
+
+  if(result.error){
+    throw result.error;
+  }
+
+  matches =
+    (result.data || [])
+      .map(function(match){
+
+        return {
+          ...match,
+
+          person:
+            match.user_one === session.user.id
+            ? match.user_two_profile
+            : match.user_one_profile
+        };
+
+      });
+}
+
 
 function matchesView(){
 
-return `
+  return `
 
-<div class=card>
+    <div class="card">
 
-<h1>Your Matches</h1>
+      <h1>Your Matches</h1>
 
-<div class=meta>
-Start a conversation with someone you matched with.
-</div>
+      <div class="meta">
+        Start a conversation with someone you matched with.
+      </div>
 
-</div>
+    </div>
 
-${
-matches.map(m=>`
+    ${
+      matches.length
+      ?
+      matches.map(function(match){
 
-<div
-class=chatrow
-onclick="openChat(${m.id})">
+        return `
 
-<img
-class=avatar
-src="${avatar(m.person)}">
+          <div
+            class="chatrow"
+            onclick="openChat(${match.id})">
 
-<div style="flex:1">
+            <img
+              class="avatar"
+              src="${avatar(match.person)}">
 
-<div class=name>
-${esc(m.person?.name||"Match")}
-</div>
+            <div style="flex:1">
 
-<div class=meta>
-${esc(m.person?.city||"Offa")}
-</div>
+              <div class="name">
+                ${esc(match.person?.name || "Match")}
+              </div>
 
-<div class=online>
-${isOnline(m.person)
-?"● Online"
-:"Recently active"}
-</div>
+              <div class="meta">
+                ${esc(match.person?.city || "Offa")}
+              </div>
 
-</div>
+              <div class="online">
+                ${
+                  isOnline(match.person)
+                  ? "● Online"
+                  : "Recently active"
+                }
+              </div>
 
-<b style="color:var(--blue)">
-Chat ›
-</b>
+            </div>
 
-</div>
+            <b style="color:var(--blue)">
+              Chat ›
+            </b>
 
-`).join("")
+          </div>
 
-||
+        `;
 
-'<div class="card empty">No matches yet. Keep discovering.</div>'
+      }).join("")
+      :
+      `
+        <div class="card empty">
+          No matches yet.
+          Keep discovering.
+        </div>
+      `
+    }
 
+  `;
 }
 
-`;
-}
+
+/* =========================================================
+   CHAT
+   ========================================================= */
 
 function chatView(){
 
-if(!selected)
+  if(!selected){
 
-return `
+    return `
 
-<div class=card>
+      <div class="card">
 
-<h1>Chat</h1>
+        <h1>Chat</h1>
 
-<div class=meta>
-Choose a match to start chatting.
-</div>
+        <div class="meta">
+          Choose a match to start chatting.
+        </div>
 
-</div>
+      </div>
 
-${
-matches.map(m=>`
+      ${
+        matches.length
+        ?
+        matches.map(function(match){
 
-<div
-class=chatrow
-onclick="openChat(${m.id})">
+          return `
 
-<img
-class=avatar
-src="${avatar(m.person)}">
+            <div
+              class="chatrow"
+              onclick="openChat(${match.id})">
 
-<div>
+              <img
+                class="avatar"
+                src="${avatar(match.person)}">
 
-<div class=name>
-${esc(m.person?.name)}
-</div>
+              <div>
 
-<div class=online>
-${isOnline(m.person)
-?"● Online"
-:"Recently active"}
-</div>
+                <div class="name">
+                  ${esc(match.person?.name)}
+                </div>
 
-</div>
+                <div class="online">
+                  ${
+                    isOnline(match.person)
+                    ? "● Online"
+                    : "Recently active"
+                  }
+                </div>
 
-</div>
+              </div>
 
-`).join("")
+            </div>
 
-||
+          `;
 
-'<div class="card empty">No matches yet.</div>'
+        }).join("")
+        :
+        `
+          <div class="card empty">
+            No matches yet.
+          </div>
+        `
+      }
 
-}`;
+    `;
+  }
 
-const p=selected.person;
+  const person =
+    selected.person;
 
-return `
+  return `
 
-<div class=card>
+    <div class="card">
 
-<div class=person>
+      <div class="person">
 
-<button
-class=close
-onclick="selected=null;render()">
-‹
-</button>
+        <button
+          class="close"
+          onclick="
+            selected=null;
+            render();
+          ">
 
-<img
-class=avatar
-src="${avatar(p)}">
+          ‹
 
-<div style="flex:1">
+        </button>
 
-<div class=name>
-${esc(p?.name||"Match")}
-</div>
+        <img
+          class="avatar"
+          src="${avatar(person)}">
 
-<div class=online>
-${isOnline(p)
-?"● Online"
-:"Recently active"}
-</div>
+        <div style="flex:1">
 
-</div>
+          <div class="name">
+            ${esc(person?.name || "Match")}
+          </div>
 
-<button
-class=close
-onclick="reportUser('${p.id}')">
-⚑
-</button>
+          <div class="online">
+            ${
+              isOnline(person)
+              ? "● Online"
+              : "Recently active"
+            }
+          </div>
 
-</div>
+        </div>
 
-<div id=typing class=typing></div>
+        <button
+          class="close"
+          onclick="reportUser('${person.id}')">
 
-<div
-id=messages
-class=messages>
+          ⚑
 
-${
-messages.map(messageBubble).join("")
+        </button>
 
-||
+      </div>
 
-'<div class=empty>Say hello 👋</div>'
+      <div
+        id="typing"
+        class="typing">
+      </div>
+
+      <div
+        id="messages"
+        class="messages">
+
+        ${
+          messages.length
+          ?
+          messages.map(messageBubble).join("")
+          :
+          `
+            <div class="empty">
+              Say hello 👋
+            </div>
+          `
+        }
+
+      </div>
+
+      <div class="meta">
+
+        ${
+          file
+          ?
+          `
+            Selected:
+            ${esc(file.name)}
+
+            ·
+
+            <button
+              class="link"
+              onclick="clearFile()">
+              remove
+            </button>
+          `
+          :
+          "Photos/files up to 15 MB."
+        }
+
+      </div>
+
+      <div class="composer">
+
+        <button
+          class="attach"
+          onclick="
+            document.getElementById('chatFile').click()
+          ">
+
+          ＋
+
+        </button>
+
+        <input
+          id="chatInput"
+          class="input"
+          placeholder="Write a message..."
+          oninput="sendTyping()"
+          onkeydown="
+            if(event.key==='Enter'){
+              event.preventDefault();
+              sendMessage();
+            }
+          ">
+
+        <input
+          id="chatFile"
+          type="file"
+          style="display:none"
+          onchange="filePicked(this)">
+
+        <button
+          class="send"
+          onclick="sendMessage()">
+
+          ➤
+
+        </button>
+
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="btn danger"
+          onclick="blockUser('${person.id}')">
+
+          Block ${esc(person.name)}
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
 }
 
-</div>
 
-<div class=meta>
+async function loadMessages(){
 
-${
-file
-?
-`Selected: ${esc(file.name)}
-·
-<button
-class=link
-onclick="clearFile()">
-remove
-</button>`
-:
-"Photos/files up to 15 MB."
+  if(!selected){
+    return;
+  }
+
+  const result =
+    await sb
+      .from("messages")
+      .select("*")
+      .eq(
+        "match_id",
+        selected.id
+      )
+      .order(
+        "created_at",
+        {ascending:true}
+      );
+
+  if(result.error){
+    throw result.error;
+  }
+
+  messages =
+    result.data || [];
+
+  render();
+
+  await markRead();
+
+  scrollMessages();
 }
 
-</div>
 
-<div class=composer>
+async function markRead(){
 
-<button
-class=attach
-onclick="$('chatFile').click()">
-＋
-</button>
+  if(!selected){
+    return;
+  }
 
-<input
-id=chatInput
-class=input
-placeholder="Write a message..."
-oninput="sendTyping()"
-onkeydown="if(event.key==='Enter')sendMessage()">
-
-<input
-id=chatFile
-type=file
-style="display:none"
-onchange="filePicked(this)">
-
-<button
-class=send
-onclick=sendMessage()>
-➤
-</button>
-
-</div>
-
-<div class=actions>
-
-<button
-class="btn danger"
-onclick="blockUser('${p.id}')">
-
-Block ${esc(p.name)}
-
-</button>
-
-</div>
-
-</div>
-
-`;
+  await sb
+    .from("messages")
+    .update({
+      read_at:
+        new Date().toISOString()
+    })
+    .eq(
+      "match_id",
+      selected.id
+    )
+    .neq(
+      "sender_id",
+      session.user.id
+    )
+    .is(
+      "read_at",
+      null
+    );
 }
 
-function messageBubble(m){
 
-let body=esc(m.message||"");
+function scrollMessages(){
 
-if(m.attachment_url){
+  setTimeout(function(){
 
-if(
-(m.attachment_type||"")
-.startsWith("image/")
-){
+    const box =
+      document.getElementById("messages");
 
-body=
-`
-<img
-class=photo
-src="${esc(m.attachment_url)}"
-alt="${esc(m.attachment_name||"photo")}">
+    if(box){
+      box.scrollTop =
+        box.scrollHeight;
+    }
 
-${body}
-`;
-
-}else{
-
-body=
-`
-<a
-href="${esc(m.attachment_url)}"
-target=_blank
-rel=noopener
-style="color:inherit;font-weight:900;display:block">
-
-📎 ${esc(m.attachment_name||"Attachment")}
-
-</a>
-
-${body}
-`;
-
+  },50);
 }
 
-}
-
-return `
-
-<div
-class="bubble ${
-m.sender_id===session.user.id
-?"mine"
-:"theirs"
-}">
-
-${body}
-
-<div class=small>
-
-${
-new Date(
-m.created_at
-).toLocaleTimeString(
-[],
-{
-hour:"numeric",
-minute:"2-digit"
-}
-)
-}
-
-${
-m.sender_id===session.user.id
-?
-(m.read_at
-?" · Read"
-:" · Sent")
-:""
-}
-
-</div>
-
-</div>
-
-`;
-}
 
 async function openChat(id){
 
-selected=
-matches.find(
-m=>m.id===id
-)||null;
+  selected =
+    matches.find(
+      match=>match.id===id
+    ) || null;
 
-messages=[];
+  messages = [];
 
-tab="chat";
+  tab = "chat";
 
-render();
+  render();
 
-await loadMessages();
+  try{
+
+    await loadMessages();
+
+  }catch(error){
+
+    toast(
+      "Chat error: " +
+      errorMessage(error)
+    );
+
+  }
 }
+
+
+/* =========================================================
+   MESSAGES
+   ========================================================= */
+
+function messageBubble(message){
+
+  let body =
+    esc(message.message || "");
+
+  if(message.attachment_url){
+
+    if(
+      (message.attachment_type || "")
+        .startsWith("image/")
+    ){
+
+      body = `
+
+        <img
+          class="photo"
+          src="${esc(message.attachment_url)}"
+          alt="${esc(message.attachment_name || "Photo")}">
+
+        ${body}
+
+      `;
+
+    }else{
+
+      body = `
+
+        <a
+          href="${esc(message.attachment_url)}"
+          target="_blank"
+          rel="noopener"
+          style="
+            color:inherit;
+            font-weight:900;
+            display:block;
+          ">
+
+          📎
+          ${esc(
+            message.attachment_name ||
+            "Attachment"
+          )}
+
+        </a>
+
+        ${body}
+
+      `;
+    }
+  }
+
+  const mine =
+    message.sender_id ===
+    session.user.id;
+
+  return `
+
+    <div
+      class="bubble ${mine ? "mine" : "theirs"}">
+
+      ${body}
+
+      <div class="small">
+
+        ${
+          new Date(
+            message.created_at
+          ).toLocaleTimeString(
+            [],
+            {
+              hour:"numeric",
+              minute:"2-digit"
+            }
+          )
+        }
+
+        ${
+          mine
+          ?
+          (
+            message.read_at
+            ? " · Read"
+            : " · Sent"
+          )
+          :
+          ""
+        }
+
+      </div>
+
+    </div>
+
+  `;
+}
+
 
 function filePicked(input){
 
-file=
-input.files?.[0]||null;
+  file =
+    input.files?.[0] || null;
 
-render();
+  render();
 }
+
 
 function clearFile(){
 
-file=null;
+  file = null;
 
-render();
+  render();
 }
+
 
 async function sendMessage(){
 
-if(!selected)return;
+  if(!selected){
+    return;
+  }
 
-const input=$("chatInput");
+  const input =
+    document.getElementById(
+      "chatInput"
+    );
 
-const text=
-(input?.value||"").trim();
+  const text =
+    (input?.value || "").trim();
 
-if(!text&&!file)return;
+  if(!text && !file){
+    return;
+  }
 
-let attachment={};
+  try{
 
-try{
+    let attachment = {};
 
-if(file){
+    if(file){
 
-if(file.size>15*1024*1024)
-throw Error(
-"File must be 15 MB or smaller."
-);
+      if(
+        file.size >
+        15 * 1024 * 1024
+      ){
 
-const safe=
-file.name.replace(
-/[^a-zA-Z0-9._-]/g,
-"_"
-);
+        throw new Error(
+          "File must be 15 MB or smaller."
+        );
 
-const path=
-`${session.user.id}/${selected.id}/${Date.now()}-${safe}`;
+      }
 
-const u=
-await sb.storage
-.from("chat-attachments")
-.upload(
-path,
-file,
-{
-contentType:
-file.type||
-"application/octet-stream",
-upsert:false
+      const safeName =
+        file.name.replace(
+          /[^a-zA-Z0-9._-]/g,
+          "_"
+        );
+
+      const path =
+        `${session.user.id}/${selected.id}/${Date.now()}-${safeName}`;
+
+      const upload =
+        await sb.storage
+          .from("chat-attachments")
+          .upload(
+            path,
+            file,
+            {
+              contentType:
+                file.type ||
+                "application/octet-stream",
+              upsert:false
+            }
+          );
+
+      if(upload.error){
+        throw upload.error;
+      }
+
+      const publicURL =
+        sb.storage
+          .from("chat-attachments")
+          .getPublicUrl(path);
+
+      attachment = {
+
+        attachment_url:
+          publicURL.data.publicUrl,
+
+        attachment_name:
+          safeName,
+
+        attachment_type:
+          file.type ||
+          "application/octet-stream"
+
+      };
+    }
+
+    const result =
+      await sb
+        .from("messages")
+        .insert({
+          match_id:selected.id,
+          sender_id:session.user.id,
+          message:text,
+          ...attachment
+        })
+        .select()
+        .single();
+
+    if(result.error){
+      throw result.error;
+    }
+
+    if(
+      !messages.some(
+        message =>
+          message.id ===
+          result.data.id
+      )
+    ){
+
+      messages.push(
+        result.data
+      );
+
+    }
+
+    file = null;
+
+    render();
+
+    scrollMessages();
+
+  }catch(error){
+
+    toast(
+      "Send failed: " +
+      errorMessage(error)
+    );
+
+  }
 }
-);
 
-if(u.error)
-throw u.error;
 
-const pub=
-sb.storage
-.from("chat-attachments")
-.getPublicUrl(path);
-
-attachment={
-attachment_url:
-pub.data.publicUrl,
-
-attachment_name:
-safe,
-
-attachment_type:
-file.type||
-"application/octet-stream"
-};
-
-}
-
-const r=
-await sb.from("messages")
-.insert({
-  match_id:selected.id,
-  sender_id:session.user.id,
-  message:text,
-  ...attachment
-})
-.select()
-.single();
-
-if(r.error)
-throw r.error;
-
-if(
-!messages.some(
-m=>m.id===r.data.id
-)
-)
-messages.push(r.data);
-
-file=null;
-
-render();
-
-scrollMessages();
-
-}catch(e){
-
-toast(
-"Send failed: "+err(e)
-);
-
-}
-
-}
+/* =========================================================
+   TYPING
+   ========================================================= */
 
 function sendTyping(){
 
-clearTimeout(typingTimer);
+  clearTimeout(
+    typingTimer
+  );
 
-if(!selected)return;
+  if(!selected){
+    return;
+  }
 
-localStorage.setItem(
-"offa-typing-"+selected.id,
-Date.now()
-);
+  localStorage.setItem(
+    "offa-typing-" +
+    selected.id,
+    String(Date.now())
+  );
 
-typingTimer=
-setTimeout(
-()=>{
-localStorage.removeItem(
-"offa-typing-"+selected.id
-);
-},
-1800
-);
+  typingTimer =
+    setTimeout(function(){
+
+      localStorage.removeItem(
+        "offa-typing-" +
+        selected.id
+      );
+
+    },1800);
 }
+
+
+/* =========================================================
+   PRESENCE
+   ========================================================= */
+
+function isOnline(profile){
+
+  if(!profile?.last_seen_at){
+    return false;
+  }
+
+  return (
+    Date.now() -
+    new Date(
+      profile.last_seen_at
+    ).getTime()
+  ) < 120000;
+}
+
+
+function startPresence(){
+
+  clearInterval(
+    presenceTimer
+  );
+
+  async function heartbeat(){
+
+    if(!session){
+      return;
+    }
+
+    try{
+
+      await sb
+        .from("profiles")
+        .update({
+          last_seen_at:
+            new Date().toISOString()
+        })
+        .eq(
+          "id",
+          session.user.id
+        );
+
+    }catch(e){
+
+      console.warn(
+        "Presence update failed:",
+        e
+      );
+
+    }
+  }
+
+  heartbeat();
+
+  presenceTimer =
+    setInterval(
+      heartbeat,
+      45000
+    );
+}
+
+
+/* =========================================================
+   REALTIME
+   ========================================================= */
+
+function subscribeRealtime(){
+
+  if(messageChannel){
+
+    sb.removeChannel(
+      messageChannel
+    );
+
+  }
+
+  messageChannel =
+    sb
+      .channel(
+        "offa-messages-" +
+        session.user.id
+      )
+
+      .on(
+        "postgres_changes",
+        {
+          event:"INSERT",
+          schema:"public",
+          table:"messages"
+        },
+        async function(payload){
+
+          if(
+            selected &&
+            payload.new.match_id ===
+            selected.id &&
+            !messages.some(
+              message =>
+                message.id ===
+                payload.new.id
+            )
+          ){
+
+            messages.push(
+              payload.new
+            );
+
+            render();
+
+            await markRead();
+
+            scrollMessages();
+
+          }
+
+          try{
+
+            await loadMatches();
+
+          }catch(e){
+
+            console.warn(e);
+
+          }
+
+        }
+      )
+
+      .subscribe();
+}
+
+
+/* =========================================================
+   PROFILE SCREEN
+   ========================================================= */
 
 function profileView(){
 
-return `
+  return `
 
-<div class=profile-cover>
+    <div class="profile-cover">
 
-<div class=avatar-wrap>
+      <div class="avatar-wrap">
 
-<img
-class="avatar big"
-src="${avatar(me)}">
+        <img
+          class="avatar big"
+          src="${avatar(me)}"
+          alt="Profile photo">
 
-<button
-class=camera
-onclick="$('avatarFile').click()">
-✎
-</button>
+        <button
+          class="camera"
+          onclick="
+            document
+              .getElementById('avatarFile')
+              .click()
+          ">
 
-</div>
+          ✎
 
-<input
-id=avatarFile
-type=file
-accept="image/*"
-style="display:none"
-onchange="uploadAvatar(this)">
+        </button>
 
-<h1
-style="margin:12px 0 3px;color:#fff">
+      </div>
 
-${esc(me.name)}
+      <input
+        id="avatarFile"
+        type="file"
+        accept="image/*"
+        style="display:none"
+        onchange="uploadAvatar(this)">
 
-</h1>
+      <h1
+        style="
+          margin:12px 0 3px;
+          color:white;
+        ">
 
-<div style="opacity:.85">
+        ${esc(me.name)}
 
-${esc(me.age)}
-·
-${esc(me.city||"Offa")}
+      </h1>
 
-</div>
+      <div style="opacity:.85">
 
-</div>
+        ${esc(me.age)}
+        ·
+        ${esc(me.city || "Offa")}
 
-<div class=card>
+      </div>
 
-<h2>My profile</h2>
+    </div>
 
-${
-me.bio
-?`<p>${esc(me.bio)}</p>`
-:
-`<p class=meta>
-Add a bio so people can get to know you.
-</p>`
+    <div class="card">
+
+      <h2>My profile</h2>
+
+      ${
+        me.bio
+        ?
+        `<p>${esc(me.bio)}</p>`
+        :
+        `
+          <p class="meta">
+            Add a bio so people can get to know you.
+          </p>
+        `
+      }
+
+      ${
+        me.relationship_goal
+        ?
+        `
+          <span class="goal">
+            ${esc(me.relationship_goal)}
+          </span>
+        `
+        :
+        ""
+      }
+
+      <div class="actions">
+
+        <button
+          class="btn blue"
+          onclick="editProfile()">
+
+          Edit profile
+
+        </button>
+
+        <button
+          class="btn ghost"
+          onclick="logout()">
+
+          Log out
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h2>Safety</h2>
+
+      <p class="meta">
+
+        Block or report anyone who makes you uncomfortable.
+        You control who you interact with.
+
+      </p>
+
+    </div>
+
+  `;
 }
 
-${
-me.relationship_goal
-?
-`<span class=goal>
-${esc(me.relationship_goal)}
-</span>`
-:""
-}
 
-<div class=actions>
-
-<button
-class="btn blue"
-onclick=editProfile()>
-Edit profile
-</button>
-
-<button
-class="btn ghost"
-onclick=logout()>
-Log out
-</button>
-
-</div>
-
-</div>
-
-<div class=card>
-
-<h2>Safety</h2>
-
-<p class=meta>
-Block or report anyone who makes you uncomfortable.
-You control who you interact with.
-</p>
-
-</div>
-
-`;
-}
+/* =========================================================
+   AVATAR UPLOAD
+   ========================================================= */
 
 async function uploadAvatar(input){
 
-const f=input.files?.[0];
+  const selectedFile =
+    input.files?.[0];
 
-if(!f)return;
+  if(!selectedFile){
+    return;
+  }
 
-if(f.size>8*1024*1024)
-return toast(
-"Profile photo must be 8 MB or smaller."
-);
+  if(
+    selectedFile.size >
+    8 * 1024 * 1024
+  ){
 
-try{
+    toast(
+      "Profile photo must be 8 MB or smaller."
+    );
 
-const ext=
-(
-f.name.split(".").pop()||
-"jpg"
-)
-.replace(
-/[^a-z0-9]/gi,
-""
-);
+    return;
+  }
 
-const path=
-`${session.user.id}/avatar-${Date.now()}.${ext}`;
+  try{
 
-const u=
-await sb.storage
-.from("avatars")
-.upload(
-path,
-f,
-{
-contentType:
-f.type||"image/jpeg",
-upsert:false
+    const extension =
+      (
+        selectedFile.name
+          .split(".")
+          .pop() ||
+        "jpg"
+      ).replace(
+        /[^a-z0-9]/gi,
+        ""
+      );
+
+    const path =
+      `${session.user.id}/avatar-${Date.now()}.${extension}`;
+
+    const upload =
+      await sb.storage
+        .from("avatars")
+        .upload(
+          path,
+          selectedFile,
+          {
+            contentType:
+              selectedFile.type ||
+              "image/jpeg",
+            upsert:false
+          }
+        );
+
+    if(upload.error){
+      throw upload.error;
+    }
+
+    const publicURL =
+      sb.storage
+        .from("avatars")
+        .getPublicUrl(path);
+
+    const result =
+      await sb
+        .from("profiles")
+        .update({
+          avatar_url:
+            publicURL.data.publicUrl
+        })
+        .eq(
+          "id",
+          session.user.id
+        )
+        .select()
+        .single();
+
+    if(result.error){
+      throw result.error;
+    }
+
+    me = result.data;
+
+    await loadPeople();
+
+    toast(
+      "Profile photo updated."
+    );
+
+    render();
+
+  }catch(error){
+
+    toast(
+      "Photo upload failed: " +
+      errorMessage(error)
+    );
+
+  }
 }
-);
 
-if(u.error)
-throw u.error;
 
-const pub=
-sb.storage
-.from("avatars")
-.getPublicUrl(path);
+/* =========================================================
+   EDIT PROFILE
+   ========================================================= */
 
-const r=
-await sb.from("profiles")
-.update({
-  avatar_url:
-  pub.data.publicUrl
-})
-.eq(
-"id",
-session.user.id
-)
-.select()
-.single();
+function editProfile(){
 
-if(r.error)
-throw r.error;
+  root.insertAdjacentHTML(
+    "beforeend",
+    `
 
-me=r.data;
+      <div
+        class="modal show"
+        id="editModal">
 
-await loadPeople();
+        <div class="modalbox">
 
-toast(
-"Profile photo updated."
-);
+          <div class="modalhead">
 
-render();
+            <h2>
+              Edit profile
+            </h2>
 
-}catch(e){
+            <button
+              class="close"
+              onclick="
+                document
+                  .getElementById('editModal')
+                  .remove()
+              ">
 
-toast(
-"Photo upload failed: "+err(e)
-);
+              ×
 
+            </button>
+
+          </div>
+
+          <div class="stack">
+
+            <label>Name</label>
+
+            <input
+              id="eName"
+              class="input"
+              value="${esc(me.name)}">
+
+            <label>Age</label>
+
+            <input
+              id="eAge"
+              class="input"
+              type="number"
+              min="18"
+              max="100"
+              value="${esc(me.age)}">
+
+            <label>City</label>
+
+            <input
+              id="eCity"
+              class="input"
+              value="${esc(me.city || "Offa")}">
+
+            <label>Sex</label>
+
+            <select
+              id="eSex"
+              class="select">
+
+              <option value="">
+                Prefer not to say
+              </option>
+
+              <option
+                value="Male"
+                ${
+                  me.sex === "Male"
+                  ? "selected"
+                  : ""
+                }>
+                Male
+              </option>
+
+              <option
+                value="Female"
+                ${
+                  me.sex === "Female"
+                  ? "selected"
+                  : ""
+                }>
+                Female
+              </option>
+
+            </select>
+
+            <label>
+              Relationship goal
+            </label>
+
+            <select
+              id="eGoal"
+              class="select">
+
+              <option value="">
+                Choose
+              </option>
+
+              <option
+                value="Single"
+                ${
+                  me.relationship_goal === "Single"
+                  ? "selected"
+                  : ""
+                }>
+                Single
+              </option>
+
+              <option
+                value="Dating"
+                ${
+                  me.relationship_goal === "Dating"
+                  ? "selected"
+                  : ""
+                }>
+                Dating
+              </option>
+
+              <option
+                value="Relationship"
+                ${
+                  me.relationship_goal === "Relationship"
+                  ? "selected"
+                  : ""
+                }>
+                Relationship
+              </option>
+
+              <option
+                value="Friendship"
+                ${
+                  me.relationship_goal === "Friendship"
+                  ? "selected"
+                  : ""
+                }>
+                Friendship
+              </option>
+
+            </select>
+
+            <label>
+              Bio
+            </label>
+
+            <textarea
+              id="eBio"
+              class="textarea">${esc(me.bio || "")}</textarea>
+
+            <button
+              class="btn green"
+              onclick="saveProfile()">
+
+              Save profile
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `
+  );
 }
-}
 
-async function editProfile(){
-
-root.insertAdjacentHTML(
-"beforeend",
-
-`
-
-<div
-class="modal show"
-id=editModal>
-
-<div class=modalbox>
-
-<div class=modalhead>
-
-<h2>Edit profile</h2>
-
-<button
-class=close
-onclick="editModal.remove()">
-×
-</button>
-
-</div>
-
-<div class=stack>
-
-<label>Name</label>
-
-<input
-id=eName
-class=input
-value="${esc(me.name)}">
-
-<label>Age</label>
-
-<input
-id=eAge
-class=input
-type=number
-min=18
-value="${me.age}">
-
-<label>City</label>
-
-<input
-id=eCity
-class=input
-value="${esc(me.city||"Offa")}">
-
-<label>Sex</label>
-
-<select
-id=eSex
-class=select>
-
-<option value="">
-Prefer not to say
-</option>
-
-<option
-${me.sex==="Male"?"selected":""}>
-Male
-</option>
-
-<option
-${me.sex==="Female"?"selected":""}>
-Female
-</option>
-
-</select>
-
-<label>
-Relationship goal
-</label>
-
-<select
-id=eGoal
-class=select>
-
-<option value="">
-Choose
-</option>
-
-<option
-${me.relationship_goal==="Single"?"selected":""}>
-Single
-</option>
-
-<option
-${me.relationship_goal==="Dating"?"selected":""}>
-Dating
-</option>
-
-<option
-${me.relationship_goal==="Relationship"?"selected":""}>
-Relationship
-</option>
-
-<option
-${me.relationship_goal==="Friendship"?"selected":""}>
-Friendship
-</option>
-
-</select>
-
-<label>Bio</label>
-
-<textarea
-id=eBio
-class=textarea>
-${esc(me.bio||"")}
-</textarea>
-
-<button
-class="btn green"
-onclick=saveProfile()>
-Save profile
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-`
-);
-}
 
 async function saveProfile(){
 
-const payload={
+  const payload = {
 
-name:$("eName").value.trim(),
+    name:
+      document
+        .getElementById("eName")
+        .value.trim(),
 
-age:Number(
-$("eAge").value
-),
+    age:
+      Number(
+        document
+          .getElementById("eAge")
+          .value
+      ),
 
-city:
-$("eCity").value.trim()||
-"Offa",
+    city:
+      document
+        .getElementById("eCity")
+        .value.trim() ||
+      "Offa",
 
-sex:
-$("eSex").value||
-null,
+    sex:
+      document
+        .getElementById("eSex")
+        .value ||
+      null,
 
-relationship_goal:
-$("eGoal").value||
-null,
+    relationship_goal:
+      document
+        .getElementById("eGoal")
+        .value ||
+      null,
 
-bio:
-$("eBio").value.trim()
+    bio:
+      document
+        .getElementById("eBio")
+        .value.trim()
 
-};
+  };
 
-if(
-!payload.name||
-payload.age<18
-)
-return toast(
-"Name and age 18+ are required."
-);
+  if(
+    !payload.name ||
+    payload.age < 18
+  ){
 
-const r=
-await sb.from("profiles")
-.update(payload)
-.eq(
-"id",
-session.user.id
-)
-.select()
-.single();
+    toast(
+      "Name and age 18+ are required."
+    );
 
-if(r.error)
-return toast(
-err(r.error)
-);
+    return;
+  }
 
-me=r.data;
+  try{
 
-$("editModal").remove();
+    const result =
+      await sb
+        .from("profiles")
+        .update(payload)
+        .eq(
+          "id",
+          session.user.id
+        )
+        .select()
+        .single();
 
-await loadPeople();
+    if(result.error){
+      throw result.error;
+    }
 
-render();
+    me =
+      result.data;
 
-toast(
-"Profile saved."
-);
+    document
+      .getElementById("editModal")
+      ?.remove();
+
+    await loadPeople();
+
+    render();
+
+    toast(
+      "Profile saved."
+    );
+
+  }catch(error){
+
+    toast(
+      "Save failed: " +
+      errorMessage(error)
+    );
+
+  }
 }
+
+
+/* =========================================================
+   BLOCK
+   ========================================================= */
 
 async function blockUser(id){
 
-if(
-!confirm(
-"Block this person? They will no longer appear in your discovery or chat list."
-)
-)
-return;
+  const confirmed =
+    confirm(
+      "Block this person? They will no longer appear in your discovery or chat list."
+    );
 
-const r=
-await sb.from("blocks")
-.insert({
-  blocker_id:session.user.id,
-  blocked_id:id
-});
+  if(!confirmed){
+    return;
+  }
 
-if(
-r.error &&
-!r.error.message
-.toLowerCase()
-.includes("duplicate")
-)
-return toast(
-err(r.error)
-);
+  try{
 
-people=
-people.filter(
-p=>p.id!==id
-);
+    const result =
+      await sb
+        .from("blocks")
+        .insert({
+          blocker_id:
+            session.user.id,
+          blocked_id:
+            id
+        });
 
-matches=
-matches.filter(
-m=>m.person?.id!==id
-);
+    if(
+      result.error &&
+      !result.error.message
+        .toLowerCase()
+        .includes("duplicate")
+    ){
 
-if(
-selected?.person?.id===id
-)
-selected=null;
+      throw result.error;
 
-toast("Person blocked.");
+    }
 
-render();
+    people =
+      people.filter(
+        p=>p.id!==id
+      );
+
+    matches =
+      matches.filter(
+        match =>
+          match.person?.id !== id
+      );
+
+    if(
+      selected?.person?.id === id
+    ){
+
+      selected = null;
+
+    }
+
+    toast(
+      "Person blocked."
+    );
+
+    render();
+
+  }catch(error){
+
+    toast(
+      "Block failed: " +
+      errorMessage(error)
+    );
+
+  }
 }
+
+
+/* =========================================================
+   REPORT
+   ========================================================= */
 
 async function reportUser(id){
 
-const reason=
-prompt(
-"Reason for report?",
-"Inappropriate behavior"
-);
+  const reason =
+    prompt(
+      "Reason for report?",
+      "Inappropriate behavior"
+    );
 
-if(!reason)return;
+  if(!reason){
+    return;
+  }
 
-const details=
-prompt(
-"Additional details (optional):",
-""
-);
+  const details =
+    prompt(
+      "Additional details (optional):",
+      ""
+    );
 
-const r=
-await sb.from("reports")
-.insert({
-  reporter_id:session.user.id,
-  reported_id:id,
-  reason,
-  details
-});
+  try{
 
-if(r.error)
-return toast(
-err(r.error)
-);
+    const result =
+      await sb
+        .from("reports")
+        .insert({
+          reporter_id:
+            session.user.id,
+          reported_id:
+            id,
+          reason:reason,
+          details:details || null
+        });
 
-toast(
-"Report submitted."
-);
+    if(result.error){
+      throw result.error;
+    }
+
+    toast(
+      "Report submitted."
+    );
+
+  }catch(error){
+
+    toast(
+      "Report failed: " +
+      errorMessage(error)
+    );
+
+  }
 }
 
-async function go(t){
 
-tab=t;
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
 
-if(t!=="chat")
-selected=null;
+async function go(destination){
 
-if(t==="discover")
-await loadPeople();
+  tab =
+    destination;
 
-if(
-t==="matches"||
-t==="chat"
-)
-await loadMatches();
+  if(destination !== "chat"){
+    selected = null;
+  }
 
-render();
+  try{
+
+    if(destination === "discover"){
+      await loadPeople();
+    }
+
+    if(
+      destination === "matches" ||
+      destination === "chat"
+    ){
+      await loadMatches();
+    }
+
+    render();
+
+  }catch(error){
+
+    toast(
+      errorMessage(error)
+    );
+
+  }
 }
+
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+
+function render(){
+
+  if(!session){
+
+    showAuth();
+
+    return;
+  }
+
+  root.innerHTML = `
+
+    <div class="app">
+
+      <header class="top">
+
+        <div class="brand">
+          Offa <span>Connect</span>
+        </div>
+
+        <div class="tag">
+          <b>by Leo</b>
+          · Meet. Connect. Belong.
+        </div>
+
+      </header>
+
+      <main class="shell">
+
+        <section class="content">
+
+          ${
+            tab === "discover"
+            ? discoverView()
+            : tab === "matches"
+            ? matchesView()
+            : tab === "chat"
+            ? chatView()
+            : profileView()
+          }
+
+        </section>
+
+      </main>
+
+      <nav class="bottom">
+
+        <button
+          class="nav ${
+            tab === "discover"
+            ? "active"
+            : ""
+          }"
+          onclick="go('discover')">
+
+          <span class="ni">
+            ♥
+          </span>
+
+          <span class="nl">
+            Discover
+          </span>
+
+        </button>
+
+        <button
+          class="nav ${
+            tab === "matches"
+            ? "active"
+            : ""
+          }"
+          onclick="go('matches')">
+
+          <span class="ni">
+
+            ♡
+
+            ${
+              matches.length
+              ?
+              `
+                <span class="badge">
+                  ${matches.length}
+                </span>
+              `
+              :
+              ""
+            }
+
+          </span>
+
+          <span class="nl">
+            Matches
+          </span>
+
+        </button>
+
+        <button
+          class="nav ${
+            tab === "chat"
+            ? "active"
+            : ""
+          }"
+          onclick="go('chat')">
+
+          <span class="ni">
+            ▣
+          </span>
+
+          <span class="nl">
+            Chat
+          </span>
+
+        </button>
+
+        <button
+          class="nav ${
+            tab === "profile"
+            ? "active"
+            : ""
+          }"
+          onclick="go('profile')">
+
+          <span class="ni">
+            ●
+          </span>
+
+          <span class="nl">
+            Profile
+          </span>
+
+        </button>
+
+      </nav>
+
+    </div>
+
+  `;
+}
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
 
 async function logout(){
 
-await sb.auth.signOut();
+  try{
 
-session=null;
-me=null;
-people=[];
-matches=[];
-selected=null;
+    if(messageChannel){
 
-auth();
+      await sb.removeChannel(
+        messageChannel
+      );
+
+      messageChannel = null;
+
+    }
+
+    clearInterval(
+      presenceTimer
+    );
+
+    await sb.auth.signOut();
+
+    session = null;
+    me = null;
+    people = [];
+    matches = [];
+    selected = null;
+    messages = [];
+
+    showAuth();
+
+  }catch(error){
+
+    toast(
+      "Logout failed: " +
+      errorMessage(error)
+    );
+
+  }
 }
 
-sb.auth.getSession()
-.then(async r=>{
 
-session=
-r.data.session;
+/* =========================================================
+   INITIAL SESSION
+   ========================================================= */
 
-if(session){
+async function startApp(){
 
-try{
+  if(!sb){
 
-await boot();
+    showFatalError(
+      new Error(
+        "Supabase could not be initialized."
+      )
+    );
 
-}catch(e){
+    return;
+  }
 
-auth(
-false,
-err(e)
-);
+  try{
+
+    const result =
+      await sb.auth.getSession();
+
+    if(result.error){
+      throw result.error;
+    }
+
+    session =
+      result.data.session;
+
+    if(session){
+
+      await boot();
+
+    }else{
+
+      showAuth();
+
+    }
+
+  }catch(error){
+
+    showFatalError(error);
+
+  }
+}
+
+
+/* =========================================================
+   AUTH STATE CHANGES
+   ========================================================= */
+
+if(sb){
+
+  sb.auth.onAuthStateChange(
+    function(event,newSession){
+
+      session =
+        newSession;
+
+      if(
+        event === "SIGNED_OUT"
+      ){
+
+        me = null;
+        people = [];
+        matches = [];
+        selected = null;
+        messages = [];
+
+        showAuth();
+
+      }
+
+    }
+  );
 
 }
 
-}else{
 
-auth();
+/* =========================================================
+   START
+   ========================================================= */
 
-}
-
-});
+startApp();
 
 </script>
 
