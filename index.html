@@ -17,14 +17,15 @@
   --cream:#F7F4EE;
   --ink:#132235;
   --muted:#6E7D8C;
-  --line:#E4EAF0
+  --line:#E4EAF0;
+  --red:#C83D4B;
 }
 
 *{box-sizing:border-box}
 
 body{
   margin:0;
-  background:linear-gradient(145deg,#071A2B,#0B5C8E,#0B8F87);
+  background:linear-gradient(145deg,#061827,#0B5C8E,#0B8F87);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
   color:var(--ink);
   min-height:100vh
@@ -34,7 +35,7 @@ button,input,textarea,select{font:inherit}
 button{border:0;cursor:pointer}
 
 .app{
-  max-width:980px;
+  max-width:1000px;
   margin:auto;
   min-height:100vh;
   padding-bottom:88px
@@ -98,7 +99,10 @@ h2{
   outline:none
 }
 
-.textarea{min-height:100px}
+.textarea{
+  min-height:100px;
+  resize:vertical
+}
 
 .search:focus,
 .input:focus,
@@ -125,12 +129,14 @@ h2{
   height:86px;
   border-radius:50%;
   object-fit:cover;
-  background:#eaf0f3
+  background:#eaf0f3;
+  border:3px solid #fff;
+  box-shadow:0 5px 15px #071a2b16
 }
 
 .avatar.big{
-  width:120px;
-  height:120px
+  width:125px;
+  height:125px
 }
 
 .name{
@@ -163,7 +169,8 @@ h2{
   display:flex;
   gap:9px;
   justify-content:flex-end;
-  margin-top:15px
+  margin-top:15px;
+  flex-wrap:wrap
 }
 
 .btn{
@@ -192,6 +199,11 @@ h2{
   color:#fff
 }
 
+.danger{
+  background:#fff0f1;
+  color:var(--red)
+}
+
 .empty{
   text-align:center;
   padding:35px;
@@ -204,7 +216,7 @@ h2{
   bottom:0;
   left:50%;
   transform:translateX(-50%);
-  width:min(980px,100%);
+  width:min(1000px,100%);
   background:#fffffff5;
   border-top:1px solid var(--line);
   display:grid;
@@ -220,14 +232,18 @@ h2{
   padding:5px
 }
 
-.nav.active{color:var(--blue)}
+.nav.active{
+  color:var(--blue)
+}
 
 .ni{
   font-size:21px;
   display:block
 }
 
-.nl{font-size:12px}
+.nl{
+  font-size:12px
+}
 
 .badge{
   background:var(--gold);
@@ -258,7 +274,9 @@ h2{
   font-weight:950
 }
 
-.authlogo b{color:var(--gold)}
+.authlogo b{
+  color:var(--gold)
+}
 
 .sub{
   color:var(--muted);
@@ -299,7 +317,7 @@ h2{
 }
 
 .messages{
-  height:53vh;
+  height:52vh;
   min-height:350px;
   overflow:auto;
   display:flex;
@@ -309,7 +327,7 @@ h2{
 }
 
 .bubble{
-  max-width:78%;
+  max-width:80%;
   padding:11px 13px;
   border-radius:18px;
   word-break:break-word
@@ -335,8 +353,10 @@ h2{
 }
 
 .photo{
-  max-width:230px;
-  border-radius:12px
+  max-width:240px;
+  border-radius:13px;
+  display:block;
+  margin-bottom:5px
 }
 
 .composer{
@@ -347,7 +367,9 @@ h2{
   padding-top:11px
 }
 
-.composer .input{flex:1}
+.composer .input{
+  flex:1
+}
 
 .attach,
 .send{
@@ -367,6 +389,44 @@ h2{
   color:#fff
 }
 
+.typing{
+  font-size:12px;
+  color:var(--teal);
+  font-weight:800;
+  height:18px
+}
+
+.online{
+  color:var(--green);
+  font-size:12px;
+  font-weight:900
+}
+
+.profile-cover{
+  background:linear-gradient(135deg,var(--navy),var(--teal));
+  border-radius:22px;
+  padding:22px;
+  color:#fff;
+  text-align:center;
+  margin-bottom:15px
+}
+
+.avatar-wrap{
+  position:relative;
+  display:inline-block
+}
+
+.camera{
+  position:absolute;
+  right:3px;
+  bottom:5px;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  background:var(--gold);
+  color:#fff
+}
+
 .modal{
   position:fixed;
   inset:0;
@@ -378,20 +438,23 @@ h2{
   z-index:40
 }
 
-.modal.show{display:flex}
+.modal.show{
+  display:flex
+}
 
 .modalbox{
   background:#fff;
   border-radius:25px;
   padding:22px;
-  width:min(520px,100%);
+  width:min(540px,100%);
   max-height:90vh;
   overflow:auto
 }
 
 .modalhead{
   display:flex;
-  justify-content:space-between
+  justify-content:space-between;
+  align-items:center
 }
 
 .close{
@@ -401,14 +464,58 @@ h2{
   background:#edf2f5
 }
 
+.pillrow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:8px
+}
+
+.pill{
+  padding:8px 11px;
+  border-radius:99px;
+  background:#edf2f5;
+  color:var(--ink);
+  font-weight:800;
+  font-size:12px
+}
+
+.toast{
+  position:fixed;
+  top:16px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--navy);
+  color:#fff;
+  padding:12px 16px;
+  border-radius:14px;
+  z-index:100;
+  font-weight:800;
+  max-width:90%;
+  display:none
+}
+
 @media(max-width:600px){
-  .filters{grid-template-columns:1fr}
-  .content{padding:15px}
+  .filters{
+    grid-template-columns:1fr
+  }
+
+  .content{
+    padding:15px
+  }
+
   .shell{
     margin:0;
     border-radius:28px 28px 0 0
   }
-  .authbox{padding:24px}
+
+  .authbox{
+    padding:24px
+  }
+
+  .messages{
+    height:49vh
+  }
 }
 </style>
 </head>
@@ -416,1096 +523,1781 @@ h2{
 <body>
 
 <div id="root"></div>
+<div id="toast" class="toast"></div>
 
 <script>
 
-const URL="https://irjahjpdjuvlmlcgtusr.supabase.co";
+const SUPABASE_URL =
+"https://irjahjpdjuvlmlcgtusr.supabase.co";
 
-const KEY="sb_publishable_HoMz0Vb4krVkz1p4Dm5_dg_hFuaxwxl";
+const SUPABASE_KEY =
+"sb_publishable_HoMz0Vb4krVkz1p4Dm5_dg_hFuaxwxl";
 
-const supabase=window.supabase.createClient(URL,KEY);
+const sb =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 let session=null;
 let me=null;
 let people=[];
 let matches=[];
 let selected=null;
-let msgs=[];
+let messages=[];
 let tab="discover";
 let query="";
-let channel=null;
+let goalFilter="";
+let sexFilter="";
+let minAge=18;
+let maxAge=100;
+let typingTimer=null;
+let presenceTimer=null;
+let messageChannel=null;
 let file=null;
 
-const $=x=>document.getElementById(x);
+const $=id=>document.getElementById(id);
 
-const esc=x=>String(x??"").replace(/[&<>"']/g,c=>({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#39;"
-}[c]));
-
-const img=p=>p?.avatar_url||
-"data:image/svg+xml;charset=utf-8,"+
-encodeURIComponent(
-'<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">'+
-'<rect width="100%" height="100%" fill="#e9eff3"/>'+
-'<text x="50%" y="60%" text-anchor="middle" font-size="45" fill="#0B5C8E">♥</text>'+
-'</svg>'
+const esc=s=>
+String(s??"").replace(
+  /[&<>"']/g,
+  c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c])
 );
 
-function auth(sign=false,e=""){
+const avatar=p=>
+p?.avatar_url ||
+"data:image/svg+xml;charset=utf-8,"+
+encodeURIComponent(
+`<svg xmlns="http://www.w3.org/2000/svg"
+width="200" height="200">
+<rect width="100%" height="100%" fill="#e9eff3"/>
+<text x="50%" y="58%"
+text-anchor="middle"
+font-size="80"
+fill="#0B5C8E">♥</text>
+</svg>`
+);
 
-  root.innerHTML=`
-  <div class=auth>
-    <div class=authbox>
+function toast(t){
 
-      <div class=authlogo>
-        Offa <b>Connect</b>
-      </div>
+  $("toast").textContent=t;
+  $("toast").style.display="block";
 
-      <div class=sub>
-        <b>by Leo</b> · Meet. Connect. Belong.
-      </div>
+  clearTimeout(window.tt);
 
-      <div class=error>${esc(e)}</div>
+  window.tt=setTimeout(
+    ()=>$("toast").style.display="none",
+    2800
+  );
+}
 
-      <div class=stack>
+function err(e){
+  return e?.message ||
+         e?.error_description ||
+         "Something went wrong.";
+}
 
-        ${sign?
-        '<input id=name class=input placeholder="Your name">'+
-        '<input id=age class=input type=number min=18 placeholder="Age">'
-        :''}
+function auth(sign=false,error=""){
 
-        <input
-          id=email
-          class=input
-          type=email
-          placeholder="Email"
-        >
+root.innerHTML=`
 
-        <input
-          id=pass
-          class=input
-          type=password
-          placeholder="Password"
-        >
+<div class=auth>
 
-        ${sign?
-        '<select id=sex class=select>'+
-        '<option value="">Sex (optional)</option>'+
-        '<option>Male</option>'+
-        '<option>Female</option>'+
-        '</select>'
-        :''}
+<div class=authbox>
 
-        <button
-          class="btn blue"
-          onclick="${sign?'signup()':'login()'}"
-        >
-          ${sign?'Create account':'Log in'}
-        </button>
+<div class=authlogo>
+Offa <b>Connect</b>
+</div>
 
-      </div>
+<div class=sub>
+<b>by Leo</b> · Meet. Connect. Belong.
+</div>
 
-      <p style="text-align:center;color:var(--muted)">
-        ${sign?'Already have an account?':'New to Offa Connect?'}
+<div class=error>
+${esc(error)}
+</div>
 
-        <button
-          class=link
-          onclick="auth(${!sign})"
-        >
-          ${sign?'Back to login':'Create account'}
-        </button>
-      </p>
+<div class=stack>
 
-    </div>
-  </div>`;
+${
+sign
+?
+`
+<input
+ id=aName
+ class=input
+ placeholder="Your name">
+
+<input
+ id=aAge
+ class=input
+ type=number
+ min=18
+ placeholder="Age">
+`
+:""
+}
+
+<input
+ id=aEmail
+ class=input
+ type=email
+ placeholder="Email address">
+
+<input
+ id=aPass
+ class=input
+ type=password
+ placeholder="Password">
+
+${
+sign
+?
+`
+<select id=aSex class=select>
+
+<option value="">
+Sex (optional)
+</option>
+
+<option>Male</option>
+<option>Female</option>
+
+</select>
+`
+:""
+}
+
+<button
+ class="btn blue"
+ onclick="${sign?"signup()":"login()"}">
+
+${sign?"Create account":"Log in"}
+
+</button>
+
+</div>
+
+<p style="text-align:center;color:var(--muted)">
+
+${
+sign
+?"Already have an account?"
+:"New to Offa Connect?"
+}
+
+<button
+class=link
+onclick="auth(${!sign})">
+
+${sign?"Back to login":"Create account"}
+
+</button>
+
+</p>
+
+</div>
+</div>
+
+`;
 }
 
 async function login(){
 
-  let email=$("email").value.trim();
-  let password=$("pass").value;
+const email=$("aEmail").value.trim();
+const password=$("aPass").value;
 
-  if(!email||!password)
-    return auth(false,"Enter your email and password.");
+if(!email||!password)
+return auth(
+false,
+"Enter your email and password."
+);
 
-  let r=await supabase.auth.signInWithPassword({
-    email,
-    password
-  });
+const r=
+await sb.auth.signInWithPassword({
+  email,
+  password
+});
 
-  if(r.error)
-    return auth(false,r.error.message);
+if(r.error)
+return auth(false,err(r.error));
 
-  session=r.data.session;
+session=r.data.session;
 
-  await boot();
+await boot();
 }
 
 async function signup(){
 
-  let name=$("name").value.trim();
-  let age=+$("age").value;
-  let email=$("email").value.trim();
-  let password=$("pass").value;
-  let sex=$("sex").value;
+const name=$("aName").value.trim();
+const age=Number($("aAge").value);
+const email=$("aEmail").value.trim();
+const password=$("aPass").value;
+const sex=$("aSex").value;
 
-  if(
-    !name||
-    age<18||
-    !email||
-    password.length<6
-  )
-    return auth(
-      true,
-      "Enter a name, age 18+, valid email and 6+ character password."
-    );
+if(
+!name ||
+age<18 ||
+!email ||
+password.length<6
+)
+return auth(
+true,
+"Enter your name, age 18+, valid email and a password of at least 6 characters."
+);
 
-  let r=await supabase.auth.signUp({
-    email,
-    password
-  });
+const r=
+await sb.auth.signUp({
+  email,
+  password
+});
 
-  if(r.error)
-    return auth(true,r.error.message);
+if(r.error)
+return auth(true,err(r.error));
 
-  if(r.data.session){
+if(!r.data.session)
+return auth(
+false,
+"Account created. Check your email to confirm, then log in."
+);
 
-    session=r.data.session;
+session=r.data.session;
 
-    let p=await supabase
-      .from("profiles")
-      .upsert({
-        id:r.data.user.id,
-        name,
-        age,
-        city:"Offa",
-        bio:"",
-        sex:sex||null
-      });
+const p=
+await sb.from("profiles")
+.upsert({
+  id:r.data.user.id,
+  name,
+  age,
+  city:"Offa",
+  bio:"",
+  sex:sex||null
+});
 
-    if(p.error)
-      return auth(true,p.error.message);
+if(p.error)
+return auth(true,err(p.error));
 
-    await boot();
-
-  }else{
-
-    auth(
-      false,
-      "Account created. Check your email, then log in."
-    );
-
-  }
+await boot();
 }
 
 async function boot(){
 
-  await loadMe();
-  await loadPeople();
-  await loadMatches();
+await loadMe();
+await loadPeople();
+await loadMatches();
 
-  render();
+render();
 
-  if(channel)
-    supabase.removeChannel(channel);
-
-  channel=supabase
-    .channel("offa-live")
-    .on(
-      "postgres_changes",
-      {
-        event:"INSERT",
-        schema:"public",
-        table:"messages"
-      },
-      p=>{
-
-        if(
-          selected &&
-          p.new.match_id===selected.id &&
-          !msgs.some(x=>x.id===p.new.id)
-        ){
-
-          msgs.push(p.new);
-          render();
-
-        }
-
-      }
-    )
-    .subscribe();
+startPresence();
+subscribeRealtime();
 }
 
 async function loadMe(){
 
-  let r=await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id",session.user.id)
-    .single();
+const r=
+await sb.from("profiles")
+.select("*")
+.eq("id",session.user.id)
+.single();
 
-  if(r.error)
-    throw r.error;
+if(r.error)
+throw r.error;
 
-  me=r.data;
+me=r.data;
 }
 
 async function loadPeople(){
 
-  let r=await supabase
-    .from("profiles")
-    .select("*")
-    .neq("id",session.user.id)
-    .order("created_at",{ascending:false});
+const r=
+await sb.from("profiles")
+.select("*")
+.neq("id",session.user.id)
+.order("created_at",{ascending:false});
 
-  people=r.data||[];
+people=r.data||[];
 }
 
 async function loadMatches(){
 
-  let r=await supabase
-    .from("matches")
-    .select(
-      "id,user_one,user_two,"+
-      "user_one_profile:profiles!matches_user_one_fkey(*),"+
-      "user_two_profile:profiles!matches_user_two_fkey(*)"
-    )
-    .or(
-      `user_one.eq.${session.user.id},user_two.eq.${session.user.id}`
-    )
-    .order("created_at",{ascending:false});
+const r=
+await sb.from("matches")
+.select(
+"id,user_one,user_two,"+
+"user_one_profile:profiles!matches_user_one_fkey(*),"+
+"user_two_profile:profiles!matches_user_two_fkey(*)"
+)
+.or(
+`user_one.eq.${session.user.id},user_two.eq.${session.user.id}`
+)
+.order(
+"created_at",
+{ascending:false}
+);
 
-  matches=(r.data||[]).map(m=>({
+matches=
+(r.data||[]).map(m=>({
+  ...m,
+  person:
+    m.user_one===session.user.id
+    ?m.user_two_profile
+    :m.user_one_profile
+}));
+}
 
-    ...m,
+async function loadMessages(){
 
-    person:
-      m.user_one===session.user.id
-      ?m.user_two_profile
-      :m.user_one_profile
+if(!selected)return;
 
-  }));
+const r=
+await sb.from("messages")
+.select("*")
+.eq("match_id",selected.id)
+.order("created_at",{ascending:true});
+
+messages=r.data||[];
+
+render();
+
+await markRead();
+
+scrollMessages();
+}
+
+async function markRead(){
+
+if(!selected)return;
+
+await sb.from("messages")
+.update({
+  read_at:new Date().toISOString()
+})
+.eq("match_id",selected.id)
+.neq("sender_id",session.user.id)
+.is("read_at",null);
+}
+
+function scrollMessages(){
+
+setTimeout(()=>{
+
+const x=$("messages");
+
+if(x)
+x.scrollTop=x.scrollHeight;
+
+},50);
+}
+
+function startPresence(){
+
+clearInterval(presenceTimer);
+
+const beat=async()=>{
+
+await sb.from("profiles")
+.update({
+  last_seen_at:new Date().toISOString()
+})
+.eq("id",session.user.id);
+
+};
+
+beat();
+
+presenceTimer=
+setInterval(
+beat,
+45000
+);
+}
+
+function subscribeRealtime(){
+
+if(messageChannel)
+sb.removeChannel(messageChannel);
+
+messageChannel=
+sb.channel(
+"offa-messages-"+session.user.id
+)
+
+.on(
+"postgres_changes",
+{
+event:"INSERT",
+schema:"public",
+table:"messages"
+},
+async p=>{
+
+if(
+selected &&
+p.new.match_id===selected.id &&
+!messages.some(
+m=>m.id===p.new.id
+)
+){
+
+messages.push(p.new);
+
+render();
+
+await markRead();
+
+scrollMessages();
+
+}
+
+await loadMatches();
+
+}
+)
+
+.subscribe();
+}
+
+function isOnline(p){
+
+return p?.last_seen_at &&
+Date.now()-
+new Date(
+p.last_seen_at
+).getTime()
+<120000;
 }
 
 function render(){
 
-  if(!session)
-    return auth();
+if(!session)
+return auth();
 
-  root.innerHTML=`
+root.innerHTML=`
 
-  <div class=app>
+<div class=app>
 
-    <header class=top>
+<header class=top>
 
-      <div class=brand>
-        Offa <b>Connect</b>
-      </div>
+<div class=brand>
+Offa <b>Connect</b>
+</div>
 
-      <div class=tag>
-        <b>by Leo</b> · Meet. Connect. Belong.
-      </div>
+<div class=tag>
+<b>by Leo</b> · Meet. Connect. Belong.
+</div>
 
-    </header>
+</header>
 
-    <main class=shell>
+<main class=shell>
 
-      <section class=content>
+<section class=content>
 
-        ${
-          tab==="discover"
-          ?discover()
-          :tab==="matches"
-          ?matchView()
-          :tab==="chat"
-          ?chatView()
-          :profileView()
-        }
-
-      </section>
-
-    </main>
-
-    <nav class=bottom>
-
-      <button
-        class="nav ${tab==="discover"?"active":""}"
-        onclick="go('discover')"
-      >
-        <span class=ni>♥</span>
-        <span class=nl>Discover</span>
-      </button>
-
-      <button
-        class="nav ${tab==="matches"?"active":""}"
-        onclick="go('matches')"
-      >
-        <span class=ni>
-          ♡
-          ${
-            matches.length
-            ?`<span class=badge>${matches.length}</span>`
-            :""
-          }
-        </span>
-
-        <span class=nl>Matches</span>
-      </button>
-
-      <button
-        class="nav ${tab==="chat"?"active":""}"
-        onclick="go('chat')"
-      >
-        <span class=ni>▣</span>
-        <span class=nl>Chat</span>
-      </button>
-
-      <button
-        class="nav ${tab==="profile"?"active":""}"
-        onclick="go('profile')"
-      >
-        <span class=ni>●</span>
-        <span class=nl>Profile</span>
-      </button>
-
-    </nav>
-
-  </div>`;
+${
+tab==="discover"
+?discoverView()
+:tab==="matches"
+?matchesView()
+:tab==="chat"
+?chatView()
+:profileView()
 }
 
-function discover(){
+</section>
 
-  let list=people.filter(p=>
-    !query||
-    [
-      p.name,
-      p.city,
-      p.bio,
-      p.relationship_goal,
-      p.sex
-    ]
-    .join(" ")
-    .toLowerCase()
-    .includes(query.toLowerCase())
-  );
+</main>
 
-  return `
+<nav class=bottom>
 
-  <div class=card>
+<button
+class="nav ${tab==="discover"?"active":""}"
+onclick="go('discover')">
 
-    <h1>Discover</h1>
+<span class=ni>♥</span>
+<span class=nl>Discover</span>
 
-    <input
-      class=search
-      placeholder="Search by name, city or bio"
-      value="${esc(query)}"
-      oninput="query=this.value;render()"
-    >
+</button>
 
-  </div>
+<button
+class="nav ${tab==="matches"?"active":""}"
+onclick="go('matches')">
 
-  ${
-    list.map(p=>`
+<span class=ni>
+♡
+${
+matches.length
+?`<span class=badge>${matches.length}</span>`
+:""
+}
+</span>
 
-      <div class=card>
+<span class=nl>Matches</span>
 
-        <div class=person>
+</button>
 
-          <img
-            class=avatar
-            src="${img(p)}"
-          >
+<button
+class="nav ${tab==="chat"?"active":""}"
+onclick="go('chat')">
 
-          <div>
+<span class=ni>▣</span>
+<span class=nl>Chat</span>
 
-            <div class=name>
-              ${esc(p.name)}, ${esc(p.age)}
-            </div>
+</button>
 
-            <div class=meta>
-              📍 ${esc(p.city||"Offa")}
-            </div>
+<button
+class="nav ${tab==="profile"?"active":""}"
+onclick="go('profile')">
 
-            ${
-              p.relationship_goal
-              ?`<span class=goal>
-                  ${esc(p.relationship_goal)}
-                </span>`
-              :""
-            }
+<span class=ni>●</span>
+<span class=nl>Profile</span>
 
-          </div>
+</button>
 
-        </div>
+</nav>
 
-        ${
-          p.bio
-          ?`<div class=bio>${esc(p.bio)}</div>`
-          :""
-        }
-
-        <div class=actions>
-
-          <button
-            class="btn ghost"
-            onclick="pass('${p.id}')"
-          >
-            ✕ Pass
-          </button>
-
-          <button
-            class="btn green"
-            onclick="like('${p.id}')"
-          >
-            ♥ Like
-          </button>
-
-        </div>
-
-      </div>
-
-    `).join("")
-    ||
-    '<div class="card empty">No profiles found yet.</div>'
-  }`;
+</div>
+`;
 }
 
-async function like(id){
+function discoverView(){
 
-  let r=await supabase
-    .from("likes")
-    .insert({
-      from_user:session.user.id,
-      to_user:id
-    });
+let list=people.filter(p=>{
 
-  if(
-    r.error &&
-    !r.error.message.toLowerCase().includes("duplicate")
-  )
-    return alert(r.error.message);
+const q=
+!query ||
+[
+p.name,
+p.city,
+p.bio,
+p.relationship_goal,
+p.sex
+]
+.join(" ")
+.toLowerCase()
+.includes(
+query.toLowerCase()
+);
 
-  people=people.filter(p=>p.id!==id);
+const g=
+!goalFilter ||
+p.relationship_goal===goalFilter;
 
-  await loadMatches();
+const s=
+!sexFilter ||
+p.sex===sexFilter;
 
-  render();
+const a=
+Number(p.age)>=minAge &&
+Number(p.age)<=maxAge;
+
+return q&&g&&s&&a;
+});
+
+return `
+
+<div class=card>
+
+<h1>Discover</h1>
+
+<input
+class=search
+placeholder="Search by name, city or bio"
+value="${esc(query)}"
+oninput="query=this.value;render()"
+>
+
+<div class=filters>
+
+<select
+class=select
+onchange="goalFilter=this.value;render()">
+
+<option value="">
+All goals
+</option>
+
+<option
+${goalFilter==="Single"?"selected":""}>
+Single
+</option>
+
+<option
+${goalFilter==="Dating"?"selected":""}>
+Dating
+</option>
+
+<option
+${goalFilter==="Relationship"?"selected":""}>
+Relationship
+</option>
+
+<option
+${goalFilter==="Friendship"?"selected":""}>
+Friendship
+</option>
+
+</select>
+
+<select
+class=select
+onchange="sexFilter=this.value;render()">
+
+<option value="">
+All sexes
+</option>
+
+<option
+${sexFilter==="Male"?"selected":""}>
+Male
+</option>
+
+<option
+${sexFilter==="Female"?"selected":""}>
+Female
+</option>
+
+</select>
+
+</div>
+
+<div class=filters>
+
+<input
+class=input
+type=number
+min=18
+max=100
+value="${minAge}"
+onchange="minAge=Number(this.value)||18;render()"
+placeholder="Min age">
+
+<input
+class=input
+type=number
+min=18
+max=100
+value="${maxAge}"
+onchange="maxAge=Number(this.value)||100;render()"
+placeholder="Max age">
+
+</div>
+
+</div>
+
+${
+list.map(profileCard).join("")
+||
+'<div class="card empty">No profiles match your filters.</div>'
 }
 
-function pass(id){
-
-  people=people.filter(p=>p.id!==id);
-
-  render();
+`;
 }
 
-function matchView(){
+function profileCard(p){
 
-  return `
+return `
 
-  <div class=card>
+<div class=card>
 
-    <h1>Your Matches</h1>
+<div class=person>
 
-    <div class=meta>
-      People who matched with you.
-    </div>
+<img
+class=avatar
+src="${avatar(p)}">
 
-  </div>
+<div style="flex:1">
 
-  ${
-    matches.map(m=>`
+<div class=name>
+${esc(p.name)}, ${esc(p.age)}
+</div>
 
-      <div
-        class=chatrow
-        onclick="openChat(${m.id})"
-      >
+<div class=meta>
+📍 ${esc(p.city||"Offa")}
+</div>
 
-        <img
-          class=avatar
-          src="${img(m.person)}"
-        >
+<div class=online>
+${isOnline(p)?"● Online":"Recently active"}
+</div>
 
-        <div style="flex:1">
+${
+p.relationship_goal
+?`<span class=goal>
+${esc(p.relationship_goal)}
+</span>`
+:""
+}
 
-          <div class=name>
-            ${esc(m.person?.name)}
-          </div>
+</div>
 
-          <div class=meta>
-            ${esc(m.person?.city||"Offa")}
-          </div>
+</div>
 
-        </div>
+${
+p.bio
+?`<div class=bio>${esc(p.bio)}</div>`
+:""
+}
 
-        <b style="color:var(--blue)">
-          Chat ›
-        </b>
+${
+p.sex
+?`<div class=pillrow>
+<span class=pill>${esc(p.sex)}</span>
+</div>`
+:""
+}
 
-      </div>
+<div class=actions>
 
-    `).join("")
-    ||
-    '<div class="card empty">No matches yet.</div>'
-  }`;
+<button
+class="btn danger"
+onclick="blockUser('${p.id}')">
+Block
+</button>
+
+<button
+class="btn ghost"
+onclick="passProfile('${p.id}')">
+✕ Pass
+</button>
+
+<button
+class="btn green"
+onclick="likeProfile('${p.id}')">
+♥ Like
+</button>
+
+</div>
+
+</div>
+
+`;
+}
+
+async function likeProfile(id){
+
+const r=
+await sb.from("likes")
+.insert({
+  from_user:session.user.id,
+  to_user:id
+});
+
+if(
+r.error &&
+!r.error.message
+.toLowerCase()
+.includes("duplicate")
+)
+return toast(err(r.error));
+
+people=
+people.filter(
+p=>p.id!==id
+);
+
+await loadMatches();
+
+toast("Like sent ♥");
+
+render();
+}
+
+function passProfile(id){
+
+people=
+people.filter(
+p=>p.id!==id
+);
+
+render();
+}
+
+function matchesView(){
+
+return `
+
+<div class=card>
+
+<h1>Your Matches</h1>
+
+<div class=meta>
+Start a conversation with someone you matched with.
+</div>
+
+</div>
+
+${
+matches.map(m=>`
+
+<div
+class=chatrow
+onclick="openChat(${m.id})">
+
+<img
+class=avatar
+src="${avatar(m.person)}">
+
+<div style="flex:1">
+
+<div class=name>
+${esc(m.person?.name||"Match")}
+</div>
+
+<div class=meta>
+${esc(m.person?.city||"Offa")}
+</div>
+
+<div class=online>
+${isOnline(m.person)
+?"● Online"
+:"Recently active"}
+</div>
+
+</div>
+
+<b style="color:var(--blue)">
+Chat ›
+</b>
+
+</div>
+
+`).join("")
+
+||
+
+'<div class="card empty">No matches yet. Keep discovering.</div>'
+
+}
+
+`;
 }
 
 function chatView(){
 
-  if(!selected)
+if(!selected)
 
-    return `
+return `
 
-    <div class=card>
+<div class=card>
 
-      <h1>Chat</h1>
+<h1>Chat</h1>
 
-      <div class=meta>
-        Choose a match to start chatting.
-      </div>
+<div class=meta>
+Choose a match to start chatting.
+</div>
 
-    </div>
+</div>
 
-    ${
-      matches.map(m=>`
+${
+matches.map(m=>`
 
-        <div
-          class=chatrow
-          onclick="openChat(${m.id})"
-        >
+<div
+class=chatrow
+onclick="openChat(${m.id})">
 
-          <img
-            class=avatar
-            src="${img(m.person)}"
-          >
+<img
+class=avatar
+src="${avatar(m.person)}">
 
-          <div>
+<div>
 
-            <div class=name>
-              ${esc(m.person?.name)}
-            </div>
+<div class=name>
+${esc(m.person?.name)}
+</div>
 
-            <div class=meta>
-              Open conversation ›
-            </div>
+<div class=online>
+${isOnline(m.person)
+?"● Online"
+:"Recently active"}
+</div>
 
-          </div>
+</div>
 
-        </div>
+</div>
 
-      `).join("")
-      ||
-      '<div class="card empty">No matches yet.</div>'
-    }`;
+`).join("")
 
-  return `
+||
 
-  <div class=card>
+'<div class="card empty">No matches yet.</div>'
 
-    <div class=person>
+}`;
 
-      <button
-        class=close
-        onclick="selected=null;render()"
-      >
-        ‹
-      </button>
+const p=selected.person;
 
-      <img
-        class=avatar
-        src="${img(selected.person)}"
-      >
+return `
 
-      <div>
+<div class=card>
 
-        <div class=name>
-          ${esc(selected.person?.name)}
-        </div>
+<div class=person>
 
-        <div class=meta>
-          Offa
-        </div>
+<button
+class=close
+onclick="selected=null;render()">
+‹
+</button>
 
-      </div>
+<img
+class=avatar
+src="${avatar(p)}">
 
-    </div>
+<div style="flex:1">
 
-    <div
-      id=messages
-      class=messages
-    >
+<div class=name>
+${esc(p?.name||"Match")}
+</div>
 
-      ${
-        msgs.map(m=>`
+<div class=online>
+${isOnline(p)
+?"● Online"
+:"Recently active"}
+</div>
 
-          <div
-            class="bubble ${
-              m.sender_id===session.user.id
-              ?"mine"
-              :"theirs"
-            }"
-          >
+</div>
 
-            ${
-              m.attachment_url
-              ?
-                (
-                  (m.attachment_type||"").startsWith("image/")
-                  ?
-                  `<img
-                    class=photo
-                    src="${esc(m.attachment_url)}"
-                  >`
-                  :
-                  `<a
-                    href="${esc(m.attachment_url)}"
-                    target=_blank
-                    rel=noopener
-                    style="color:inherit;font-weight:900"
-                  >
-                    📎 ${esc(m.attachment_name||"Attachment")}
-                  </a>`
-                )
-              :""
-            }
+<button
+class=close
+onclick="reportUser('${p.id}')">
+⚑
+</button>
 
-            ${esc(m.message||"")}
+</div>
 
-            <div class=small>
-              ${
-                new Date(m.created_at)
-                .toLocaleTimeString(
-                  [],
-                  {
-                    hour:"numeric",
-                    minute:"2-digit"
-                  }
-                )
-              }
-            </div>
+<div id=typing class=typing></div>
 
-          </div>
+<div
+id=messages
+class=messages>
 
-        `).join("")
-        ||
-        '<div class=empty>Say hello 👋</div>'
-      }
+${
+messages.map(messageBubble).join("")
 
-    </div>
+||
 
-    <div class=composer>
+'<div class=empty>Say hello 👋</div>'
+}
 
-      <button
-        class=attach
-        onclick="file.click()"
-      >
-        ＋
-      </button>
+</div>
 
-      <input
-        id=chatInput
-        class=input
-        placeholder="Write a message..."
-        onkeydown="if(event.key==='Enter')send()"
-      >
+<div class=meta>
 
-      <input
-        id=file
-        type=file
-        style="display:none"
-        onchange="picked(this)"
-      >
+${
+file
+?
+`Selected: ${esc(file.name)}
+·
+<button
+class=link
+onclick="clearFile()">
+remove
+</button>`
+:
+"Photos/files up to 15 MB."
+}
 
-      <button
-        class=send
-        onclick=send()
-      >
-        ➤
-      </button>
+</div>
 
-    </div>
+<div class=composer>
 
-    ${
-      file
-      ?`<div class=meta>
-          Selected: ${esc(file.name)}
-        </div>`
-      :""
-    }
+<button
+class=attach
+onclick="$('chatFile').click()">
+＋
+</button>
 
-  </div>`;
+<input
+id=chatInput
+class=input
+placeholder="Write a message..."
+oninput="sendTyping()"
+onkeydown="if(event.key==='Enter')sendMessage()">
+
+<input
+id=chatFile
+type=file
+style="display:none"
+onchange="filePicked(this)">
+
+<button
+class=send
+onclick=sendMessage()>
+➤
+</button>
+
+</div>
+
+<div class=actions>
+
+<button
+class="btn danger"
+onclick="blockUser('${p.id}')">
+
+Block ${esc(p.name)}
+
+</button>
+
+</div>
+
+</div>
+
+`;
+}
+
+function messageBubble(m){
+
+let body=esc(m.message||"");
+
+if(m.attachment_url){
+
+if(
+(m.attachment_type||"")
+.startsWith("image/")
+){
+
+body=
+`
+<img
+class=photo
+src="${esc(m.attachment_url)}"
+alt="${esc(m.attachment_name||"photo")}">
+
+${body}
+`;
+
+}else{
+
+body=
+`
+<a
+href="${esc(m.attachment_url)}"
+target=_blank
+rel=noopener
+style="color:inherit;font-weight:900;display:block">
+
+📎 ${esc(m.attachment_name||"Attachment")}
+
+</a>
+
+${body}
+`;
+
+}
+
+}
+
+return `
+
+<div
+class="bubble ${
+m.sender_id===session.user.id
+?"mine"
+:"theirs"
+}">
+
+${body}
+
+<div class=small>
+
+${
+new Date(
+m.created_at
+).toLocaleTimeString(
+[],
+{
+hour:"numeric",
+minute:"2-digit"
+}
+)
+}
+
+${
+m.sender_id===session.user.id
+?
+(m.read_at
+?" · Read"
+:" · Sent")
+:""
+}
+
+</div>
+
+</div>
+
+`;
 }
 
 async function openChat(id){
 
-  selected=matches.find(m=>m.id===id);
+selected=
+matches.find(
+m=>m.id===id
+)||null;
 
-  msgs=[];
+messages=[];
 
-  tab="chat";
+tab="chat";
 
-  render();
+render();
 
-  let r=await supabase
-    .from("messages")
-    .select("*")
-    .eq("match_id",id)
-    .order("created_at",{ascending:true});
-
-  msgs=r.data||[];
-
-  render();
-
-  setTimeout(()=>{
-
-    let x=$("messages");
-
-    if(x)
-      x.scrollTop=x.scrollHeight;
-
-  },50);
+await loadMessages();
 }
 
-function picked(x){
+function filePicked(input){
 
-  file=x.files?.[0]||null;
+file=
+input.files?.[0]||null;
 
-  render();
+render();
 }
 
-async function send(){
+function clearFile(){
 
-  if(!selected)
-    return;
+file=null;
 
-  let text=($("chatInput")?.value||"").trim();
+render();
+}
 
-  if(!text&&!file)
-    return;
+async function sendMessage(){
 
-  let a={};
+if(!selected)return;
 
-  try{
+const input=$("chatInput");
 
-    if(file){
+const text=
+(input?.value||"").trim();
 
-      if(file.size>15*1024*1024)
-        throw Error("File must be 15 MB or smaller.");
+if(!text&&!file)return;
 
-      let safe=file.name.replace(
-        /[^a-zA-Z0-9._-]/g,
-        "_"
-      );
+let attachment={};
 
-      let path=
-        `${session.user.id}/${selected.id}/${Date.now()}-${safe}`;
+try{
 
-      let u=await supabase
-        .storage
-        .from("chat-attachments")
-        .upload(
-          path,
-          file,
-          {
-            contentType:
-              file.type||
-              "application/octet-stream"
-          }
-        );
+if(file){
 
-      if(u.error)
-        throw u.error;
+if(file.size>15*1024*1024)
+throw Error(
+"File must be 15 MB or smaller."
+);
 
-      let pub=supabase
-        .storage
-        .from("chat-attachments")
-        .getPublicUrl(path);
+const safe=
+file.name.replace(
+/[^a-zA-Z0-9._-]/g,
+"_"
+);
 
-      a={
-        attachment_url:pub.data.publicUrl,
-        attachment_name:safe,
-        attachment_type:
-          file.type||
-          "application/octet-stream"
-      };
-    }
+const path=
+`${session.user.id}/${selected.id}/${Date.now()}-${safe}`;
 
-    let r=await supabase
-      .from("messages")
-      .insert({
-        match_id:selected.id,
-        sender_id:session.user.id,
-        message:text,
-        ...a
-      })
-      .select()
-      .single();
+const u=
+await sb.storage
+.from("chat-attachments")
+.upload(
+path,
+file,
+{
+contentType:
+file.type||
+"application/octet-stream",
+upsert:false
+}
+);
 
-    if(r.error)
-      throw r.error;
+if(u.error)
+throw u.error;
 
-    if(!msgs.some(m=>m.id===r.data.id))
-      msgs.push(r.data);
+const pub=
+sb.storage
+.from("chat-attachments")
+.getPublicUrl(path);
 
-    file=null;
+attachment={
+attachment_url:
+pub.data.publicUrl,
 
-    render();
+attachment_name:
+safe,
 
-  }catch(e){
+attachment_type:
+file.type||
+"application/octet-stream"
+};
 
-    alert(e.message);
+}
 
-  }
+const r=
+await sb.from("messages")
+.insert({
+  match_id:selected.id,
+  sender_id:session.user.id,
+  message:text,
+  ...attachment
+})
+.select()
+.single();
+
+if(r.error)
+throw r.error;
+
+if(
+!messages.some(
+m=>m.id===r.data.id
+)
+)
+messages.push(r.data);
+
+file=null;
+
+render();
+
+scrollMessages();
+
+}catch(e){
+
+toast(
+"Send failed: "+err(e)
+);
+
+}
+
+}
+
+function sendTyping(){
+
+clearTimeout(typingTimer);
+
+if(!selected)return;
+
+localStorage.setItem(
+"offa-typing-"+selected.id,
+Date.now()
+);
+
+typingTimer=
+setTimeout(
+()=>{
+localStorage.removeItem(
+"offa-typing-"+selected.id
+);
+},
+1800
+);
 }
 
 function profileView(){
 
-  return `
+return `
 
-  <div
-    class=card
-    style="text-align:center"
-  >
+<div class=profile-cover>
 
-    <img
-      class="avatar big"
-      src="${img(me)}"
-    >
+<div class=avatar-wrap>
 
-    <h1 style="margin:12px 0 3px">
-      ${esc(me.name)}
-    </h1>
+<img
+class="avatar big"
+src="${avatar(me)}">
 
-    <div class=meta>
-      ${esc(me.age)} · ${esc(me.city||"Offa")}
-    </div>
+<button
+class=camera
+onclick="$('avatarFile').click()">
+✎
+</button>
 
-    ${
-      me.bio
-      ?`<p>${esc(me.bio)}</p>`
-      :""
-    }
+</div>
 
-    ${
-      me.relationship_goal
-      ?`<span class=goal>
-          ${esc(me.relationship_goal)}
-        </span>`
-      :""
-    }
+<input
+id=avatarFile
+type=file
+accept="image/*"
+style="display:none"
+onchange="uploadAvatar(this)">
 
-    <div
-      class=actions
-      style="justify-content:center"
-    >
+<h1
+style="margin:12px 0 3px;color:#fff">
 
-      <button
-        class="btn blue"
-        onclick=edit()
-      >
-        Edit profile
-      </button>
+${esc(me.name)}
 
-      <button
-        class="btn ghost"
-        onclick=logout()
-      >
-        Log out
-      </button>
+</h1>
 
-    </div>
+<div style="opacity:.85">
 
-  </div>
+${esc(me.age)}
+·
+${esc(me.city||"Offa")}
 
-  <div class=card>
+</div>
 
-    <h2>Offa Connect</h2>
+</div>
 
-    <div class=meta>
-      Meet. Connect. Belong.
-    </div>
+<div class=card>
 
-    <p>
-      For people from Offa and people connected to Offa.
-    </p>
+<h2>My profile</h2>
 
-  </div>`;
+${
+me.bio
+?`<p>${esc(me.bio)}</p>`
+:
+`<p class=meta>
+Add a bio so people can get to know you.
+</p>`
 }
 
-function edit(){
-
-  root.insertAdjacentHTML(
-    "beforeend",
-
-    `<div
-      class="modal show"
-      id=modal
-    >
-
-      <div class=modalbox>
-
-        <div class=modalhead>
-
-          <h2>Edit profile</h2>
-
-          <button
-            class=close
-            onclick="modal.remove()"
-          >
-            ×
-          </button>
-
-        </div>
-
-        <div class=stack>
-
-          <input
-            id=en
-            class=input
-            value="${esc(me.name)}"
-          >
-
-          <input
-            id=ea
-            class=input
-            type=number
-            min=18
-            value="${me.age}"
-          >
-
-          <input
-            id=ec
-            class=input
-            value="${esc(me.city||"Offa")}"
-          >
-
-          <select id=eg class=select>
-
-            <option value="">
-              Relationship goal
-            </option>
-
-            <option
-              ${me.relationship_goal==="Single"?"selected":""}
-            >
-              Single
-            </option>
-
-            <option
-              ${me.relationship_goal==="Dating"?"selected":""}
-            >
-              Dating
-            </option>
-
-            <option
-              ${me.relationship_goal==="Relationship"?"selected":""}
-            >
-              Relationship
-            </option>
-
-            <option
-              ${me.relationship_goal==="Friendship"?"selected":""}
-            >
-              Friendship
-            </option>
-
-          </select>
-
-          <textarea
-            id=eb
-            class=textarea
-          >${esc(me.bio||"")}</textarea>
-
-          <button
-            class="btn green"
-            onclick=save()
-          >
-            Save profile
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>`
-  );
+${
+me.relationship_goal
+?
+`<span class=goal>
+${esc(me.relationship_goal)}
+</span>`
+:""
 }
 
-async function save(){
+<div class=actions>
 
-  let r=await supabase
-    .from("profiles")
-    .update({
-      name:en.value.trim(),
-      age:+ea.value,
-      city:ec.value.trim()||"Offa",
-      relationship_goal:eg.value||null,
-      bio:eb.value.trim()
-    })
-    .eq("id",session.user.id)
-    .select()
-    .single();
+<button
+class="btn blue"
+onclick=editProfile()>
+Edit profile
+</button>
 
-  if(r.error)
-    return alert(r.error.message);
+<button
+class="btn ghost"
+onclick=logout()>
+Log out
+</button>
 
-  me=r.data;
+</div>
 
-  modal.remove();
+</div>
 
-  render();
+<div class=card>
+
+<h2>Safety</h2>
+
+<p class=meta>
+Block or report anyone who makes you uncomfortable.
+You control who you interact with.
+</p>
+
+</div>
+
+`;
 }
 
-async function go(x){
+async function uploadAvatar(input){
 
-  tab=x;
+const f=input.files?.[0];
 
-  if(x!=="chat")
-    selected=null;
+if(!f)return;
 
-  if(x==="matches"||x==="chat")
-    await loadMatches();
+if(f.size>8*1024*1024)
+return toast(
+"Profile photo must be 8 MB or smaller."
+);
 
-  render();
+try{
+
+const ext=
+(
+f.name.split(".").pop()||
+"jpg"
+)
+.replace(
+/[^a-z0-9]/gi,
+""
+);
+
+const path=
+`${session.user.id}/avatar-${Date.now()}.${ext}`;
+
+const u=
+await sb.storage
+.from("avatars")
+.upload(
+path,
+f,
+{
+contentType:
+f.type||"image/jpeg",
+upsert:false
+}
+);
+
+if(u.error)
+throw u.error;
+
+const pub=
+sb.storage
+.from("avatars")
+.getPublicUrl(path);
+
+const r=
+await sb.from("profiles")
+.update({
+  avatar_url:
+  pub.data.publicUrl
+})
+.eq(
+"id",
+session.user.id
+)
+.select()
+.single();
+
+if(r.error)
+throw r.error;
+
+me=r.data;
+
+await loadPeople();
+
+toast(
+"Profile photo updated."
+);
+
+render();
+
+}catch(e){
+
+toast(
+"Photo upload failed: "+err(e)
+);
+
+}
+}
+
+async function editProfile(){
+
+root.insertAdjacentHTML(
+"beforeend",
+
+`
+
+<div
+class="modal show"
+id=editModal>
+
+<div class=modalbox>
+
+<div class=modalhead>
+
+<h2>Edit profile</h2>
+
+<button
+class=close
+onclick="editModal.remove()">
+×
+</button>
+
+</div>
+
+<div class=stack>
+
+<label>Name</label>
+
+<input
+id=eName
+class=input
+value="${esc(me.name)}">
+
+<label>Age</label>
+
+<input
+id=eAge
+class=input
+type=number
+min=18
+value="${me.age}">
+
+<label>City</label>
+
+<input
+id=eCity
+class=input
+value="${esc(me.city||"Offa")}">
+
+<label>Sex</label>
+
+<select
+id=eSex
+class=select>
+
+<option value="">
+Prefer not to say
+</option>
+
+<option
+${me.sex==="Male"?"selected":""}>
+Male
+</option>
+
+<option
+${me.sex==="Female"?"selected":""}>
+Female
+</option>
+
+</select>
+
+<label>
+Relationship goal
+</label>
+
+<select
+id=eGoal
+class=select>
+
+<option value="">
+Choose
+</option>
+
+<option
+${me.relationship_goal==="Single"?"selected":""}>
+Single
+</option>
+
+<option
+${me.relationship_goal==="Dating"?"selected":""}>
+Dating
+</option>
+
+<option
+${me.relationship_goal==="Relationship"?"selected":""}>
+Relationship
+</option>
+
+<option
+${me.relationship_goal==="Friendship"?"selected":""}>
+Friendship
+</option>
+
+</select>
+
+<label>Bio</label>
+
+<textarea
+id=eBio
+class=textarea>
+${esc(me.bio||"")}
+</textarea>
+
+<button
+class="btn green"
+onclick=saveProfile()>
+Save profile
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`
+);
+}
+
+async function saveProfile(){
+
+const payload={
+
+name:$("eName").value.trim(),
+
+age:Number(
+$("eAge").value
+),
+
+city:
+$("eCity").value.trim()||
+"Offa",
+
+sex:
+$("eSex").value||
+null,
+
+relationship_goal:
+$("eGoal").value||
+null,
+
+bio:
+$("eBio").value.trim()
+
+};
+
+if(
+!payload.name||
+payload.age<18
+)
+return toast(
+"Name and age 18+ are required."
+);
+
+const r=
+await sb.from("profiles")
+.update(payload)
+.eq(
+"id",
+session.user.id
+)
+.select()
+.single();
+
+if(r.error)
+return toast(
+err(r.error)
+);
+
+me=r.data;
+
+$("editModal").remove();
+
+await loadPeople();
+
+render();
+
+toast(
+"Profile saved."
+);
+}
+
+async function blockUser(id){
+
+if(
+!confirm(
+"Block this person? They will no longer appear in your discovery or chat list."
+)
+)
+return;
+
+const r=
+await sb.from("blocks")
+.insert({
+  blocker_id:session.user.id,
+  blocked_id:id
+});
+
+if(
+r.error &&
+!r.error.message
+.toLowerCase()
+.includes("duplicate")
+)
+return toast(
+err(r.error)
+);
+
+people=
+people.filter(
+p=>p.id!==id
+);
+
+matches=
+matches.filter(
+m=>m.person?.id!==id
+);
+
+if(
+selected?.person?.id===id
+)
+selected=null;
+
+toast("Person blocked.");
+
+render();
+}
+
+async function reportUser(id){
+
+const reason=
+prompt(
+"Reason for report?",
+"Inappropriate behavior"
+);
+
+if(!reason)return;
+
+const details=
+prompt(
+"Additional details (optional):",
+""
+);
+
+const r=
+await sb.from("reports")
+.insert({
+  reporter_id:session.user.id,
+  reported_id:id,
+  reason,
+  details
+});
+
+if(r.error)
+return toast(
+err(r.error)
+);
+
+toast(
+"Report submitted."
+);
+}
+
+async function go(t){
+
+tab=t;
+
+if(t!=="chat")
+selected=null;
+
+if(t==="discover")
+await loadPeople();
+
+if(
+t==="matches"||
+t==="chat"
+)
+await loadMatches();
+
+render();
 }
 
 async function logout(){
 
-  await supabase.auth.signOut();
+await sb.auth.signOut();
 
-  session=null;
-  me=null;
-  people=[];
-  matches=[];
+session=null;
+me=null;
+people=[];
+matches=[];
+selected=null;
 
-  auth();
+auth();
 }
 
-supabase.auth.getSession().then(async r=>{
+sb.auth.getSession()
+.then(async r=>{
 
-  session=r.data.session;
+session=
+r.data.session;
 
-  if(session){
+if(session){
 
-    try{
+try{
 
-      await boot();
+await boot();
 
-    }catch(e){
+}catch(e){
 
-      auth(false,e.message);
+auth(
+false,
+err(e)
+);
 
-    }
+}
 
-  }else{
+}else{
 
-    auth();
+auth();
 
-  }
+}
 
 });
 
