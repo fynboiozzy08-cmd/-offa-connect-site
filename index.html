@@ -28,7 +28,8 @@
   box-sizing:border-box;
 }
 
-html,body{
+html,
+body{
   margin:0;
   padding:0;
   min-height:100%;
@@ -66,6 +67,10 @@ button:active{
 #root{
   min-height:100vh;
 }
+
+/* =========================
+   APP
+========================= */
 
 .app{
   max-width:1000px;
@@ -107,6 +112,10 @@ button:active{
   padding:20px;
 }
 
+/* =========================
+   CARDS
+========================= */
+
 .card{
   margin-bottom:15px;
   padding:20px;
@@ -129,6 +138,10 @@ h2{
   color:var(--muted);
   font-weight:700;
 }
+
+/* =========================
+   INPUTS
+========================= */
 
 .input,
 .select,
@@ -166,6 +179,10 @@ h2{
   gap:10px;
   margin-top:10px;
 }
+
+/* =========================
+   BUTTONS
+========================= */
 
 .btn{
   padding:13px 17px;
@@ -205,6 +222,10 @@ h2{
   gap:9px;
   margin-top:15px;
 }
+
+/* =========================
+   PEOPLE
+========================= */
 
 .person{
   display:flex;
@@ -263,48 +284,25 @@ h2{
   font-weight:800;
 }
 
-.bottom{
-  position:fixed;
-  z-index:20;
-  bottom:0;
-  left:50%;
-  width:min(1000px,100%);
-  padding:9px 8px calc(9px + env(safe-area-inset-bottom));
-  transform:translateX(-50%);
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  border-top:1px solid var(--line);
-  background:rgba(255,255,255,.97);
+.pillrow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:8px;
 }
 
-.nav{
-  padding:5px;
-  color:var(--muted);
-  background:none;
-  font-weight:900;
-}
-
-.nav.active{
-  color:var(--blue);
-}
-
-.ni{
-  display:block;
-  font-size:21px;
-}
-
-.nl{
+.pill{
+  padding:8px 11px;
+  border-radius:99px;
+  color:var(--ink);
+  background:#EDF2F5;
   font-size:12px;
+  font-weight:800;
 }
 
-.badge{
-  display:inline-block;
-  padding:2px 6px;
-  border-radius:20px;
-  color:white;
-  background:var(--gold);
-  font-size:10px;
-}
+/* =========================
+   AUTH
+========================= */
 
 .auth{
   min-height:100vh;
@@ -322,19 +320,53 @@ h2{
   box-shadow:0 25px 70px rgba(0,0,0,.3);
 }
 
+/* PEACOCK LOGO */
+
 .authlogo{
-  font-size:42px;
-  font-weight:950;
+  text-align:center;
+  margin-bottom:20px;
 }
 
-.authlogo span{
+.logo-mark{
+  width:100px;
+  height:100px;
+  margin:0 auto 8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.logo-mark svg{
+  width:100%;
+  height:100%;
+  overflow:visible;
+  filter:drop-shadow(0 7px 10px rgba(7,26,43,.16));
+}
+
+.auth-title{
+  font-size:38px;
+  line-height:1;
+  font-weight:950;
+  color:var(--navy);
+}
+
+.auth-title span{
   color:var(--gold);
+}
+
+.logo-by{
+  margin-top:7px;
+  color:var(--teal);
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:1.5px;
 }
 
 .sub{
   margin:8px 0 23px;
   color:var(--muted);
-  font-size:18px;
+  font-size:17px;
+  text-align:center;
 }
 
 .error{
@@ -342,6 +374,7 @@ h2{
   margin-bottom:5px;
   color:var(--red);
   font-weight:800;
+  text-align:center;
 }
 
 .link{
@@ -350,6 +383,10 @@ h2{
   background:none;
   font-weight:900;
 }
+
+/* =========================
+   CHAT
+========================= */
 
 .chatrow{
   display:flex;
@@ -406,8 +443,10 @@ h2{
 .photo{
   display:block;
   max-width:240px;
+  max-height:300px;
   margin-bottom:5px;
   border-radius:13px;
+  object-fit:cover;
 }
 
 .composer{
@@ -447,13 +486,21 @@ h2{
   font-weight:800;
 }
 
+/* =========================
+   PROFILE
+========================= */
+
 .profile-cover{
   margin-bottom:15px;
   padding:22px;
   border-radius:22px;
   color:white;
   text-align:center;
-  background:linear-gradient(135deg,var(--navy),var(--teal));
+  background:linear-gradient(
+    135deg,
+    var(--navy),
+    var(--teal)
+  );
 }
 
 .avatar-wrap{
@@ -472,21 +519,9 @@ h2{
   background:var(--gold);
 }
 
-.pillrow{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:8px;
-}
-
-.pill{
-  padding:8px 11px;
-  border-radius:99px;
-  color:var(--ink);
-  background:#EDF2F5;
-  font-size:12px;
-  font-weight:800;
-}
+/* =========================
+   MODAL
+========================= */
 
 .modal{
   position:fixed;
@@ -527,6 +562,10 @@ h2{
   font-size:22px;
 }
 
+/* =========================
+   TOAST
+========================= */
+
 .toast{
   position:fixed;
   z-index:100;
@@ -541,6 +580,10 @@ h2{
   background:var(--navy);
   font-weight:800;
 }
+
+/* =========================
+   LOADING / ERROR
+========================= */
 
 .loading{
   min-height:100vh;
@@ -581,6 +624,57 @@ h2{
   word-break:break-word;
 }
 
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom{
+  position:fixed;
+  z-index:20;
+  bottom:0;
+  left:50%;
+  width:min(1000px,100%);
+  padding:9px 8px calc(9px + env(safe-area-inset-bottom));
+  transform:translateX(-50%);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--line);
+  background:rgba(255,255,255,.97);
+}
+
+.nav{
+  padding:5px;
+  color:var(--muted);
+  background:none;
+  font-weight:900;
+}
+
+.nav.active{
+  color:var(--blue);
+}
+
+.ni{
+  display:block;
+  font-size:21px;
+}
+
+.nl{
+  font-size:12px;
+}
+
+.badge{
+  display:inline-block;
+  padding:2px 6px;
+  border-radius:20px;
+  color:white;
+  background:var(--gold);
+  font-size:10px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:600px){
 
   .filters{
@@ -608,8 +702,13 @@ h2{
     font-size:29px;
   }
 
-  .authlogo{
-    font-size:36px;
+  .auth-title{
+    font-size:34px;
+  }
+
+  .logo-mark{
+    width:90px;
+    height:90px;
   }
 }
 </style>
@@ -618,17 +717,29 @@ h2{
 <body>
 
 <div id="root">
+
   <div class="loading">
+
     <div class="loadingbox">
+
       <div class="loadinglogo">
         Offa <span>Connect</span>
       </div>
-      <p>Loading your community...</p>
+
+      <p>
+        Loading your community...
+      </p>
+
     </div>
+
   </div>
+
 </div>
 
-<div id="toast" class="toast"></div>
+<div
+  id="toast"
+  class="toast">
+</div>
 
 <script>
 
@@ -648,19 +759,21 @@ const root =
 const toastBox =
   document.getElementById("toast");
 
-
-/* =========================================================
-   SUPABASE STARTUP
-   ========================================================= */
-
 let sb = null;
 
-try {
 
-  if (!window.supabase) {
+/* =========================================================
+   SUPABASE INITIALIZATION
+========================================================= */
+
+try{
+
+  if(!window.supabase){
+
     throw new Error(
-      "Supabase library did not load. Check your internet connection and try again."
+      "Supabase library did not load. Please check your internet connection."
     );
+
   }
 
   sb =
@@ -669,16 +782,16 @@ try {
       SUPABASE_KEY
     );
 
-} catch (e) {
+}catch(error){
 
-  showFatalError(e);
+  showFatalError(error);
 
 }
 
 
 /* =========================================================
    APP STATE
-   ========================================================= */
+========================================================= */
 
 let session = null;
 let me = null;
@@ -700,6 +813,7 @@ let maxAge = 100;
 
 let typingTimer = null;
 let presenceTimer = null;
+
 let messageChannel = null;
 
 let file = null;
@@ -707,7 +821,7 @@ let file = null;
 
 /* =========================================================
    HELPERS
-   ========================================================= */
+========================================================= */
 
 function esc(value){
 
@@ -725,15 +839,63 @@ function esc(value){
         };
 
         return map[char];
+
       }
     );
+
 }
 
 
+function errorMessage(error){
+
+  return (
+    error?.message ||
+    error?.error_description ||
+    "Something went wrong."
+  );
+
+}
+
+
+function toast(message){
+
+  toastBox.textContent =
+    message;
+
+  toastBox.style.display =
+    "block";
+
+  clearTimeout(
+    window.offaToastTimer
+  );
+
+  window.offaToastTimer =
+    setTimeout(
+      function(){
+
+        toastBox.style.display =
+          "none";
+
+      },
+      3000
+    );
+
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
 function avatar(profile){
 
-  if(profile && profile.avatar_url){
+  if(
+    profile &&
+    profile.avatar_url
+  ){
+
     return profile.avatar_url;
+
   }
 
   return (
@@ -761,40 +923,15 @@ function avatar(profile){
       </svg>
     `)
   );
+
 }
 
 
-function errorMessage(error){
-
-  return (
-    error?.message ||
-    error?.error_description ||
-    "Something went wrong."
-  );
-}
-
-
-function toast(message){
-
-  toastBox.textContent = message;
-  toastBox.style.display = "block";
-
-  clearTimeout(window.offaToastTimer);
-
-  window.offaToastTimer =
-    setTimeout(
-      function(){
-        toastBox.style.display = "none";
-      },
-      3000
-    );
-}
-
+/* =========================================================
+   ERROR SCREEN
+========================================================= */
 
 function showFatalError(error){
-
-  const message =
-    errorMessage(error);
 
   root.innerHTML = `
 
@@ -815,7 +952,7 @@ function showFatalError(error){
         </p>
 
         <div class="debug">
-          ${esc(message)}
+          ${esc(errorMessage(error))}
         </div>
 
         <button
@@ -832,14 +969,18 @@ function showFatalError(error){
     </div>
 
   `;
+
 }
 
 
 /* =========================================================
-   AUTH
-   ========================================================= */
+   AUTH SCREEN
+========================================================= */
 
-function showAuth(signupMode = false, error = ""){
+function showAuth(
+  signupMode = false,
+  error = ""
+){
 
   root.innerHTML = `
 
@@ -848,12 +989,173 @@ function showAuth(signupMode = false, error = ""){
       <div class="authbox">
 
         <div class="authlogo">
-          Offa <span>Connect</span>
+
+          <div class="logo-mark">
+
+            <!-- INLINE PEACOCK LOGO -->
+
+            <svg
+              viewBox="0 0 120 120"
+              xmlns="http://www.w3.org/2000/svg">
+
+              <!-- Peacock feathers -->
+
+              <circle
+                cx="60"
+                cy="28"
+                r="23"
+                fill="#18A06A"/>
+
+              <circle
+                cx="36"
+                cy="38"
+                r="21"
+                fill="#0B8F87"/>
+
+              <circle
+                cx="84"
+                cy="38"
+                r="21"
+                fill="#0B5C8E"/>
+
+              <circle
+                cx="25"
+                cy="62"
+                r="19"
+                fill="#0B5C8E"/>
+
+              <circle
+                cx="95"
+                cy="62"
+                r="19"
+                fill="#18A06A"/>
+
+              <!-- Feather eyes -->
+
+              <circle
+                cx="60"
+                cy="28"
+                r="11"
+                fill="#D9A441"/>
+
+              <circle
+                cx="36"
+                cy="38"
+                r="10"
+                fill="#D9A441"/>
+
+              <circle
+                cx="84"
+                cy="38"
+                r="10"
+                fill="#D9A441"/>
+
+              <circle
+                cx="25"
+                cy="62"
+                r="9"
+                fill="#D9A441"/>
+
+              <circle
+                cx="95"
+                cy="62"
+                r="9"
+                fill="#D9A441"/>
+
+              <circle
+                cx="60"
+                cy="28"
+                r="5"
+                fill="#071A2B"/>
+
+              <circle
+                cx="36"
+                cy="38"
+                r="4"
+                fill="#071A2B"/>
+
+              <circle
+                cx="84"
+                cy="38"
+                r="4"
+                fill="#071A2B"/>
+
+              <circle
+                cx="25"
+                cy="62"
+                r="4"
+                fill="#071A2B"/>
+
+              <circle
+                cx="95"
+                cy="62"
+                r="4"
+                fill="#071A2B"/>
+
+              <!-- Peacock body -->
+
+              <ellipse
+                cx="60"
+                cy="73"
+                rx="16"
+                ry="29"
+                fill="#0B5C8E"/>
+
+              <!-- Neck -->
+
+              <circle
+                cx="60"
+                cy="56"
+                r="10"
+                fill="#0B8F87"/>
+
+              <!-- Head -->
+
+              <circle
+                cx="60"
+                cy="45"
+                r="8"
+                fill="#18A06A"/>
+
+              <!-- Beak -->
+
+              <path
+                d="M68 45 L79 49 L68 52 Z"
+                fill="#D9A441"/>
+
+              <!-- Eye -->
+
+              <circle
+                cx="63"
+                cy="43"
+                r="2"
+                fill="#071A2B"/>
+
+              <!-- Feet -->
+
+              <path
+                d="M54 99 L49 108
+                   M66 99 L71 108"
+                stroke="#D9A441"
+                stroke-width="4"
+                stroke-linecap="round"/>
+
+            </svg>
+
+          </div>
+
+          <div class="auth-title">
+            Offa <span>Connect</span>
+          </div>
+
+          <div class="logo-by">
+            BY LEO
+          </div>
+
         </div>
 
         <div class="sub">
-          <b>by Leo</b>
-          · Meet. Connect. Belong.
+          Meet. Connect. Belong.
         </div>
 
         <div class="error">
@@ -940,7 +1242,11 @@ function showAuth(signupMode = false, error = ""){
 
         </div>
 
-        <p style="text-align:center;color:var(--muted)">
+        <p
+          style="
+            text-align:center;
+            color:var(--muted);
+          ">
 
           ${
             signupMode
@@ -967,17 +1273,25 @@ function showAuth(signupMode = false, error = ""){
     </div>
 
   `;
+
 }
 
+
+/* =========================================================
+   LOGIN
+========================================================= */
 
 async function login(){
 
   const email =
-    document.getElementById("aEmail")
-      ?.value.trim();
+    document
+      .getElementById("aEmail")
+      ?.value
+      .trim();
 
   const password =
-    document.getElementById("aPass")
+    document
+      .getElementById("aPass")
       ?.value;
 
   if(!email || !password){
@@ -988,6 +1302,7 @@ async function login(){
     );
 
     return;
+
   }
 
   try{
@@ -1015,31 +1330,44 @@ async function login(){
     );
 
   }
+
 }
 
+
+/* =========================================================
+   SIGN UP
+========================================================= */
 
 async function signup(){
 
   const name =
-    document.getElementById("aName")
-      ?.value.trim();
+    document
+      .getElementById("aName")
+      ?.value
+      .trim();
 
   const age =
     Number(
-      document.getElementById("aAge")
+      document
+        .getElementById("aAge")
         ?.value
     );
 
   const sex =
-    document.getElementById("aSex")
-      ?.value || null;
+    document
+      .getElementById("aSex")
+      ?.value ||
+    null;
 
   const email =
-    document.getElementById("aEmail")
-      ?.value.trim();
+    document
+      .getElementById("aEmail")
+      ?.value
+      .trim();
 
   const password =
-    document.getElementById("aPass")
+    document
+      .getElementById("aPass")
       ?.value;
 
   if(
@@ -1057,6 +1385,7 @@ async function signup(){
     );
 
     return;
+
   }
 
   try{
@@ -1079,12 +1408,13 @@ async function signup(){
       );
 
       return;
+
     }
 
     session =
       result.data.session;
 
-    const profileResult =
+    const profile =
       await sb
         .from("profiles")
         .upsert({
@@ -1098,8 +1428,8 @@ async function signup(){
         .select()
         .single();
 
-    if(profileResult.error){
-      throw profileResult.error;
+    if(profile.error){
+      throw profile.error;
     }
 
     await boot();
@@ -1112,12 +1442,13 @@ async function signup(){
     );
 
   }
+
 }
 
 
 /* =========================================================
-   START APP
-   ========================================================= */
+   BOOT
+========================================================= */
 
 async function boot(){
 
@@ -1140,12 +1471,13 @@ async function boot(){
     showFatalError(error);
 
   }
+
 }
 
 
 /* =========================================================
-   PROFILE
-   ========================================================= */
+   LOAD MY PROFILE
+========================================================= */
 
 async function loadMe(){
 
@@ -1153,7 +1485,10 @@ async function loadMe(){
     await sb
       .from("profiles")
       .select("*")
-      .eq("id",session.user.id)
+      .eq(
+        "id",
+        session.user.id
+      )
       .maybeSingle();
 
   if(result.error){
@@ -1162,7 +1497,7 @@ async function loadMe(){
 
   if(!result.data){
 
-    const createResult =
+    const created =
       await sb
         .from("profiles")
         .insert({
@@ -1178,23 +1513,26 @@ async function loadMe(){
         .select()
         .single();
 
-    if(createResult.error){
-      throw createResult.error;
+    if(created.error){
+      throw created.error;
     }
 
-    me=createResult.data;
+    me =
+      created.data;
 
   }else{
 
-    me=result.data;
+    me =
+      result.data;
 
   }
+
 }
 
 
 /* =========================================================
-   DISCOVER
-   ========================================================= */
+   LOAD PEOPLE
+========================================================= */
 
 async function loadPeople(){
 
@@ -1202,10 +1540,15 @@ async function loadPeople(){
     await sb
       .from("profiles")
       .select("*")
-      .neq("id",session.user.id)
+      .neq(
+        "id",
+        session.user.id
+      )
       .order(
         "created_at",
-        {ascending:false}
+        {
+          ascending:false
+        }
       );
 
   if(result.error){
@@ -1214,57 +1557,68 @@ async function loadPeople(){
 
   people =
     result.data || [];
+
 }
 
+
+/* =========================================================
+   DISCOVER
+========================================================= */
 
 function discoverView(){
 
   const list =
-    people.filter(function(profile){
+    people.filter(
+      function(profile){
 
-      const searchable =
-        [
-          profile.name,
-          profile.city,
-          profile.bio,
-          profile.relationship_goal,
-          profile.sex
-        ]
-        .join(" ")
-        .toLowerCase();
+        const searchable =
+          [
+            profile.name,
+            profile.city,
+            profile.bio,
+            profile.relationship_goal,
+            profile.sex
+          ]
+          .join(" ")
+          .toLowerCase();
 
-      const searchMatch =
-        !query ||
-        searchable.includes(
-          query.toLowerCase()
+        const searchMatch =
+          !query ||
+          searchable.includes(
+            query.toLowerCase()
+          );
+
+        const goalMatch =
+          !goalFilter ||
+          profile.relationship_goal ===
+          goalFilter;
+
+        const sexMatch =
+          !sexFilter ||
+          profile.sex ===
+          sexFilter;
+
+        const ageMatch =
+          Number(profile.age) >= minAge &&
+          Number(profile.age) <= maxAge;
+
+        return (
+          searchMatch &&
+          goalMatch &&
+          sexMatch &&
+          ageMatch
         );
 
-      const goalMatch =
-        !goalFilter ||
-        profile.relationship_goal === goalFilter;
-
-      const sexMatch =
-        !sexFilter ||
-        profile.sex === sexFilter;
-
-      const ageMatch =
-        Number(profile.age) >= minAge &&
-        Number(profile.age) <= maxAge;
-
-      return (
-        searchMatch &&
-        goalMatch &&
-        sexMatch &&
-        ageMatch
-      );
-
-    });
+      }
+    );
 
   return `
 
     <div class="card">
 
-      <h1>Discover</h1>
+      <h1>
+        Discover
+      </h1>
 
       <input
         class="search"
@@ -1384,8 +1738,13 @@ function discoverView(){
     }
 
   `;
+
 }
 
+
+/* =========================================================
+   PROFILE CARD
+========================================================= */
 
 function profileCard(profile){
 
@@ -1403,20 +1762,27 @@ function profileCard(profile){
         <div style="flex:1">
 
           <div class="name">
+
             ${esc(profile.name)},
             ${esc(profile.age)}
+
           </div>
 
           <div class="meta">
-            📍 ${esc(profile.city || "Offa")}
+
+            📍
+            ${esc(profile.city || "Offa")}
+
           </div>
 
           <div class="online">
+
             ${
               isOnline(profile)
               ? "● Online"
               : "Recently active"
             }
+
           </div>
 
           ${
@@ -1424,7 +1790,9 @@ function profileCard(profile){
             ?
             `
               <span class="goal">
-                ${esc(profile.relationship_goal)}
+                ${esc(
+                  profile.relationship_goal
+                )}
               </span>
             `
             :
@@ -1452,9 +1820,11 @@ function profileCard(profile){
         ?
         `
           <div class="pillrow">
+
             <span class="pill">
               ${esc(profile.sex)}
             </span>
+
           </div>
         `
         :
@@ -1465,7 +1835,9 @@ function profileCard(profile){
 
         <button
           class="btn danger"
-          onclick="blockUser('${profile.id}')">
+          onclick="
+            blockUser('${profile.id}')
+          ">
 
           Block
 
@@ -1473,7 +1845,9 @@ function profileCard(profile){
 
         <button
           class="btn ghost"
-          onclick="passProfile('${profile.id}')">
+          onclick="
+            passProfile('${profile.id}')
+          ">
 
           ✕ Pass
 
@@ -1481,7 +1855,9 @@ function profileCard(profile){
 
         <button
           class="btn green"
-          onclick="likeProfile('${profile.id}')">
+          onclick="
+            likeProfile('${profile.id}')
+          ">
 
           ♥ Like
 
@@ -1492,8 +1868,13 @@ function profileCard(profile){
     </div>
 
   `;
+
 }
 
+
+/* =========================================================
+   LIKE
+========================================================= */
 
 async function likeProfile(id){
 
@@ -1503,7 +1884,8 @@ async function likeProfile(id){
       await sb
         .from("likes")
         .insert({
-          from_user:session.user.id,
+          from_user:
+            session.user.id,
           to_user:id
         });
 
@@ -1525,7 +1907,9 @@ async function likeProfile(id){
 
     await loadMatches();
 
-    toast("Like sent ♥");
+    toast(
+      "Like sent ♥"
+    );
 
     render();
 
@@ -1537,8 +1921,13 @@ async function likeProfile(id){
     );
 
   }
+
 }
 
+
+/* =========================================================
+   PASS
+========================================================= */
 
 function passProfile(id){
 
@@ -1548,12 +1937,13 @@ function passProfile(id){
     );
 
   render();
+
 }
 
 
 /* =========================================================
-   MATCHES
-   ========================================================= */
+   LOAD MATCHES
+========================================================= */
 
 async function loadMatches(){
 
@@ -1562,11 +1952,11 @@ async function loadMatches(){
       .from("matches")
       .select(
         `
-        id,
-        user_one,
-        user_two,
-        user_one_profile:profiles!matches_user_one_fkey(*),
-        user_two_profile:profiles!matches_user_two_fkey(*)
+          id,
+          user_one,
+          user_two,
+          user_one_profile:profiles!matches_user_one_fkey(*),
+          user_two_profile:profiles!matches_user_two_fkey(*)
         `
       )
       .or(
@@ -1574,7 +1964,9 @@ async function loadMatches(){
       )
       .order(
         "created_at",
-        {ascending:false}
+        {
+          ascending:false
+        }
       );
 
   if(result.error){
@@ -1583,20 +1975,32 @@ async function loadMatches(){
 
   matches =
     (result.data || [])
-      .map(function(match){
+      .map(
+        function(match){
 
-        return {
-          ...match,
+          return {
 
-          person:
-            match.user_one === session.user.id
-            ? match.user_two_profile
-            : match.user_one_profile
-        };
+            ...match,
 
-      });
+            person:
+              match.user_one ===
+              session.user.id
+              ?
+              match.user_two_profile
+              :
+              match.user_one_profile
+
+          };
+
+        }
+      );
+
 }
 
+
+/* =========================================================
+   MATCHES VIEW
+========================================================= */
 
 function matchesView(){
 
@@ -1604,7 +2008,9 @@ function matchesView(){
 
     <div class="card">
 
-      <h1>Your Matches</h1>
+      <h1>
+        Your Matches
+      </h1>
 
       <div class="meta">
         Start a conversation with someone you matched with.
@@ -1615,47 +2021,61 @@ function matchesView(){
     ${
       matches.length
       ?
-      matches.map(function(match){
+      matches
+        .map(
+          function(match){
 
-        return `
+            return `
 
-          <div
-            class="chatrow"
-            onclick="openChat(${match.id})">
+              <div
+                class="chatrow"
+                onclick="
+                  openChat(${match.id})
+                ">
 
-            <img
-              class="avatar"
-              src="${avatar(match.person)}">
+                <img
+                  class="avatar"
+                  src="${avatar(match.person)}">
 
-            <div style="flex:1">
+                <div style="flex:1">
 
-              <div class="name">
-                ${esc(match.person?.name || "Match")}
+                  <div class="name">
+                    ${esc(
+                      match.person?.name ||
+                      "Match"
+                    )}
+                  </div>
+
+                  <div class="meta">
+                    ${esc(
+                      match.person?.city ||
+                      "Offa"
+                    )}
+                  </div>
+
+                  <div class="online">
+
+                    ${
+                      isOnline(match.person)
+                      ? "● Online"
+                      : "Recently active"
+                    }
+
+                  </div>
+
+                </div>
+
+                <b style="color:var(--blue)">
+                  Chat ›
+                </b>
+
               </div>
 
-              <div class="meta">
-                ${esc(match.person?.city || "Offa")}
-              </div>
+            `;
 
-              <div class="online">
-                ${
-                  isOnline(match.person)
-                  ? "● Online"
-                  : "Recently active"
-                }
-              </div>
-
-            </div>
-
-            <b style="color:var(--blue)">
-              Chat ›
-            </b>
-
-          </div>
-
-        `;
-
-      }).join("")
+          }
+        )
+        .join("")
       :
       `
         <div class="card empty">
@@ -1666,12 +2086,13 @@ function matchesView(){
     }
 
   `;
+
 }
 
 
 /* =========================================================
-   CHAT
-   ========================================================= */
+   CHAT VIEW
+========================================================= */
 
 function chatView(){
 
@@ -1681,7 +2102,9 @@ function chatView(){
 
       <div class="card">
 
-        <h1>Chat</h1>
+        <h1>
+          Chat
+        </h1>
 
         <div class="meta">
           Choose a match to start chatting.
@@ -1692,39 +2115,49 @@ function chatView(){
       ${
         matches.length
         ?
-        matches.map(function(match){
+        matches
+          .map(
+            function(match){
 
-          return `
+              return `
 
-            <div
-              class="chatrow"
-              onclick="openChat(${match.id})">
+                <div
+                  class="chatrow"
+                  onclick="
+                    openChat(${match.id})
+                  ">
 
-              <img
-                class="avatar"
-                src="${avatar(match.person)}">
+                  <img
+                    class="avatar"
+                    src="${avatar(match.person)}">
 
-              <div>
+                  <div>
 
-                <div class="name">
-                  ${esc(match.person?.name)}
+                    <div class="name">
+                      ${esc(
+                        match.person?.name
+                      )}
+                    </div>
+
+                    <div class="online">
+
+                      ${
+                        isOnline(match.person)
+                        ? "● Online"
+                        : "Recently active"
+                      }
+
+                    </div>
+
+                  </div>
+
                 </div>
 
-                <div class="online">
-                  ${
-                    isOnline(match.person)
-                    ? "● Online"
-                    : "Recently active"
-                  }
-                </div>
+              `;
 
-              </div>
-
-            </div>
-
-          `;
-
-        }).join("")
+            }
+          )
+          .join("")
         :
         `
           <div class="card empty">
@@ -1734,6 +2167,7 @@ function chatView(){
       }
 
     `;
+
   }
 
   const person =
@@ -1763,22 +2197,29 @@ function chatView(){
         <div style="flex:1">
 
           <div class="name">
-            ${esc(person?.name || "Match")}
+            ${esc(
+              person?.name ||
+              "Match"
+            )}
           </div>
 
           <div class="online">
+
             ${
               isOnline(person)
               ? "● Online"
               : "Recently active"
             }
+
           </div>
 
         </div>
 
         <button
           class="close"
-          onclick="reportUser('${person.id}')">
+          onclick="
+            reportUser('${person.id}')
+          ">
 
           ⚑
 
@@ -1798,7 +2239,9 @@ function chatView(){
         ${
           messages.length
           ?
-          messages.map(messageBubble).join("")
+          messages
+            .map(messageBubble)
+            .join("")
           :
           `
             <div class="empty">
@@ -1822,8 +2265,12 @@ function chatView(){
 
             <button
               class="link"
-              onclick="clearFile()">
+              onclick="
+                clearFile()
+              ">
+
               remove
+
             </button>
           `
           :
@@ -1837,7 +2284,9 @@ function chatView(){
         <button
           class="attach"
           onclick="
-            document.getElementById('chatFile').click()
+            document
+              .getElementById('chatFile')
+              .click()
           ">
 
           ＋
@@ -1860,11 +2309,15 @@ function chatView(){
           id="chatFile"
           type="file"
           style="display:none"
-          onchange="filePicked(this)">
+          onchange="
+            filePicked(this)
+          ">
 
         <button
           class="send"
-          onclick="sendMessage()">
+          onclick="
+            sendMessage()
+          ">
 
           ➤
 
@@ -1876,9 +2329,12 @@ function chatView(){
 
         <button
           class="btn danger"
-          onclick="blockUser('${person.id}')">
+          onclick="
+            blockUser('${person.id}')
+          ">
 
-          Block ${esc(person.name)}
+          Block
+          ${esc(person.name)}
 
         </button>
 
@@ -1887,8 +2343,13 @@ function chatView(){
     </div>
 
   `;
+
 }
 
+
+/* =========================================================
+   LOAD MESSAGES
+========================================================= */
 
 async function loadMessages(){
 
@@ -1906,7 +2367,9 @@ async function loadMessages(){
       )
       .order(
         "created_at",
-        {ascending:true}
+        {
+          ascending:true
+        }
       );
 
   if(result.error){
@@ -1921,8 +2384,13 @@ async function loadMessages(){
   await markRead();
 
   scrollMessages();
+
 }
 
+
+/* =========================================================
+   MARK READ
+========================================================= */
 
 async function markRead(){
 
@@ -1948,30 +2416,48 @@ async function markRead(){
       "read_at",
       null
     );
+
 }
 
+
+/* =========================================================
+   SCROLL CHAT
+========================================================= */
 
 function scrollMessages(){
 
-  setTimeout(function(){
+  setTimeout(
+    function(){
 
-    const box =
-      document.getElementById("messages");
+      const box =
+        document.getElementById(
+          "messages"
+        );
 
-    if(box){
-      box.scrollTop =
-        box.scrollHeight;
-    }
+      if(box){
 
-  },50);
+        box.scrollTop =
+          box.scrollHeight;
+
+      }
+
+    },
+    50
+  );
+
 }
 
+
+/* =========================================================
+   OPEN CHAT
+========================================================= */
 
 async function openChat(id){
 
   selected =
     matches.find(
-      match=>match.id===id
+      match =>
+        match.id === id
     ) || null;
 
   messages = [];
@@ -1992,17 +2478,21 @@ async function openChat(id){
     );
 
   }
+
 }
 
 
 /* =========================================================
-   MESSAGES
-   ========================================================= */
+   MESSAGE BUBBLE
+========================================================= */
 
 function messageBubble(message){
 
   let body =
-    esc(message.message || "");
+    esc(
+      message.message ||
+      ""
+    );
 
   if(message.attachment_url){
 
@@ -2016,7 +2506,10 @@ function messageBubble(message){
         <img
           class="photo"
           src="${esc(message.attachment_url)}"
-          alt="${esc(message.attachment_name || "Photo")}">
+          alt="${esc(
+            message.attachment_name ||
+            "Photo"
+          )}">
 
         ${body}
 
@@ -2047,7 +2540,9 @@ function messageBubble(message){
         ${body}
 
       `;
+
     }
+
   }
 
   const mine =
@@ -2057,7 +2552,11 @@ function messageBubble(message){
   return `
 
     <div
-      class="bubble ${mine ? "mine" : "theirs"}">
+      class="bubble ${
+        mine
+        ? "mine"
+        : "theirs"
+      }">
 
       ${body}
 
@@ -2066,7 +2565,8 @@ function messageBubble(message){
         ${
           new Date(
             message.created_at
-          ).toLocaleTimeString(
+          )
+          .toLocaleTimeString(
             [],
             {
               hour:"numeric",
@@ -2080,8 +2580,10 @@ function messageBubble(message){
           ?
           (
             message.read_at
-            ? " · Read"
-            : " · Sent"
+            ?
+            " · Read"
+            :
+            " · Sent"
           )
           :
           ""
@@ -2092,15 +2594,22 @@ function messageBubble(message){
     </div>
 
   `;
+
 }
 
+
+/* =========================================================
+   FILE PICKER
+========================================================= */
 
 function filePicked(input){
 
   file =
-    input.files?.[0] || null;
+    input.files?.[0] ||
+    null;
 
   render();
+
 }
 
 
@@ -2109,8 +2618,13 @@ function clearFile(){
   file = null;
 
   render();
+
 }
 
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
 
 async function sendMessage(){
 
@@ -2124,7 +2638,8 @@ async function sendMessage(){
     );
 
   const text =
-    (input?.value || "").trim();
+    (input?.value || "")
+      .trim();
 
   if(!text && !file){
     return;
@@ -2177,7 +2692,9 @@ async function sendMessage(){
       const publicURL =
         sb.storage
           .from("chat-attachments")
-          .getPublicUrl(path);
+          .getPublicUrl(
+            path
+          );
 
       attachment = {
 
@@ -2192,15 +2709,19 @@ async function sendMessage(){
           "application/octet-stream"
 
       };
+
     }
 
     const result =
       await sb
         .from("messages")
         .insert({
-          match_id:selected.id,
-          sender_id:session.user.id,
-          message:text,
+          match_id:
+            selected.id,
+          sender_id:
+            session.user.id,
+          message:
+            text,
           ...attachment
         })
         .select()
@@ -2238,12 +2759,13 @@ async function sendMessage(){
     );
 
   }
+
 }
 
 
 /* =========================================================
    TYPING
-   ========================================================= */
+========================================================= */
 
 function sendTyping(){
 
@@ -2262,25 +2784,33 @@ function sendTyping(){
   );
 
   typingTimer =
-    setTimeout(function(){
+    setTimeout(
+      function(){
 
-      localStorage.removeItem(
-        "offa-typing-" +
-        selected.id
-      );
+        localStorage.removeItem(
+          "offa-typing-" +
+          selected.id
+        );
 
-    },1800);
+      },
+      1800
+    );
+
 }
 
 
 /* =========================================================
-   PRESENCE
-   ========================================================= */
+   ONLINE STATUS
+========================================================= */
 
 function isOnline(profile){
 
-  if(!profile?.last_seen_at){
+  if(
+    !profile?.last_seen_at
+  ){
+
     return false;
+
   }
 
   return (
@@ -2289,6 +2819,7 @@ function isOnline(profile){
       profile.last_seen_at
     ).getTime()
   ) < 120000;
+
 }
 
 
@@ -2317,14 +2848,15 @@ function startPresence(){
           session.user.id
         );
 
-    }catch(e){
+    }catch(error){
 
       console.warn(
         "Presence update failed:",
-        e
+        error
       );
 
     }
+
   }
 
   heartbeat();
@@ -2334,12 +2866,13 @@ function startPresence(){
       heartbeat,
       45000
     );
+
 }
 
 
 /* =========================================================
-   REALTIME
-   ========================================================= */
+   REALTIME MESSAGES
+========================================================= */
 
 function subscribeRealtime(){
 
@@ -2394,9 +2927,9 @@ function subscribeRealtime(){
 
             await loadMatches();
 
-          }catch(e){
+          }catch(error){
 
-            console.warn(e);
+            console.warn(error);
 
           }
 
@@ -2404,12 +2937,13 @@ function subscribeRealtime(){
       )
 
       .subscribe();
+
 }
 
 
 /* =========================================================
-   PROFILE SCREEN
-   ========================================================= */
+   PROFILE VIEW
+========================================================= */
 
 function profileView(){
 
@@ -2443,7 +2977,9 @@ function profileView(){
         type="file"
         accept="image/*"
         style="display:none"
-        onchange="uploadAvatar(this)">
+        onchange="
+          uploadAvatar(this)
+        ">
 
       <h1
         style="
@@ -2467,7 +3003,9 @@ function profileView(){
 
     <div class="card">
 
-      <h2>My profile</h2>
+      <h2>
+        My profile
+      </h2>
 
       ${
         me.bio
@@ -2486,7 +3024,9 @@ function profileView(){
         ?
         `
           <span class="goal">
-            ${esc(me.relationship_goal)}
+            ${esc(
+              me.relationship_goal
+            )}
           </span>
         `
         :
@@ -2497,7 +3037,9 @@ function profileView(){
 
         <button
           class="btn blue"
-          onclick="editProfile()">
+          onclick="
+            editProfile()
+          ">
 
           Edit profile
 
@@ -2505,7 +3047,9 @@ function profileView(){
 
         <button
           class="btn ghost"
-          onclick="logout()">
+          onclick="
+            logout()
+          ">
 
           Log out
 
@@ -2517,7 +3061,9 @@ function profileView(){
 
     <div class="card">
 
-      <h2>Safety</h2>
+      <h2>
+        Safety
+      </h2>
 
       <p class="meta">
 
@@ -2529,12 +3075,13 @@ function profileView(){
     </div>
 
   `;
+
 }
 
 
 /* =========================================================
-   AVATAR UPLOAD
-   ========================================================= */
+   UPLOAD AVATAR
+========================================================= */
 
 async function uploadAvatar(input){
 
@@ -2555,6 +3102,7 @@ async function uploadAvatar(input){
     );
 
     return;
+
   }
 
   try{
@@ -2565,7 +3113,8 @@ async function uploadAvatar(input){
           .split(".")
           .pop() ||
         "jpg"
-      ).replace(
+      )
+      .replace(
         /[^a-z0-9]/gi,
         ""
       );
@@ -2594,7 +3143,9 @@ async function uploadAvatar(input){
     const publicURL =
       sb.storage
         .from("avatars")
-        .getPublicUrl(path);
+        .getPublicUrl(
+          path
+        );
 
     const result =
       await sb
@@ -2614,7 +3165,8 @@ async function uploadAvatar(input){
       throw result.error;
     }
 
-    me = result.data;
+    me =
+      result.data;
 
     await loadPeople();
 
@@ -2632,17 +3184,19 @@ async function uploadAvatar(input){
     );
 
   }
+
 }
 
 
 /* =========================================================
    EDIT PROFILE
-   ========================================================= */
+========================================================= */
 
 function editProfile(){
 
   root.insertAdjacentHTML(
     "beforeend",
+
     `
 
       <div
@@ -2673,14 +3227,18 @@ function editProfile(){
 
           <div class="stack">
 
-            <label>Name</label>
+            <label>
+              Name
+            </label>
 
             <input
               id="eName"
               class="input"
               value="${esc(me.name)}">
 
-            <label>Age</label>
+            <label>
+              Age
+            </label>
 
             <input
               id="eAge"
@@ -2690,14 +3248,20 @@ function editProfile(){
               max="100"
               value="${esc(me.age)}">
 
-            <label>City</label>
+            <label>
+              City
+            </label>
 
             <input
               id="eCity"
               class="input"
-              value="${esc(me.city || "Offa")}">
+              value="${esc(
+                me.city || "Offa"
+              )}">
 
-            <label>Sex</label>
+            <label>
+              Sex
+            </label>
 
             <select
               id="eSex"
@@ -2714,7 +3278,9 @@ function editProfile(){
                   ? "selected"
                   : ""
                 }>
+
                 Male
+
               </option>
 
               <option
@@ -2724,7 +3290,9 @@ function editProfile(){
                   ? "selected"
                   : ""
                 }>
+
                 Female
+
               </option>
 
             </select>
@@ -2744,41 +3312,53 @@ function editProfile(){
               <option
                 value="Single"
                 ${
-                  me.relationship_goal === "Single"
+                  me.relationship_goal ===
+                  "Single"
                   ? "selected"
                   : ""
                 }>
+
                 Single
+
               </option>
 
               <option
                 value="Dating"
                 ${
-                  me.relationship_goal === "Dating"
+                  me.relationship_goal ===
+                  "Dating"
                   ? "selected"
                   : ""
                 }>
+
                 Dating
+
               </option>
 
               <option
                 value="Relationship"
                 ${
-                  me.relationship_goal === "Relationship"
+                  me.relationship_goal ===
+                  "Relationship"
                   ? "selected"
                   : ""
                 }>
+
                 Relationship
+
               </option>
 
               <option
                 value="Friendship"
                 ${
-                  me.relationship_goal === "Friendship"
+                  me.relationship_goal ===
+                  "Friendship"
                   ? "selected"
                   : ""
                 }>
+
                 Friendship
+
               </option>
 
             </select>
@@ -2789,11 +3369,15 @@ function editProfile(){
 
             <textarea
               id="eBio"
-              class="textarea">${esc(me.bio || "")}</textarea>
+              class="textarea">${esc(
+                me.bio || ""
+              )}</textarea>
 
             <button
               class="btn green"
-              onclick="saveProfile()">
+              onclick="
+                saveProfile()
+              ">
 
               Save profile
 
@@ -2807,8 +3391,13 @@ function editProfile(){
 
     `
   );
+
 }
 
+
+/* =========================================================
+   SAVE PROFILE
+========================================================= */
 
 async function saveProfile(){
 
@@ -2817,7 +3406,8 @@ async function saveProfile(){
     name:
       document
         .getElementById("eName")
-        .value.trim(),
+        .value
+        .trim(),
 
     age:
       Number(
@@ -2829,7 +3419,8 @@ async function saveProfile(){
     city:
       document
         .getElementById("eCity")
-        .value.trim() ||
+        .value
+        .trim() ||
       "Offa",
 
     sex:
@@ -2847,7 +3438,8 @@ async function saveProfile(){
     bio:
       document
         .getElementById("eBio")
-        .value.trim()
+        .value
+        .trim()
 
   };
 
@@ -2861,6 +3453,7 @@ async function saveProfile(){
     );
 
     return;
+
   }
 
   try{
@@ -2903,22 +3496,24 @@ async function saveProfile(){
     );
 
   }
+
 }
 
 
 /* =========================================================
    BLOCK
-   ========================================================= */
+========================================================= */
 
 async function blockUser(id){
 
-  const confirmed =
-    confirm(
+  if(
+    !confirm(
       "Block this person? They will no longer appear in your discovery or chat list."
-    );
+    )
+  ){
 
-  if(!confirmed){
     return;
+
   }
 
   try{
@@ -2977,12 +3572,13 @@ async function blockUser(id){
     );
 
   }
+
 }
 
 
 /* =========================================================
    REPORT
-   ========================================================= */
+========================================================= */
 
 async function reportUser(id){
 
@@ -3013,7 +3609,8 @@ async function reportUser(id){
           reported_id:
             id,
           reason:reason,
-          details:details || null
+          details:
+            details || null
         });
 
     if(result.error){
@@ -3032,12 +3629,13 @@ async function reportUser(id){
     );
 
   }
+
 }
 
 
 /* =========================================================
    NAVIGATION
-   ========================================================= */
+========================================================= */
 
 async function go(destination){
 
@@ -3051,14 +3649,18 @@ async function go(destination){
   try{
 
     if(destination === "discover"){
+
       await loadPeople();
+
     }
 
     if(
       destination === "matches" ||
       destination === "chat"
     ){
+
       await loadMatches();
+
     }
 
     render();
@@ -3070,12 +3672,13 @@ async function go(destination){
     );
 
   }
+
 }
 
 
 /* =========================================================
    RENDER
-   ========================================================= */
+========================================================= */
 
 function render(){
 
@@ -3084,6 +3687,7 @@ function render(){
     showAuth();
 
     return;
+
   }
 
   root.innerHTML = `
@@ -3093,12 +3697,22 @@ function render(){
       <header class="top">
 
         <div class="brand">
-          Offa <span>Connect</span>
+
+          Offa
+          <span>
+            Connect
+          </span>
+
         </div>
 
         <div class="tag">
-          <b>by Leo</b>
+
+          <b>
+            by Leo
+          </b>
+
           · Meet. Connect. Belong.
+
         </div>
 
       </header>
@@ -3129,7 +3743,9 @@ function render(){
             ? "active"
             : ""
           }"
-          onclick="go('discover')">
+          onclick="
+            go('discover')
+          ">
 
           <span class="ni">
             ♥
@@ -3147,7 +3763,9 @@ function render(){
             ? "active"
             : ""
           }"
-          onclick="go('matches')">
+          onclick="
+            go('matches')
+          ">
 
           <span class="ni">
 
@@ -3179,7 +3797,9 @@ function render(){
             ? "active"
             : ""
           }"
-          onclick="go('chat')">
+          onclick="
+            go('chat')
+          ">
 
           <span class="ni">
             ▣
@@ -3197,7 +3817,9 @@ function render(){
             ? "active"
             : ""
           }"
-          onclick="go('profile')">
+          onclick="
+            go('profile')
+          ">
 
           <span class="ni">
             ●
@@ -3214,12 +3836,13 @@ function render(){
     </div>
 
   `;
+
 }
 
 
 /* =========================================================
    LOGOUT
-   ========================================================= */
+========================================================= */
 
 async function logout(){
 
@@ -3258,12 +3881,13 @@ async function logout(){
     );
 
   }
+
 }
 
 
 /* =========================================================
    INITIAL SESSION
-   ========================================================= */
+========================================================= */
 
 async function startApp(){
 
@@ -3276,6 +3900,7 @@ async function startApp(){
     );
 
     return;
+
   }
 
   try{
@@ -3305,12 +3930,13 @@ async function startApp(){
     showFatalError(error);
 
   }
+
 }
 
 
 /* =========================================================
-   AUTH STATE CHANGES
-   ========================================================= */
+   AUTH STATE
+========================================================= */
 
 if(sb){
 
@@ -3342,7 +3968,7 @@ if(sb){
 
 /* =========================================================
    START
-   ========================================================= */
+========================================================= */
 
 startApp();
 
