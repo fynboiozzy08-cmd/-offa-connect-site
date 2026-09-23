@@ -8,18 +8,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:#f7f4ee;
-  color:#132235
-}
-
-button,input,textarea,select{font:inherit}
-button{cursor:pointer;border:0}
-
 :root{
   --navy:#071A2B;
   --blue:#0B5C8E;
@@ -27,1208 +15,853 @@ button{cursor:pointer;border:0}
   --green:#18A06A;
   --gold:#D9A441;
   --cream:#F7F4EE;
-  --white:#FFFFFF;
   --ink:#132235;
   --muted:#6E7D8C;
-  --line:#E4EAF0;
+  --line:#E4EAF0
 }
 
-.hidden{display:none!important}
+*{box-sizing:border-box}
 
-.app{min-height:100vh}
+body{
+  margin:0;
+  background:linear-gradient(145deg,#071A2B,#0B5C8E,#0B8F87);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  color:var(--ink);
+  min-height:100vh
+}
+
+button,input,textarea,select{font:inherit}
+button{border:0;cursor:pointer}
+
+.app{
+  max-width:980px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:88px
+}
 
 .top{
-  background:var(--navy);
-  color:white;
-  padding:18px;
-  position:sticky;
-  top:0;
-  z-index:10;
+  color:#fff;
+  padding:25px 20px
 }
 
 .brand{
-  font-weight:900;
-  font-size:22px;
+  font-size:32px;
+  font-weight:900
 }
+
+.brand b{color:var(--gold)}
 
 .tag{
-  font-size:12px;
-  opacity:.8;
-  margin-top:2px;
+  font-weight:700;
+  color:#d9e6ed;
+  margin-top:4px
 }
 
-.main{
-  max-width:720px;
-  margin:auto;
-  padding:18px 14px 95px;
+.shell{
+  background:var(--cream);
+  margin:0 12px;
+  border-radius:30px;
+  min-height:calc(100vh - 145px);
+  overflow:hidden
 }
+
+.content{padding:20px}
 
 .card{
-  background:white;
+  background:#fff;
   border:1px solid var(--line);
-  border-radius:20px;
-  padding:16px;
-  margin-bottom:14px;
-  box-shadow:0 5px 20px #071a2b0b;
+  border-radius:24px;
+  padding:20px;
+  margin-bottom:15px;
+  box-shadow:0 12px 35px #071a2b12
 }
 
-.btn{
-  background:var(--blue);
-  color:white;
-  padding:12px 16px;
-  border-radius:12px;
-  font-weight:800;
+h1{
+  margin:0 0 17px;
+  font-size:31px
 }
 
-.btn.green{background:var(--green)}
-.btn.gold{background:var(--gold);color:var(--navy)}
-.btn.gray{background:#edf1f4;color:var(--ink)}
-.btn.danger{background:#c93636;color:white}
-
-.row{
-  display:flex;
-  gap:10px;
-  align-items:center;
+h2{
+  margin:0 0 14px
 }
 
-.grow{flex:1}
-
-input,
-textarea,
-select{
+.input,
+.select,
+.textarea,
+.search{
   width:100%;
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:12px;
-  background:white;
-  outline:none;
+  padding:14px;
+  border:2px solid var(--line);
+  border-radius:16px;
+  background:#fff;
+  outline:none
 }
 
-textarea{
-  min-height:90px;
-  resize:vertical;
+.textarea{min-height:100px}
+
+.search:focus,
+.input:focus,
+.select:focus,
+.textarea:focus{
+  border-color:var(--teal)
 }
 
-.nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:white;
-  border-top:1px solid var(--line);
+.filters{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:10px
+}
+
+.person{
   display:flex;
-  justify-content:center;
-  z-index:20;
-}
-
-.nav button{
-  flex:1;
-  max-width:180px;
-  background:white;
-  padding:13px 5px;
-  color:var(--muted);
-  font-size:12px;
-}
-
-.nav button.active{
-  color:var(--blue);
-  font-weight:900;
+  align-items:center;
+  gap:15px
 }
 
 .avatar{
-  width:56px;
-  height:56px;
+  width:86px;
+  height:86px;
   border-radius:50%;
-  overflow:hidden;
-  background:#dceaf1;
-  display:grid;
-  place-items:center;
-  font-weight:900;
-  color:var(--blue);
-  flex:none;
-}
-
-.avatar img{
-  width:100%;
-  height:100%;
   object-fit:cover;
+  background:#eaf0f3
 }
 
-.profile-card{
-  display:flex;
-  gap:14px;
-  align-items:center;
+.avatar.big{
+  width:120px;
+  height:120px
+}
+
+.name{
+  font-size:21px;
+  font-weight:900
+}
+
+.meta{
+  color:var(--muted);
+  font-weight:700
+}
+
+.bio{
+  margin-top:12px;
+  line-height:1.5
+}
+
+.goal{
+  display:inline-block;
+  background:#e6f5f1;
+  color:#08766f;
+  border-radius:99px;
+  padding:6px 10px;
+  margin-top:8px;
+  font-size:13px;
+  font-weight:900
 }
 
 .actions{
   display:flex;
-  gap:8px;
-  margin-top:12px;
+  gap:9px;
+  justify-content:flex-end;
+  margin-top:15px
 }
 
-.actions button{
-  flex:1;
+.btn{
+  padding:13px 17px;
+  border-radius:15px;
+  font-weight:900
 }
 
-.match{
+.green{
+  background:var(--green);
+  color:#fff
+}
+
+.blue{
+  background:var(--blue);
+  color:#fff
+}
+
+.ghost{
+  background:#edf2f5;
+  color:var(--ink)
+}
+
+.gold{
+  background:var(--gold);
+  color:#fff
+}
+
+.empty{
+  text-align:center;
+  padding:35px;
+  color:var(--muted);
+  font-weight:800
+}
+
+.bottom{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(980px,100%);
+  background:#fffffff5;
+  border-top:1px solid var(--line);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:9px 8px calc(9px + env(safe-area-inset-bottom));
+  z-index:20
+}
+
+.nav{
+  background:none;
+  color:var(--muted);
+  font-weight:900;
+  padding:5px
+}
+
+.nav.active{color:var(--blue)}
+
+.ni{
+  font-size:21px;
+  display:block
+}
+
+.nl{font-size:12px}
+
+.badge{
+  background:var(--gold);
+  color:white;
+  border-radius:20px;
+  padding:2px 6px;
+  font-size:10px
+}
+
+.auth{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px
+}
+
+.authbox{
+  width:min(520px,100%);
+  background:#fff;
+  border-radius:30px;
+  padding:30px;
+  box-shadow:0 25px 70px #0005
+}
+
+.authlogo{
+  font-size:44px;
+  font-weight:950
+}
+
+.authlogo b{color:var(--gold)}
+
+.sub{
+  color:var(--muted);
+  font-size:18px;
+  margin:7px 0 23px
+}
+
+.stack{
+  display:grid;
+  gap:11px
+}
+
+.error{
+  color:#c43d4b;
+  font-weight:800;
+  min-height:25px
+}
+
+.link{
+  background:none;
+  color:var(--blue);
+  font-weight:900
+}
+
+.chatrow{
   display:flex;
   align-items:center;
   gap:12px;
   padding:12px;
   border:1px solid var(--line);
-  border-radius:15px;
-  margin-bottom:10px;
+  border-radius:18px;
+  margin-bottom:9px
 }
 
-.chat-head{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:12px;
+.chatrow .avatar{
+  width:56px;
+  height:56px
 }
 
 .messages{
-  height:55vh;
+  height:53vh;
+  min-height:350px;
   overflow:auto;
-  background:#f1f5f7;
-  border-radius:16px;
-  padding:12px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:15px 2px
 }
 
 .bubble{
   max-width:78%;
-  padding:10px 12px;
-  border-radius:16px;
-  margin:6px 0;
-  word-break:break-word;
+  padding:11px 13px;
+  border-radius:18px;
+  word-break:break-word
 }
 
 .mine{
-  margin-left:auto;
-  background:#d8f2e5;
-  border-bottom-right-radius:5px;
+  align-self:flex-end;
+  background:var(--blue);
+  color:#fff;
+  border-bottom-right-radius:5px
 }
 
 .theirs{
-  background:white;
-  border-bottom-left-radius:5px;
+  align-self:flex-start;
+  background:#edf2f5;
+  border-bottom-left-radius:5px
 }
 
-.bubble img{
-  max-width:100%;
-  max-height:280px;
-  border-radius:12px;
-  display:block;
-  margin-bottom:5px;
+.small{
+  font-size:10px;
+  opacity:.65;
+  margin-top:4px
 }
 
-.attachment{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  background:#f3f6f8;
-  border-radius:10px;
-  padding:9px;
-  text-decoration:none;
-  color:var(--ink);
+.photo{
+  max-width:230px;
+  border-radius:12px
 }
 
 .composer{
   display:flex;
   gap:7px;
-  margin-top:10px;
-  align-items:flex-end;
+  align-items:center;
+  border-top:1px solid var(--line);
+  padding-top:11px
 }
 
-.composer textarea{
-  min-height:46px;
-  max-height:130px;
-}
+.composer .input{flex:1}
 
-.attachbtn{
-  width:46px;
+.attach,
+.send{
   height:46px;
-  border-radius:12px;
-  background:#edf1f4;
-  font-size:22px;
+  border-radius:14px
+}
+
+.attach{
+  width:46px;
+  background:#edf2f5;
+  font-size:20px
 }
 
 .send{
-  width:54px;
-  height:46px;
-  border-radius:12px;
+  width:50px;
   background:var(--green);
-  color:white;
-  font-weight:900;
+  color:#fff
 }
 
-.file-preview{
-  font-size:12px;
-  color:var(--muted);
-  padding:4px 2px;
-}
-
-.auth{
-  min-height:100vh;
-  display:grid;
-  place-items:center;
-  padding:20px;
-  background:linear-gradient(150deg,var(--navy),#0b5c8e);
-}
-
-.authbox{
-  width:min(440px,100%);
-  background:white;
-  border-radius:25px;
-  padding:25px;
-}
-
-.logo{
-  font-size:34px;
-  font-weight:950;
-  color:var(--navy);
-}
-
-.logo span{
-  color:var(--gold);
-}
-
-.muted{
-  color:var(--muted);
-  font-size:13px;
-}
-
-.empty{
-  text-align:center;
-  padding:35px 15px;
-  color:var(--muted);
-}
-
-.toast{
+.modal{
   position:fixed;
-  top:18px;
-  left:50%;
-  transform:translateX(-50%);
-  background:var(--navy);
-  color:white;
-  padding:11px 15px;
-  border-radius:12px;
-  z-index:99;
+  inset:0;
+  background:#0009;
   display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:40
+}
+
+.modal.show{display:flex}
+
+.modalbox{
+  background:#fff;
+  border-radius:25px;
+  padding:22px;
+  width:min(520px,100%);
+  max-height:90vh;
+  overflow:auto
+}
+
+.modalhead{
+  display:flex;
+  justify-content:space-between
+}
+
+.close{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  background:#edf2f5
+}
+
+@media(max-width:600px){
+  .filters{grid-template-columns:1fr}
+  .content{padding:15px}
+  .shell{
+    margin:0;
+    border-radius:28px 28px 0 0
+  }
+  .authbox{padding:24px}
 }
 </style>
 </head>
 
 <body>
 
-<div id="toast" class="toast"></div>
-
-<!-- AUTH -->
-<section id="auth" class="auth">
-
-  <div class="authbox">
-
-    <div class="logo">
-      Offa <span>Connect</span>
-    </div>
-
-    <p>
-      <b>by Leo</b> · Meet. Connect. Belong.
-    </p>
-
-    <div id="authMsg" class="muted"></div>
-
-    <div id="signupFields" class="hidden">
-
-      <input
-        id="signupName"
-        placeholder="Full name"
-      >
-
-      <br><br>
-
-      <input
-        id="signupAge"
-        type="number"
-        min="18"
-        placeholder="Age"
-      >
-
-      <br><br>
-
-    </div>
-
-    <input
-      id="email"
-      type="email"
-      placeholder="Email"
-    >
-
-    <br><br>
-
-    <input
-      id="password"
-      type="password"
-      placeholder="Password"
-    >
-
-    <br><br>
-
-    <button
-      id="authBtn"
-      class="btn"
-      style="width:100%"
-    >
-      Log in
-    </button>
-
-    <p style="text-align:center">
-
-      <button
-        id="toggleAuth"
-        class="btn gray"
-      >
-        Create account
-      </button>
-
-    </p>
-
-  </div>
-
-</section>
-
-
-<!-- APP -->
-<div id="app" class="app hidden">
-
-<header class="top">
-
-  <div class="brand">
-    Offa Connect by Leo
-  </div>
-
-  <div class="tag">
-    Meet. Connect. Belong.
-  </div>
-
-</header>
-
-
-<main class="main">
-
-
-<!-- DISCOVER -->
-<section id="page-discover">
-
-  <div class="card">
-
-    <h2>Discover</h2>
-
-    <input
-      id="search"
-      placeholder="Search by name, city or bio"
-    >
-
-  </div>
-
-  <div id="discoverList"></div>
-
-</section>
-
-
-<!-- MATCHES -->
-<section
-  id="page-matches"
-  class="hidden"
->
-
-  <div class="card">
-
-    <h2>Your Matches</h2>
-
-    <div id="matchesList"></div>
-
-  </div>
-
-</section>
-
-
-<!-- CHAT -->
-<section
-  id="page-chat"
-  class="hidden"
->
-
-  <div class="card">
-
-    <div
-      id="chatEmpty"
-      class="empty"
-    >
-      Open a match to start chatting.
-    </div>
-
-
-    <div
-      id="chatBox"
-      class="hidden"
-    >
-
-      <div class="chat-head">
-
-        <button
-          class="btn gray"
-          onclick="showPage('matches')"
-        >
-          ←
-        </button>
-
-        <div
-          id="chatAvatar"
-          class="avatar"
-        ></div>
-
-        <div class="grow">
-
-          <b id="chatName">
-            Chat
-          </b>
-
-          <div
-            id="chatStatus"
-            class="muted"
-          ></div>
-
-        </div>
-
-      </div>
-
-
-      <div
-        id="messages"
-        class="messages"
-      ></div>
-
-
-      <div
-        id="filePreview"
-        class="file-preview"
-      ></div>
-
-
-      <form
-        id="composer"
-        class="composer"
-      >
-
-        <input
-          id="fileInput"
-          type="file"
-          hidden
-          multiple
-        >
-
-        <button
-          type="button"
-          class="attachbtn"
-          onclick="document.getElementById('fileInput').click()"
-        >
-          📎
-        </button>
-
-        <textarea
-          id="messageInput"
-          placeholder="Write a message..."
-        ></textarea>
-
-        <button
-          class="send"
-          type="submit"
-        >
-          ➤
-        </button>
-
-      </form>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- PROFILE -->
-<section
-  id="page-profile"
-  class="hidden"
->
-
-  <div class="card">
-
-    <h2>My Profile</h2>
-
-    <div class="row">
-
-      <div
-        id="myAvatar"
-        class="avatar"
-      ></div>
-
-      <div class="grow">
-
-        <input
-          id="profileName"
-          placeholder="Name"
-        >
-
-        <br><br>
-
-        <input
-          id="profileCity"
-          placeholder="City"
-        >
-
-      </div>
-
-    </div>
-
-    <br>
-
-    <input
-      id="profileAge"
-      type="number"
-      min="18"
-      placeholder="Age"
-    >
-
-    <br><br>
-
-    <textarea
-      id="profileBio"
-      placeholder="Tell people about yourself"
-    ></textarea>
-
-    <br><br>
-
-    <input
-      id="avatarInput"
-      type="file"
-      accept="image/*"
-    >
-
-    <br><br>
-
-    <button
-      class="btn green"
-      onclick="saveProfile()"
-    >
-      Save profile
-    </button>
-
-    <button
-      class="btn danger"
-      onclick="logout()"
-      style="float:right"
-    >
-      Log out
-    </button>
-
-  </div>
-
-</section>
-
-</main>
-
-
-<!-- NAV -->
-<nav class="nav">
-
-  <button
-    id="nav-discover"
-    class="active"
-    onclick="showPage('discover')"
-  >
-    ♥<br>
-    Discover
-  </button>
-
-  <button
-    id="nav-matches"
-    onclick="showPage('matches')"
-  >
-    ♡<br>
-    Matches
-  </button>
-
-  <button
-    id="nav-chat"
-    onclick="showPage('chat')"
-  >
-    ▣<br>
-    Chat
-  </button>
-
-  <button
-    id="nav-profile"
-    onclick="showPage('profile')"
-  >
-    ●<br>
-    Profile
-  </button>
-
-</nav>
-
-</div>
-
+<div id="root"></div>
 
 <script>
 
-/* =========================
-   SUPABASE
-========================= */
+const URL="https://irjahjpdjuvlmlcgtusr.supabase.co";
 
-const SUPABASE_URL =
-"https://irjahjpdjuvlmlcgtusr.supabase.co";
+const KEY="sb_publishable_HoMz0Vb4krVkz1p4Dm5_dg_hFuaxwxl";
 
-const SUPABASE_KEY =
-"sb_publishable_HoMz0Vb4krVkz1p4Dm5_dg_hFuaxwxl";
+const supabase=window.supabase.createClient(URL,KEY);
 
-const db =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+let session=null;
+let me=null;
+let people=[];
+let matches=[];
+let selected=null;
+let msgs=[];
+let tab="discover";
+let query="";
+let channel=null;
+let file=null;
+
+const $=x=>document.getElementById(x);
+
+const esc=x=>String(x??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+}[c]));
+
+const img=p=>p?.avatar_url||
+"data:image/svg+xml;charset=utf-8,"+
+encodeURIComponent(
+'<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">'+
+'<rect width="100%" height="100%" fill="#e9eff3"/>'+
+'<text x="50%" y="60%" text-anchor="middle" font-size="45" fill="#0B5C8E">♥</text>'+
+'</svg>'
 );
 
+function auth(sign=false,e=""){
 
-/* =========================
-   APP STATE
-========================= */
+  root.innerHTML=`
+  <div class=auth>
+    <div class=authbox>
 
-let session = null;
-let profile = null;
-let signup = false;
-let selectedMatch = null;
-let realtime = null;
+      <div class=authlogo>
+        Offa <b>Connect</b>
+      </div>
 
-window.offaMatches = {};
+      <div class=sub>
+        <b>by Leo</b> · Meet. Connect. Belong.
+      </div>
 
+      <div class=error>${esc(e)}</div>
 
-/* =========================
-   HELPERS
-========================= */
+      <div class=stack>
 
-const $ = id =>
-  document.getElementById(id);
+        ${sign?
+        '<input id=name class=input placeholder="Your name">'+
+        '<input id=age class=input type=number min=18 placeholder="Age">'
+        :''}
 
+        <input
+          id=email
+          class=input
+          type=email
+          placeholder="Email"
+        >
 
-function esc(value){
+        <input
+          id=pass
+          class=input
+          type=password
+          placeholder="Password"
+        >
 
-  return String(value ?? "")
-    .replace(
-      /[&<>"']/g,
-      m => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-      }[m])
-    );
+        ${sign?
+        '<select id=sex class=select>'+
+        '<option value="">Sex (optional)</option>'+
+        '<option>Male</option>'+
+        '<option>Female</option>'+
+        '</select>'
+        :''}
 
+        <button
+          class="btn blue"
+          onclick="${sign?'signup()':'login()'}"
+        >
+          ${sign?'Create account':'Log in'}
+        </button>
+
+      </div>
+
+      <p style="text-align:center;color:var(--muted)">
+        ${sign?'Already have an account?':'New to Offa Connect?'}
+
+        <button
+          class=link
+          onclick="auth(${!sign})"
+        >
+          ${sign?'Back to login':'Create account'}
+        </button>
+      </p>
+
+    </div>
+  </div>`;
 }
 
+async function login(){
 
-function initials(name){
+  let email=$("email").value.trim();
+  let password=$("pass").value;
 
-  return (name || "OC")
-    .split(/\s+/)
-    .slice(0,2)
-    .map(x => x[0])
-    .join("")
-    .toUpperCase();
+  if(!email||!password)
+    return auth(false,"Enter your email and password.");
 
-}
-
-
-function toast(message){
-
-  $("toast").textContent = message;
-
-  $("toast").style.display = "block";
-
-  setTimeout(() => {
-
-    $("toast").style.display = "none";
-
-  },2600);
-
-}
-
-
-function avatarHtml(p){
-
-  if(p?.avatar_url){
-
-    return `
-      <img
-        src="${esc(p.avatar_url)}"
-        alt=""
-      >
-    `;
-
-  }
-
-  return esc(initials(p?.name));
-
-}
-
-
-/* =========================
-   NAVIGATION
-========================= */
-
-function showPage(page){
-
-  [
-    "discover",
-    "matches",
-    "chat",
-    "profile"
-  ].forEach(p => {
-
-    $("page-"+p)
-      .classList
-      .toggle("hidden",p !== page);
-
-    $("nav-"+p)
-      .classList
-      .toggle("active",p === page);
-
+  let r=await supabase.auth.signInWithPassword({
+    email,
+    password
   });
 
+  if(r.error)
+    return auth(false,r.error.message);
 
-  if(page === "discover")
-    loadDiscover();
+  session=r.data.session;
 
-  if(page === "matches")
-    loadMatches();
+  await boot();
+}
 
+async function signup(){
+
+  let name=$("name").value.trim();
+  let age=+$("age").value;
+  let email=$("email").value.trim();
+  let password=$("pass").value;
+  let sex=$("sex").value;
 
   if(
-    page === "chat" &&
-    !selectedMatch
-  ){
+    !name||
+    age<18||
+    !email||
+    password.length<6
+  )
+    return auth(
+      true,
+      "Enter a name, age 18+, valid email and 6+ character password."
+    );
 
-    $("chatEmpty")
-      .classList
-      .remove("hidden");
+  let r=await supabase.auth.signUp({
+    email,
+    password
+  });
 
-    $("chatBox")
-      .classList
-      .add("hidden");
+  if(r.error)
+    return auth(true,r.error.message);
 
-  }
+  if(r.data.session){
 
-}
+    session=r.data.session;
 
-
-/* =========================
-   AUTH
-========================= */
-
-function setAuthMode(){
-
-  $("signupFields")
-    .classList
-    .toggle("hidden",!signup);
-
-  $("authBtn").textContent =
-    signup
-      ? "Create account"
-      : "Log in";
-
-  $("toggleAuth").textContent =
-    signup
-      ? "Back to login"
-      : "Create account";
-
-}
-
-
-$("toggleAuth").onclick = () => {
-
-  signup = !signup;
-
-  setAuthMode();
-
-};
-
-
-$("authBtn").onclick = async () => {
-
-  $("authMsg").textContent =
-    "Working...";
-
-  try{
-
-    if(signup){
-
-      const email =
-        $("email").value.trim();
-
-      const password =
-        $("password").value;
-
-      const name =
-        $("signupName").value.trim();
-
-      const age =
-        Number($("signupAge").value);
-
-
-      if(!name || age < 18){
-
-        throw Error(
-          "Enter your name and an age of 18 or older."
-        );
-
-      }
-
-
-      const {
-        data,
-        error
-      } =
-      await db.auth.signUp({
-        email,
-        password
+    let p=await supabase
+      .from("profiles")
+      .upsert({
+        id:r.data.user.id,
+        name,
+        age,
+        city:"Offa",
+        bio:"",
+        sex:sex||null
       });
 
+    if(p.error)
+      return auth(true,p.error.message);
 
-      if(error)
-        throw error;
+    await boot();
 
+  }else{
 
-      if(data.user){
+    auth(
+      false,
+      "Account created. Check your email, then log in."
+    );
 
-        const {
-          error:e
-        } =
-        await db
-          .from("profiles")
-          .upsert({
-            id:data.user.id,
-            name,
-            age,
-            city:"Offa",
-            bio:""
-          });
+  }
+}
 
+async function boot(){
 
-        if(e)
-          throw e;
+  await loadMe();
+  await loadPeople();
+  await loadMatches();
+
+  render();
+
+  if(channel)
+    supabase.removeChannel(channel);
+
+  channel=supabase
+    .channel("offa-live")
+    .on(
+      "postgres_changes",
+      {
+        event:"INSERT",
+        schema:"public",
+        table:"messages"
+      },
+      p=>{
+
+        if(
+          selected &&
+          p.new.match_id===selected.id &&
+          !msgs.some(x=>x.id===p.new.id)
+        ){
+
+          msgs.push(p.new);
+          render();
+
+        }
 
       }
-
-
-      toast(
-        "Account created. Check your email if confirmation is required."
-      );
-
-    }else{
-
-      const {
-        error
-      } =
-      await db.auth.signInWithPassword({
-
-        email:
-          $("email").value.trim(),
-
-        password:
-          $("password").value
-
-      });
-
-
-      if(error)
-        throw error;
-
-    }
-
-
-    $("authMsg").textContent = "";
-
-  }catch(error){
-
-    $("authMsg").textContent =
-      error.message;
-
-  }
-
-};
-
-
-/* =========================
-   START
-========================= */
-
-async function start(){
-
-  const {
-    data
-  } =
-  await db.auth.getSession();
-
-  session =
-    data.session;
-
-  await updateUI();
-
-
-  db.auth.onAuthStateChange(
-    async (_event,newSession) => {
-
-      session =
-        newSession;
-
-      await updateUI();
-
-    }
-  );
-
+    )
+    .subscribe();
 }
 
+async function loadMe(){
 
-async function updateUI(){
-
-  if(!session){
-
-    $("auth")
-      .classList
-      .remove("hidden");
-
-    $("app")
-      .classList
-      .add("hidden");
-
-    return;
-
-  }
-
-
-  $("auth")
-    .classList
-    .add("hidden");
-
-  $("app")
-    .classList
-    .remove("hidden");
-
-
-  await loadMyProfile();
-
-  showPage("discover");
-
-}
-
-
-/* =========================
-   PROFILE
-========================= */
-
-async function loadMyProfile(){
-
-  const {
-    data,
-    error
-  } =
-  await db
+  let r=await supabase
     .from("profiles")
     .select("*")
     .eq("id",session.user.id)
-    .maybeSingle();
+    .single();
 
+  if(r.error)
+    throw r.error;
 
-  if(error)
-    toast(error.message);
-
-
-  profile = data;
-
-
-  if(!profile){
-
-    const newProfile = {
-
-      id:
-        session.user.id,
-
-      name:
-        session.user.email
-          ?.split("@")[0] ||
-        "Member",
-
-      age:18,
-
-      city:"Offa",
-
-      bio:""
-
-    };
-
-
-    const result =
-      await db
-        .from("profiles")
-        .insert(newProfile)
-        .select()
-        .single();
-
-
-    profile =
-      result.data;
-
-  }
-
-
-  if(profile){
-
-    $("profileName").value =
-      profile.name || "";
-
-    $("profileAge").value =
-      profile.age || 18;
-
-    $("profileCity").value =
-      profile.city || "Offa";
-
-    $("profileBio").value =
-      profile.bio || "";
-
-
-    $("myAvatar").innerHTML =
-      avatarHtml(profile);
-
-  }
-
+  me=r.data;
 }
 
+async function loadPeople(){
 
-/* =========================
-   DISCOVER
-========================= */
+  let r=await supabase
+    .from("profiles")
+    .select("*")
+    .neq("id",session.user.id)
+    .order("created_at",{ascending:false});
 
-async function loadDiscover(){
+  people=r.data||[];
+}
 
-  const q =
-    $("search").value.trim();
+async function loadMatches(){
 
+  let r=await supabase
+    .from("matches")
+    .select(
+      "id,user_one,user_two,"+
+      "user_one_profile:profiles!matches_user_one_fkey(*),"+
+      "user_two_profile:profiles!matches_user_two_fkey(*)"
+    )
+    .or(
+      `user_one.eq.${session.user.id},user_two.eq.${session.user.id}`
+    )
+    .order("created_at",{ascending:false});
 
-  const query =
-    db
-      .from("profiles")
-      .select("*")
-      .neq("id",session.user.id)
-      .order(
-        "created_at",
-        {ascending:false}
-      )
-      .limit(50);
+  matches=(r.data||[]).map(m=>({
 
+    ...m,
 
-  const {
-    data,
-    error
-  } =
-  await query;
+    person:
+      m.user_one===session.user.id
+      ?m.user_two_profile
+      :m.user_one_profile
 
+  }));
+}
 
-  if(error){
+function render(){
 
-    $("discoverList").innerHTML =
-      `<div class="card">
-        ${esc(error.message)}
-      </div>`;
+  if(!session)
+    return auth();
 
-    return;
+  root.innerHTML=`
 
-  }
+  <div class=app>
 
+    <header class=top>
 
-  const rows =
-    (data || []).filter(p => {
+      <div class=brand>
+        Offa <b>Connect</b>
+      </div>
 
-      if(!q)
-        return true;
+      <div class=tag>
+        <b>by Leo</b> · Meet. Connect. Belong.
+      </div>
 
+    </header>
 
-      return [
-        p.name,
-        p.city,
-        p.bio
-      ]
-      .join(" ")
-      .toLowerCase()
-      .includes(q.toLowerCase());
+    <main class=shell>
 
-    });
+      <section class=content>
 
+        ${
+          tab==="discover"
+          ?discover()
+          :tab==="matches"
+          ?matchView()
+          :tab==="chat"
+          ?chatView()
+          :profileView()
+        }
 
-  $("discoverList").innerHTML =
-    rows.length
+      </section>
 
-    ?
+    </main>
 
-    rows.map(p => `
+    <nav class=bottom>
 
-      <div class="card profile-card">
+      <button
+        class="nav ${tab==="discover"?"active":""}"
+        onclick="go('discover')"
+      >
+        <span class=ni>♥</span>
+        <span class=nl>Discover</span>
+      </button>
 
-        <div class="avatar">
+      <button
+        class="nav ${tab==="matches"?"active":""}"
+        onclick="go('matches')"
+      >
+        <span class=ni>
+          ♡
+          ${
+            matches.length
+            ?`<span class=badge>${matches.length}</span>`
+            :""
+          }
+        </span>
 
-          ${avatarHtml(p)}
+        <span class=nl>Matches</span>
+      </button>
 
-        </div>
+      <button
+        class="nav ${tab==="chat"?"active":""}"
+        onclick="go('chat')"
+      >
+        <span class=ni>▣</span>
+        <span class=nl>Chat</span>
+      </button>
 
+      <button
+        class="nav ${tab==="profile"?"active":""}"
+        onclick="go('profile')"
+      >
+        <span class=ni>●</span>
+        <span class=nl>Profile</span>
+      </button>
 
-        <div class="grow">
+    </nav>
 
-          <h3 style="margin:0">
-            ${esc(p.name)}
-          </h3>
+  </div>`;
+}
 
-          <div class="muted">
+function discover(){
 
-            ${esc(p.age || "")}
-            ·
-            ${esc(p.city || "Offa")}
+  let list=people.filter(p=>
+    !query||
+    [
+      p.name,
+      p.city,
+      p.bio,
+      p.relationship_goal,
+      p.sex
+    ]
+    .join(" ")
+    .toLowerCase()
+    .includes(query.toLowerCase())
+  );
+
+  return `
+
+  <div class=card>
+
+    <h1>Discover</h1>
+
+    <input
+      class=search
+      placeholder="Search by name, city or bio"
+      value="${esc(query)}"
+      oninput="query=this.value;render()"
+    >
+
+  </div>
+
+  ${
+    list.map(p=>`
+
+      <div class=card>
+
+        <div class=person>
+
+          <img
+            class=avatar
+            src="${img(p)}"
+          >
+
+          <div>
+
+            <div class=name>
+              ${esc(p.name)}, ${esc(p.age)}
+            </div>
+
+            <div class=meta>
+              📍 ${esc(p.city||"Offa")}
+            </div>
+
+            ${
+              p.relationship_goal
+              ?`<span class=goal>
+                  ${esc(p.relationship_goal)}
+                </span>`
+              :""
+            }
 
           </div>
 
-
-          <p>
-            ${esc(p.bio || "")}
-          </p>
-
         </div>
 
+        ${
+          p.bio
+          ?`<div class=bio>${esc(p.bio)}</div>`
+          :""
+        }
 
-        <div>
+        <div class=actions>
+
+          <button
+            class="btn ghost"
+            onclick="pass('${p.id}')"
+          >
+            ✕ Pass
+          </button>
 
           <button
             class="btn green"
-            onclick="likeProfile('${p.id}')"
+            onclick="like('${p.id}')"
           >
             ♥ Like
-          </button>
-
-          <br><br>
-
-          <button
-            class="btn gray"
-            onclick="this.closest('.card').remove()"
-          >
-            × Pass
           </button>
 
         </div>
@@ -1236,759 +869,342 @@ async function loadDiscover(){
       </div>
 
     `).join("")
-
-    :
-
-    `
-      <div class="card empty">
-        No members found.
-      </div>
-    `;
-
+    ||
+    '<div class="card empty">No profiles found yet.</div>'
+  }`;
 }
 
+async function like(id){
 
-$("search")
-  .addEventListener(
-    "input",
-    loadDiscover
-  );
-
-
-/* =========================
-   LIKE
-========================= */
-
-async function likeProfile(id){
-
-  const {
-    error
-  } =
-  await db
+  let r=await supabase
     .from("likes")
-    .upsert(
-      {
-        from_user:
-          session.user.id,
-
-        to_user:
-          id
-      },
-      {
-        onConflict:
-          "from_user,to_user"
-      }
-    );
-
-
-  if(error){
-
-    toast(error.message);
-
-    return;
-
-  }
-
-
-  toast("Like sent ♥");
-
-
-  const {
-    data
-  } =
-  await db
-    .from("matches")
-    .select("*")
-    .or(
-      `user_one.eq.${session.user.id},user_two.eq.${session.user.id}`
-    );
-
+    .insert({
+      from_user:session.user.id,
+      to_user:id
+    });
 
   if(
-    (data || [])
-      .some(
-        m =>
-          m.user_one === id ||
-          m.user_two === id
-      )
-  ){
+    r.error &&
+    !r.error.message.toLowerCase().includes("duplicate")
+  )
+    return alert(r.error.message);
 
-    toast("It's a match! ♥");
+  people=people.filter(p=>p.id!==id);
 
-  }
+  await loadMatches();
 
+  render();
 }
 
+function pass(id){
 
-/* =========================
-   MATCHES
-========================= */
+  people=people.filter(p=>p.id!==id);
 
-async function loadMatches(){
-
-  const box =
-    $("matchesList");
-
-
-  box.innerHTML =
-    "<div class='muted'>Loading...</div>";
-
-
-  const {
-    data:matches,
-    error
-  } =
-  await db
-    .from("matches")
-    .select("*")
-    .or(
-      `user_one.eq.${session.user.id},user_two.eq.${session.user.id}`
-    )
-    .order(
-      "created_at",
-      {ascending:false}
-    );
-
-
-  if(error){
-
-    box.innerHTML =
-      `<div class="muted">
-        ${esc(error.message)}
-      </div>`;
-
-    return;
-
-  }
-
-
-  if(!matches?.length){
-
-    box.innerHTML =
-      `
-        <div class="empty">
-          No matches yet.
-        </div>
-      `;
-
-    return;
-
-  }
-
-
-  const ids =
-    matches.map(
-      m =>
-        m.user_one === session.user.id
-          ? m.user_two
-          : m.user_one
-    );
-
-
-  const {
-    data:profiles,
-    error:profileError
-  } =
-  await db
-    .from("profiles")
-    .select("*")
-    .in("id",ids);
-
-
-  if(profileError){
-
-    box.innerHTML =
-      esc(profileError.message);
-
-    return;
-
-  }
-
-
-  const map =
-    Object.fromEntries(
-      (profiles || [])
-        .map(
-          p => [p.id,p]
-        )
-    );
-
-
-  window.offaMatches = {};
-
-
-  box.innerHTML =
-    matches
-      .map(match => {
-
-        const otherId =
-          match.user_one === session.user.id
-            ? match.user_two
-            : match.user_one;
-
-
-        const p =
-          map[otherId];
-
-
-        if(!p)
-          return "";
-
-
-        window.offaMatches[
-          String(match.id)
-        ] = {
-
-          matchId:
-            match.id,
-
-          profile:
-            p
-
-        };
-
-
-        return `
-
-          <div class="match">
-
-            <div class="avatar">
-              ${avatarHtml(p)}
-            </div>
-
-
-            <div class="grow">
-
-              <b>
-                ${esc(p.name)}
-              </b>
-
-              <div class="muted">
-                ${esc(p.city || "Offa")}
-              </div>
-
-            </div>
-
-
-            <button
-              class="btn"
-              onclick="openChat('${match.id}')"
-            >
-              Chat
-            </button>
-
-          </div>
-
-        `;
-
-      })
-      .join("");
-
+  render();
 }
 
-
-/* =========================
-   OPEN CHAT
-========================= */
-
-async function openChat(id){
-
-  selectedMatch =
-    window.offaMatches[
-      String(id)
-    ];
-
-
-  if(!selectedMatch){
-
-    toast(
-      "Refresh your matches and try again."
-    );
-
-    return;
-
-  }
-
-
-  showPage("chat");
-
-
-  $("chatEmpty")
-    .classList
-    .add("hidden");
-
-
-  $("chatBox")
-    .classList
-    .remove("hidden");
-
-
-  const p =
-    selectedMatch.profile;
-
-
-  $("chatName").textContent =
-    p.name || "Chat";
-
-
-  $("chatStatus").textContent =
-    p.city || "";
-
-
-  $("chatAvatar").innerHTML =
-    avatarHtml(p);
-
-
-  await loadMessages();
-
-  subscribe();
-
-}
-
-
-/* =========================
-   LOAD MESSAGES
-========================= */
-
-async function loadMessages(){
-
-  if(!selectedMatch)
-    return;
-
-
-  const {
-    data,
-    error
-  } =
-  await db
-    .from("messages")
-    .select("*")
-    .eq(
-      "match_id",
-      selectedMatch.matchId
-    )
-    .order(
-      "created_at",
-      {ascending:true}
-    );
-
-
-  if(error){
-
-    $("messages").innerHTML =
-      `
-        <div class="empty">
-          ${esc(error.message)}
-        </div>
-      `;
-
-    return;
-
-  }
-
-
-  $("messages").innerHTML =
-    (data || [])
-      .map(messageHtml)
-      .join("")
-
-
-    ||
-
-    `
-      <div class="empty">
-        No messages yet.
-        Say hello 👋
-      </div>
-    `;
-
-
-  $("messages").scrollTop =
-    $("messages").scrollHeight;
-
-
-  const unread =
-    (data || [])
-      .filter(
-        m =>
-          m.sender_id !== session.user.id &&
-          !m.read_at
-      )
-      .map(
-        m => m.id
-      );
-
-
-  if(unread.length){
-
-    await db
-      .from("messages")
-      .update({
-        read_at:
-          new Date().toISOString()
-      })
-      .in(
-        "id",
-        unread
-      );
-
-  }
-
-}
-
-
-/* =========================
-   MESSAGE DISPLAY
-========================= */
-
-function messageHtml(m){
-
-  const mine =
-    m.sender_id === session.user.id;
-
-
-  let body = "";
-
-
-  if(m.attachment_url){
-
-    if(
-      (m.attachment_type || "")
-        .startsWith("image/")
-    ){
-
-      body += `
-
-        <a
-          href="${esc(m.attachment_url)}"
-          target="_blank"
-          rel="noopener"
-        >
-
-          <img
-            src="${esc(m.attachment_url)}"
-            alt="${esc(
-              m.attachment_name ||
-              "image"
-            )}"
-          >
-
-        </a>
-
-      `;
-
-    }else{
-
-      body += `
-
-        <a
-          class="attachment"
-          href="${esc(m.attachment_url)}"
-          target="_blank"
-          rel="noopener"
-        >
-
-          📎
-          ${esc(
-            m.attachment_name ||
-            "Attachment"
-          )}
-
-        </a>
-
-      `;
-
-    }
-
-  }
-
-
-  if(m.message){
-
-    body += `
-
-      <div>
-        ${esc(m.message)}
-      </div>
-
-    `;
-
-  }
-
+function matchView(){
 
   return `
 
-    <div
-      class="bubble ${
-        mine
-          ? "mine"
-          : "theirs"
-      }"
-    >
+  <div class=card>
 
-      ${body}
+    <h1>Your Matches</h1>
+
+    <div class=meta>
+      People who matched with you.
+    </div>
+
+  </div>
+
+  ${
+    matches.map(m=>`
 
       <div
-        class="muted"
-        style="margin-top:4px"
+        class=chatrow
+        onclick="openChat(${m.id})"
       >
 
-        ${
-          mine
-            ? (
-                m.read_at
-                  ? "Seen"
-                  : "Sent"
-              )
-            : ""
-        }
+        <img
+          class=avatar
+          src="${img(m.person)}"
+        >
+
+        <div style="flex:1">
+
+          <div class=name>
+            ${esc(m.person?.name)}
+          </div>
+
+          <div class=meta>
+            ${esc(m.person?.city||"Offa")}
+          </div>
+
+        </div>
+
+        <b style="color:var(--blue)">
+          Chat ›
+        </b>
+
+      </div>
+
+    `).join("")
+    ||
+    '<div class="card empty">No matches yet.</div>'
+  }`;
+}
+
+function chatView(){
+
+  if(!selected)
+
+    return `
+
+    <div class=card>
+
+      <h1>Chat</h1>
+
+      <div class=meta>
+        Choose a match to start chatting.
+      </div>
+
+    </div>
+
+    ${
+      matches.map(m=>`
+
+        <div
+          class=chatrow
+          onclick="openChat(${m.id})"
+        >
+
+          <img
+            class=avatar
+            src="${img(m.person)}"
+          >
+
+          <div>
+
+            <div class=name>
+              ${esc(m.person?.name)}
+            </div>
+
+            <div class=meta>
+              Open conversation ›
+            </div>
+
+          </div>
+
+        </div>
+
+      `).join("")
+      ||
+      '<div class="card empty">No matches yet.</div>'
+    }`;
+
+  return `
+
+  <div class=card>
+
+    <div class=person>
+
+      <button
+        class=close
+        onclick="selected=null;render()"
+      >
+        ‹
+      </button>
+
+      <img
+        class=avatar
+        src="${img(selected.person)}"
+      >
+
+      <div>
+
+        <div class=name>
+          ${esc(selected.person?.name)}
+        </div>
+
+        <div class=meta>
+          Offa
+        </div>
 
       </div>
 
     </div>
 
-  `;
+    <div
+      id=messages
+      class=messages
+    >
 
-}
+      ${
+        msgs.map(m=>`
 
+          <div
+            class="bubble ${
+              m.sender_id===session.user.id
+              ?"mine"
+              :"theirs"
+            }"
+          >
 
-/* =========================
-   REALTIME CHAT
-========================= */
+            ${
+              m.attachment_url
+              ?
+                (
+                  (m.attachment_type||"").startsWith("image/")
+                  ?
+                  `<img
+                    class=photo
+                    src="${esc(m.attachment_url)}"
+                  >`
+                  :
+                  `<a
+                    href="${esc(m.attachment_url)}"
+                    target=_blank
+                    rel=noopener
+                    style="color:inherit;font-weight:900"
+                  >
+                    📎 ${esc(m.attachment_name||"Attachment")}
+                  </a>`
+                )
+              :""
+            }
 
-function subscribe(){
+            ${esc(m.message||"")}
 
-  if(realtime)
-    db.removeChannel(realtime);
+            <div class=small>
+              ${
+                new Date(m.created_at)
+                .toLocaleTimeString(
+                  [],
+                  {
+                    hour:"numeric",
+                    minute:"2-digit"
+                  }
+                )
+              }
+            </div>
 
+          </div>
 
-  realtime =
-    db
-      .channel(
-        "offa-chat-" +
-        selectedMatch.matchId +
-        "-" +
-        Date.now()
-      )
-      .on(
-        "postgres_changes",
-        {
-          event:"*",
-          schema:"public",
-          table:"messages",
-          filter:
-            `match_id=eq.${selectedMatch.matchId}`
-        },
-        () => {
-
-          loadMessages();
-
-        }
-      )
-      .subscribe();
-
-}
-
-
-/* =========================
-   CHAT TEXT
-========================= */
-
-$("composer")
-  .addEventListener(
-    "submit",
-    async event => {
-
-      event.preventDefault();
-
-      await sendText();
-
-    }
-  );
-
-
-$("messageInput")
-  .addEventListener(
-    "keydown",
-    event => {
-
-      if(
-        event.key === "Enter" &&
-        !event.shiftKey
-      ){
-
-        event.preventDefault();
-
-        $("composer")
-          .requestSubmit();
-
+        `).join("")
+        ||
+        '<div class=empty>Say hello 👋</div>'
       }
 
+    </div>
+
+    <div class=composer>
+
+      <button
+        class=attach
+        onclick="file.click()"
+      >
+        ＋
+      </button>
+
+      <input
+        id=chatInput
+        class=input
+        placeholder="Write a message..."
+        onkeydown="if(event.key==='Enter')send()"
+      >
+
+      <input
+        id=file
+        type=file
+        style="display:none"
+        onchange="picked(this)"
+      >
+
+      <button
+        class=send
+        onclick=send()
+      >
+        ➤
+      </button>
+
+    </div>
+
+    ${
+      file
+      ?`<div class=meta>
+          Selected: ${esc(file.name)}
+        </div>`
+      :""
     }
-  );
 
+  </div>`;
+}
 
-/* =========================
-   FILE SELECTION
-========================= */
+async function openChat(id){
 
-$("fileInput")
-  .addEventListener(
-    "change",
-    () => {
+  selected=matches.find(m=>m.id===id);
 
-      const files =
-        [
-          ...$("fileInput").files
-        ];
+  msgs=[];
 
+  tab="chat";
 
-      $("filePreview")
-        .textContent =
-          files.length
+  render();
 
-            ?
-
-            `${files.length} file${
-              files.length > 1
-                ? "s"
-                : ""
-            } selected — send to upload.`
-
-            :
-
-            "";
-
-    }
-  );
-
-
-/* =========================
-   SEND TEXT + FILES
-========================= */
-
-async function sendText(){
-
-  if(!selectedMatch){
-
-    toast(
-      "Open a match first."
-    );
-
-    return;
-
-  }
-
-
-  const text =
-    $("messageInput")
-      .value
-      .trim();
-
-
-  if(!text){
-
-    await sendAttachments();
-
-    return;
-
-  }
-
-
-  $("messageInput").value = "";
-
-
-  const {
-    error
-  } =
-  await db
+  let r=await supabase
     .from("messages")
-    .insert({
+    .select("*")
+    .eq("match_id",id)
+    .order("created_at",{ascending:true});
 
-      match_id:
-        selectedMatch.matchId,
+  msgs=r.data||[];
 
-      sender_id:
-        session.user.id,
+  render();
 
-      message:
-        text
+  setTimeout(()=>{
 
-    });
+    let x=$("messages");
 
+    if(x)
+      x.scrollTop=x.scrollHeight;
 
-  if(error){
-
-    $("messageInput").value =
-      text;
-
-    toast(error.message);
-
-    return;
-
-  }
-
-
-  await sendAttachments();
-
-  await loadMessages();
-
+  },50);
 }
 
+function picked(x){
 
-/* =========================
-   SEND ATTACHMENTS
-========================= */
+  file=x.files?.[0]||null;
 
-async function sendAttachments(){
+  render();
+}
 
-  const files =
-    [
-      ...$("fileInput").files
-    ];
+async function send(){
 
-
-  if(!files.length)
+  if(!selected)
     return;
 
+  let text=($("chatInput")?.value||"").trim();
 
-  for(
-    const file of files
-  ){
+  if(!text&&!file)
+    return;
 
-    try{
+  let a={};
 
-      if(
-        file.size >
-        15 * 1024 * 1024
-      ){
+  try{
 
-        throw Error(
-          `${file.name} is larger than 15MB.`
-        );
+    if(file){
 
-      }
+      if(file.size>15*1024*1024)
+        throw Error("File must be 15 MB or smaller.");
 
+      let safe=file.name.replace(
+        /[^a-zA-Z0-9._-]/g,
+        "_"
+      );
 
-      const safe =
-        file.name.replace(
-          /[^a-zA-Z0-9._-]/g,
-          "_"
-        );
+      let path=
+        `${session.user.id}/${selected.id}/${Date.now()}-${safe}`;
 
-
-      const path =
-        `${session.user.id}/` +
-        `${selectedMatch.matchId}/` +
-        `${Date.now()}-${safe}`;
-
-
-      /* UPLOAD FILE */
-
-      const {
-        error:uploadError
-      } =
-      await db
+      let u=await supabase
         .storage
         .from("chat-attachments")
         .upload(
@@ -1996,268 +1212,302 @@ async function sendAttachments(){
           file,
           {
             contentType:
-              file.type ||
-              "application/octet-stream",
-
-            upsert:false
+              file.type||
+              "application/octet-stream"
           }
         );
 
+      if(u.error)
+        throw u.error;
 
-      if(uploadError)
-        throw uploadError;
-
-
-      /* GET PUBLIC URL */
-
-      const {
-        data:publicData
-      } =
-      db
+      let pub=supabase
         .storage
         .from("chat-attachments")
         .getPublicUrl(path);
 
-
-      const publicUrl =
-        publicData.publicUrl;
-
-
-      /* SAVE MESSAGE */
-
-      const {
-        error:messageError
-      } =
-      await db
-        .from("messages")
-        .insert({
-
-          match_id:
-            selectedMatch.matchId,
-
-          sender_id:
-            session.user.id,
-
-          message:"",
-
-          attachment_url:
-            publicUrl,
-
-          attachment_name:
-            safe,
-
-          attachment_type:
-            file.type ||
-            "application/octet-stream"
-
-        });
-
-
-      if(messageError)
-        throw messageError;
-
-
-    }catch(error){
-
-      toast(
-        "Attachment failed: " +
-        error.message
-      );
-
+      a={
+        attachment_url:pub.data.publicUrl,
+        attachment_name:safe,
+        attachment_type:
+          file.type||
+          "application/octet-stream"
+      };
     }
 
-  }
-
-
-  $("fileInput").value = "";
-
-  $("filePreview").textContent = "";
-
-  await loadMessages();
-
-}
-
-
-/* =========================
-   SAVE PROFILE
-========================= */
-
-async function saveProfile(){
-
-  try{
-
-    let avatar =
-      profile?.avatar_url ||
-      null;
-
-
-    const file =
-      $("avatarInput").files[0];
-
-
-    if(file){
-
-      if(
-        file.size >
-        8 * 1024 * 1024
-      ){
-
-        throw Error(
-          "Profile photo must be under 8MB."
-        );
-
-      }
-
-
-      const ext =
-        (
-          file.name
-            .split(".")
-            .pop() ||
-          "jpg"
-        )
-        .replace(
-          /[^a-zA-Z0-9]/g,
-          ""
-        );
-
-
-      const path =
-        `${session.user.id}/` +
-        `avatar-${Date.now()}.` +
-        ext;
-
-
-      const {
-        error
-      } =
-      await db
-        .storage
-        .from("avatars")
-        .upload(
-          path,
-          file,
-          {
-            contentType:
-              file.type ||
-              "image/jpeg",
-
-            upsert:false
-          }
-        );
-
-
-      if(error)
-        throw error;
-
-
-      avatar =
-        db
-          .storage
-          .from("avatars")
-          .getPublicUrl(path)
-          .data
-          .publicUrl;
-
-    }
-
-
-    const {
-      data,
-      error
-    } =
-    await db
-      .from("profiles")
-      .update({
-
-        name:
-          $("profileName")
-            .value
-            .trim() ||
-          "Member",
-
-        age:
-          Math.max(
-            18,
-            Number(
-              $("profileAge").value
-            ) || 18
-          ),
-
-        city:
-          $("profileCity")
-            .value
-            .trim() ||
-          "Offa",
-
-        bio:
-          $("profileBio")
-            .value
-            .trim(),
-
-        avatar_url:
-          avatar
-
+    let r=await supabase
+      .from("messages")
+      .insert({
+        match_id:selected.id,
+        sender_id:session.user.id,
+        message:text,
+        ...a
       })
-      .eq(
-        "id",
-        session.user.id
-      )
       .select()
       .single();
 
+    if(r.error)
+      throw r.error;
 
-    if(error)
-      throw error;
+    if(!msgs.some(m=>m.id===r.data.id))
+      msgs.push(r.data);
 
+    file=null;
 
-    profile = data;
+    render();
 
+  }catch(e){
 
-    $("myAvatar").innerHTML =
-      avatarHtml(profile);
-
-
-    $("avatarInput").value = "";
-
-    toast(
-      "Profile saved"
-    );
-
-
-  }catch(error){
-
-    toast(
-      error.message
-    );
+    alert(e.message);
 
   }
-
 }
 
+function profileView(){
 
-/* =========================
-   LOGOUT
-========================= */
+  return `
+
+  <div
+    class=card
+    style="text-align:center"
+  >
+
+    <img
+      class="avatar big"
+      src="${img(me)}"
+    >
+
+    <h1 style="margin:12px 0 3px">
+      ${esc(me.name)}
+    </h1>
+
+    <div class=meta>
+      ${esc(me.age)} · ${esc(me.city||"Offa")}
+    </div>
+
+    ${
+      me.bio
+      ?`<p>${esc(me.bio)}</p>`
+      :""
+    }
+
+    ${
+      me.relationship_goal
+      ?`<span class=goal>
+          ${esc(me.relationship_goal)}
+        </span>`
+      :""
+    }
+
+    <div
+      class=actions
+      style="justify-content:center"
+    >
+
+      <button
+        class="btn blue"
+        onclick=edit()
+      >
+        Edit profile
+      </button>
+
+      <button
+        class="btn ghost"
+        onclick=logout()
+      >
+        Log out
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class=card>
+
+    <h2>Offa Connect</h2>
+
+    <div class=meta>
+      Meet. Connect. Belong.
+    </div>
+
+    <p>
+      For people from Offa and people connected to Offa.
+    </p>
+
+  </div>`;
+}
+
+function edit(){
+
+  root.insertAdjacentHTML(
+    "beforeend",
+
+    `<div
+      class="modal show"
+      id=modal
+    >
+
+      <div class=modalbox>
+
+        <div class=modalhead>
+
+          <h2>Edit profile</h2>
+
+          <button
+            class=close
+            onclick="modal.remove()"
+          >
+            ×
+          </button>
+
+        </div>
+
+        <div class=stack>
+
+          <input
+            id=en
+            class=input
+            value="${esc(me.name)}"
+          >
+
+          <input
+            id=ea
+            class=input
+            type=number
+            min=18
+            value="${me.age}"
+          >
+
+          <input
+            id=ec
+            class=input
+            value="${esc(me.city||"Offa")}"
+          >
+
+          <select id=eg class=select>
+
+            <option value="">
+              Relationship goal
+            </option>
+
+            <option
+              ${me.relationship_goal==="Single"?"selected":""}
+            >
+              Single
+            </option>
+
+            <option
+              ${me.relationship_goal==="Dating"?"selected":""}
+            >
+              Dating
+            </option>
+
+            <option
+              ${me.relationship_goal==="Relationship"?"selected":""}
+            >
+              Relationship
+            </option>
+
+            <option
+              ${me.relationship_goal==="Friendship"?"selected":""}
+            >
+              Friendship
+            </option>
+
+          </select>
+
+          <textarea
+            id=eb
+            class=textarea
+          >${esc(me.bio||"")}</textarea>
+
+          <button
+            class="btn green"
+            onclick=save()
+          >
+            Save profile
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>`
+  );
+}
+
+async function save(){
+
+  let r=await supabase
+    .from("profiles")
+    .update({
+      name:en.value.trim(),
+      age:+ea.value,
+      city:ec.value.trim()||"Offa",
+      relationship_goal:eg.value||null,
+      bio:eb.value.trim()
+    })
+    .eq("id",session.user.id)
+    .select()
+    .single();
+
+  if(r.error)
+    return alert(r.error.message);
+
+  me=r.data;
+
+  modal.remove();
+
+  render();
+}
+
+async function go(x){
+
+  tab=x;
+
+  if(x!=="chat")
+    selected=null;
+
+  if(x==="matches"||x==="chat")
+    await loadMatches();
+
+  render();
+}
 
 async function logout(){
 
-  if(realtime)
-    db.removeChannel(
-      realtime
-    );
+  await supabase.auth.signOut();
 
+  session=null;
+  me=null;
+  people=[];
+  matches=[];
 
-  await db.auth.signOut();
-
+  auth();
 }
 
+supabase.auth.getSession().then(async r=>{
 
-/* =========================
-   START APP
-========================= */
+  session=r.data.session;
 
-start();
+  if(session){
+
+    try{
+
+      await boot();
+
+    }catch(e){
+
+      auth(false,e.message);
+
+    }
+
+  }else{
+
+    auth();
+
+  }
+
+});
 
 </script>
 
